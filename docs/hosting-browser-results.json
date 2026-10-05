@@ -1,0 +1,106 @@
+{
+  "checkedAt": "2026-10-05T04:36:58.831Z",
+  "browser": "Microsoft Edge / Chromium",
+  "base": "https://comp4020-final-2513238602.fly.dev",
+  "checks": [
+    "Home 1920: no horizontal overflow",
+    "Home 1920: axe WCAG A/AA scan passed",
+    "Start dialog 1920: axe WCAG A/AA scan passed",
+    "Keyboard open and Escape close 1920",
+    "Desk 1920: no horizontal overflow",
+    "Desk 1920: axe WCAG A/AA scan passed",
+    "Evidence F1 1920: no horizontal overflow",
+    "Evidence F2 1920: no horizontal overflow",
+    "Evidence F3 1920: no horizontal overflow",
+    "Evidence F4 1920: no horizontal overflow",
+    "Evidence A1 1920: no horizontal overflow",
+    "Evidence A2 1920: no horizontal overflow",
+    "Evidence A3 1920: no horizontal overflow",
+    "Evidence A4 1920: no horizontal overflow",
+    "Saved evidence restored 1920",
+    "Theory dialog 1920: axe WCAG A/AA scan passed",
+    "Solved 1920: no horizontal overflow",
+    "Complete playthrough with wrong and correct explanation 1920",
+    "Resolution 1920: axe WCAG A/AA scan passed",
+    "README 1920: no horizontal overflow",
+    "README 1920: axe WCAG A/AA scan passed",
+    "Home 390: no horizontal overflow",
+    "Home 390: axe WCAG A/AA scan passed",
+    "Start dialog 390: axe WCAG A/AA scan passed",
+    "Keyboard open and Escape close 390",
+    "Desk 390: no horizontal overflow",
+    "Desk 390: axe WCAG A/AA scan passed",
+    "Evidence F1 390: no horizontal overflow",
+    "Evidence F2 390: no horizontal overflow",
+    "Evidence F3 390: no horizontal overflow",
+    "Evidence F4 390: no horizontal overflow",
+    "Evidence A1 390: no horizontal overflow",
+    "Evidence A2 390: no horizontal overflow",
+    "Evidence A3 390: no horizontal overflow",
+    "Evidence A4 390: no horizontal overflow",
+    "Saved evidence restored 390",
+    "Theory dialog 390: axe WCAG A/AA scan passed",
+    "Solved 390: no horizontal overflow",
+    "Complete playthrough with wrong and correct explanation 390",
+    "Resolution 390: axe WCAG A/AA scan passed",
+    "README 390: no horizontal overflow",
+    "README 390: axe WCAG A/AA scan passed",
+    "Partner publication visible without reload (102ms including UI clicks)",
+    "Failed save does not show a success state",
+    "SSE reconnect retrieves missed evidence",
+    "Resize during duo investigation: no horizontal overflow",
+    "Resize back during duo investigation: no horizontal overflow",
+    "No browser JavaScript errors"
+  ],
+  "errors": [],
+  "axeReports": [
+    {
+      "label": "Home 1920",
+      "violations": []
+    },
+    {
+      "label": "Start dialog 1920",
+      "violations": []
+    },
+    {
+      "label": "Desk 1920",
+      "violations": []
+    },
+    {
+      "label": "Theory dialog 1920",
+      "violations": []
+    },
+    {
+      "label": "Resolution 1920",
+      "violations": []
+    },
+    {
+      "label": "README 1920",
+      "violations": []
+    },
+    {
+      "label": "Home 390",
+      "violations": []
+    },
+    {
+      "label": "Start dialog 390",
+      "violations": []
+    },
+    {
+      "label": "Desk 390",
+      "violations": []
+    },
+    {
+      "label": "Theory dialog 390",
+      "violations": []
+    },
+    {
+      "label": "Resolution 390",
+      "violations": []
+    },
+    {
+      "label": "README 390",
+      "violations": []
+    }
+  ]
+}

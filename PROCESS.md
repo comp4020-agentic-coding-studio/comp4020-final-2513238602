@@ -101,3 +101,16 @@ evaluation should observe two first-time players without explaining the controls
 do both contribute an inference, can they correct the clock, and does the final
 explanation feel earned? Those observations should guide the next edit and the
 student's personal reflection. A passing automated suite cannot supply them.
+
+## Hosting follow-up, 5 October 2026
+
+After the local iteration, the user requested completion of the course hosting
+instructions and supplied the final-app token. Fly CLI was installed through
+mise, credentials were kept out of Git and the Docker context, and the unchanged
+course Fly configuration was used to deploy. Remote image builds succeeded.
+The same machine and 1GB volume survived a restart and a second deployment;
+the dedicated test investigation remained accessible with its published evidence.
+The real HTTPS site passed the HTTP suite and browser acceptance scenarios.
+See [hosting verification](docs/hosting-verification.md) for the precise boundary
+between these checks and the earlier local-only evidence. The repository remains
+private; the course ship flow and personal reflection are still separate work.

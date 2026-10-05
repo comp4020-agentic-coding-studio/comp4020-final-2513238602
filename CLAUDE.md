@@ -18,6 +18,8 @@
 - Log pseudonymous actions, not tokens or private clue contents.
 - Never invent reflection, human research, measured play time or deployment.
 - Document mistakes and fix the contract or test that allowed them.
-- The user currently requests local completion; do not publish or deploy.
+- Course hosting setup and deployment to this final app are now authorised.
+  Keep the repository private until the course ship flow is explicitly requested.
+  Never expose Fly credentials or change the course resource limits.
 
 Course constraints live in fly.toml, Dockerfile and spec/README.md.

@@ -36,8 +36,9 @@ The conversation happens in person or on a call; the website holds the evidence.
 
 An investigation is stored on the server. Published evidence, chronology and
 attempts survive a browser refresh and a server restart using the same database.
-The intended Fly deployment stores that database on its persistent `/data` volume.
-This current build is a local preview; it has not yet been deployed.
+The Fly deployment stores that database on its persistent `/data` volume.
+Play the live app at [Lost & Found](https://comp4020-final-2513238602.fly.dev/).
+Local running instructions and verification evidence are kept in the repository.
 
 The server checks membership on every room action and event stream. Unpublished
 partner clues are not sent to the browser. Concurrent timeline changes cannot

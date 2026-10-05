@@ -1,6 +1,8 @@
 # 本地试玩与课程边界
 
-项目：Lost & Found / 失物档案。当前仅本地运行，没有部署或推送。
+项目：Lost & Found / 失物档案。现已部署到课程分配的 Fly 应用；
+GitHub 仓库仍保持私有。线上地址：https://comp4020-final-2513238602.fly.dev/
+下方为本地运行方法；部署操作见 [HOSTING.md](HOSTING.md)。
 
 ## 启动
 
@@ -22,7 +24,7 @@ mise exec -- pnpm start
 - 单人：Open the case → 输入昵称 → Just me → Begin investigation。
 - 双人同机：选择 Bring a partner，在 Invite your partner 中复制链接，
   用另一个浏览器或独立无痕窗口打开。两人需要不同的 cookie 会话。
-- localhost 链接只能在这台电脑使用；尚未提供公共网络试玩地址。
+- localhost 链接只能在这台电脑使用。跨设备试玩请使用线上网站生成邀请。
 - 阅读线索后用 Add to shared desk 发布；调整右侧事件顺序；用
   Make your case 提交解释并引用两种文件夹的证据。
 - 不看 server/case.ts 或 docs/case-design.md，其中有剧透答案。
@@ -51,8 +53,7 @@ mise exec -- pnpm check:evidence
 
 ## 提交前尚需完成
 
-本地完成不等于课程已提交。Fly 凭据尚未配置；Docker 镜像和 Fly 持久卷
-尚未实际验收。先做一次真实双人试玩，再由学生核实 README 的立场、
+上线不等于课程已提交。先做一次真实双人试玩，再由学生核实 README 的立场、
 PROCESS 的过程描述，并亲自完成 reflections/crit-8.md 的个人反思。
 COMP8020 期末研究写作及后续 crit 的增量要求仍需按对应 brief 完成。
 
