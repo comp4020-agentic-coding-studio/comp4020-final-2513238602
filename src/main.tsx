@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ArrowRight, ArrowUpRight, ArrowLeft, ArrowUp, ArrowDown, Check, CheckCircle, Users, User, Copy, X, FileText, ClockCounterClockwise, Eye, PaperPlaneTilt, MagnifyingGlass, BookOpen, SpinnerGap } from '@phosphor-icons/react';
-import '@fontsource/dm-sans/400.css';
-import '@fontsource/dm-sans/500.css';
-import '@fontsource/dm-sans/600.css';
-import '@fontsource/libre-caslon-display/400.css';
-import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/dm-sans/latin-400.css';
+import '@fontsource/dm-sans/latin-500.css';
+import '@fontsource/dm-sans/latin-600.css';
+import '@fontsource/libre-caslon-display/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
 import './style.css';
 import type { Clue, Investigation, Mode, RoomState, Theory } from '../shared/types.ts';
 
@@ -17,7 +17,7 @@ async function api<T>(path: string, data?: unknown): Promise<T> {
 const roleName=(role:string)=>role==='solo'?'Both folders':role==='field'?'Field investigator':'Archive investigator';
 const time=(value:string)=>new Intl.DateTimeFormat('en-AU',{hour:'2-digit',minute:'2-digit'}).format(new Date(value));
 
-function Brand(){return <a className="brand" href="/" aria-label="Lost and Found home"><span className="brand-mark" aria-hidden="true">&amp;</span><span>lost<span className="brand-join"> &amp; </span>found<span className="brand-caption">THE SMALL MYSTERY CLUB</span></span></a>}
+function Brand(){return <a className="brand" href="/"><span className="brand-mark" aria-hidden="true">&amp;</span><span>lost<span className="brand-join"> &amp; </span>found<span className="brand-caption">THE SMALL MYSTERY CLUB</span></span></a>}
 function Header(){return <header className="site-header"><Brand/><nav aria-label="Main navigation"><a href="/#case">The case</a><a href="/#how">How to play</a><a href="/readme/">Project notes <ArrowUpRight size={14}/></a></nav></header>}
 function Footer(){return <footer className="site-footer"><span>Made for curious people, together.</span><a href="/readme/">What good means here <ArrowUpRight size={14}/></a><span>A fictional case. A shared discovery.</span></footer>}
 
