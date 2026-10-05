@@ -1,10 +1,19 @@
-# Your harness
+# Lost & Found: working rules
 
-This file is yours, and it arrives empty on purpose. The rules you hold the
-agent to are part of what gets marked, so they should be rules you decided on.
+- Follow PRODUCT.md and docs/case-design.md. Keep one case.
+- Preserve shipped invariants and course Fly machine/volume limits.
+- Use SQLite on DATA_DIR (production /data). No browser-only persistence.
+- Say saved only after the transaction commits.
+- Authenticate membership on every room read, mutation and event stream.
+- Never send unpublished clues from the other role to a cooperative client.
+- Keep solution data on the server, out of the frontend bundle.
+- Reject stale timeline writes explicitly; never silently overwrite.
+- Validate request shape, length, origin and clue ownership server-side.
+- Keep clues readable as text and actions usable by keyboard and touch.
+- Render the full README in server HTML at /readme/.
+- Log pseudonymous actions, not tokens or private clue contents.
+- Never invent reflection, human research, measured play time or deployment.
+- Document mistakes and fix the contract or test that allowed them.
+- The user currently requests local completion; do not publish or deploy.
 
-Nothing about the template is recorded here. What the repo ships is explained
-where it lives --- `fly.toml`, the `Dockerfile`, the CI workflow and
-`spec/README.md` each say what they fix --- and the course website publishes the
-[final project brief](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/assessments/final-project/).
-What the agent needs to carry from any of it is your call.
+Course constraints live in fly.toml, Dockerfile and spec/README.md.
