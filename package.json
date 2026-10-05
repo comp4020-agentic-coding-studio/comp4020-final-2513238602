@@ -3,19 +3,38 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prepare": "git rev-parse --git-dir >/dev/null 2>&1 && git config core.hooksPath .githooks || true",
+    "prepare": "node scripts/configure-hooks.mjs",
+    "dev": "node --experimental-strip-types server/index.ts",
+    "start": "node --experimental-strip-types server/index.ts",
+    "build": "vite build",
+    "check:browser": "node scripts/check-browser.mjs",
     "typecheck": "tsc --noEmit",
     "check": "pnpm typecheck && pnpm test",
     "check:evidence": "node scripts/check-evidence.ts",
     "test": "vitest run"
   },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "@phosphor-icons/react": "^2.1.10",
+    "@fontsource/dm-sans": "^5.2.8",
+    "@fontsource/libre-caslon-display": "^5.2.6",
+    "@fontsource/ibm-plex-mono": "^5.2.7",
+    "marked": "^17.0.0"
+  },
   "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "vite": "^8.0.0",
+    "playwright": "^1.58.0",
+    "@axe-core/playwright": "^4.11.0",
     "@types/jsdom": "^30.0.0",
     "@types/node": "^24.0.0",
     "jsdom": "^30.1.0",
     "typescript": "^6.0.3",
     "vitest": "^5.0.1"
   },
+  "packageManager": "pnpm@11.9.0",
   "engines": {
     "pnpm": ">=11"
   }
