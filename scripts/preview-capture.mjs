@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+import { mkdirSync } from 'node:fs';
+mkdirSync('evidence',{recursive:true});
+const browser=await chromium.launch({channel:'msedge',headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:1080},deviceScaleFactor:1});
+page.on('pageerror',e=>console.log('PAGE ERROR',e.message));
+await page.goto('http://localhost:8081');await page.locator('h1').waitFor();await page.evaluate(()=>document.fonts.ready);
+await page.screenshot({path:'evidence/home-desktop.png',fullPage:true});
+await page.getByRole('button',{name:'Open the case'}).click();await page.getByLabel('What should we call you?').fill('Alex');await page.getByRole('button',{name:'Begin investigation'}).click();
+await page.locator('.evidence-document').waitFor();await page.screenshot({path:'evidence/desk-desktop.png',fullPage:true});
+await page.setViewportSize({width:390,height:844});await page.screenshot({path:'evidence/desk-mobile.png',fullPage:true});
+await page.goto('http://localhost:8081');await page.locator('h1').waitFor();await page.screenshot({path:'evidence/home-mobile.png',fullPage:true});
+await browser.close();

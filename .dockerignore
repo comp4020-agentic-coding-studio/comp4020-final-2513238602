@@ -4,6 +4,9 @@
 .git
 node_modules
 dist
+data
+evidence
+test-results
 *.log
 .env
 .env.*

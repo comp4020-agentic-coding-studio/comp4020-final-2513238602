@@ -132,12 +132,12 @@ const server = createServer(async (req,res) => {
           if (!Array.isArray(data.order) || data.order.length !== 4 || new Set(data.order).size !== 4 || data.order.some(x => !events.some(e => e.id === x))) fail(400,'The timeline must contain each event exactly once.');
           run('UPDATE rooms SET ordering=? WHERE code=?',JSON.stringify(data.order),code); log(code,mid,'arranged','Reordered the shared chronology.');
         } else if (action === 'theory') {
-          if (!['eli','mara','jules'].includes(String(data.who)) || !['north','studio','loading'].includes(String(data.where)) || !['light','repair','collection'].includes(String(data.why))) fail(400,'Complete the three parts of your explanation.');
+          if (!['eli','mara','jules'].includes(String(data.who)) || !['north','studio','loading'].includes(String(data.where)) || !['light','repair','collection'].includes(String(data.why)) || !['17:30','17:34','17:36'].includes(String(data.when))) fail(400,'Complete all four parts of your explanation.');
           if (!Array.isArray(data.evidence) || data.evidence.length < 2 || data.evidence.length > 8 || new Set(data.evidence).size !== data.evidence.length || data.evidence.some(x => typeof x !== 'string')) fail(400,'Cite at least two different pieces of evidence.');
           const citations=data.evidence as string[];
           if (citations.some(c => !one('SELECT clue FROM publications WHERE room=? AND clue=?',code,c))) fail(400,'Publish your supporting evidence before citing it.');
           if (!citations.some(c => c.startsWith('F')) || !citations.some(c => c.startsWith('A'))) fail(400,'Cite evidence from both the field and archive folders.');
-          const theory={who:data.who,where:data.where,why:data.why,evidence:citations} as Theory;
+          const theory={who:data.who,where:data.where,why:data.why,when:data.when,evidence:citations} as Theory;
           const result=assess(theory,JSON.parse(String(room.ordering)));
           run('INSERT INTO attempts(room,member,body,correct,at) VALUES (?,?,?,?,?)',code,mid,JSON.stringify(theory),result.correct?1:0,now());
           run('UPDATE rooms SET status=?,feedback=? WHERE code=?',result.correct?'solved':'open',result.feedback,code);

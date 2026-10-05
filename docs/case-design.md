@@ -18,11 +18,12 @@ relocation instruction; receiving receipt. Every clue has full accessible text.
 
 ## Required reasoning
 Pair the camera observation with the clock slip to establish the real movement
-time. Pair access initials with the instruction to identify Eli. Condition report
-and instruction explain the reason; receipt and route establish the destination.
+time. The field access record names Eli; the archive instruction authorises the
+duty technician. The archive receipt names location N-3, which only the field
+route map translates to North Store. Neither folder gives the full answer alone.
 
 ## Submission
-Choose person, destination and reason. Cite at least two different published
+Choose person, destination, reason and corrected movement time. Cite at least two different published
 clues, including one from each folder. Incorrect submissions give targeted hints.
 Correct answers also require the four events in chronological order. Every attempt
 persists. The full explanation is sent only after the investigation is solved.

@@ -1,5 +1,9 @@
 node_modules/
 dist/
+data/
+evidence/*.png
+evidence/*.json
+test-results/
 *.log
 
 # editor and OS junk
