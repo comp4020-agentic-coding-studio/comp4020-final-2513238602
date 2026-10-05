@@ -84,10 +84,25 @@ function Desk({code}:{code:string}){
   async function refresh(){const next=await api<RoomState>(`/api/rooms/${code}`);accept(next)}
   useEffect(()=>{let live=true;api<RoomState>(`/api/rooms/${code}`).then(next=>{if(live)accept(next)}).catch(e=>{if(live){if(e.status===403)setJoin(true);else setError(e.message)}});return()=>{live=false}},[code]);
   const memberId=room?.me.id;
-  useEffect(()=>{if(!memberId)return;const es=new EventSource(`/api/rooms/${code}/events`);let alive=true;
-    es.onopen=()=>{if(alive)setConnected(true)};es.onerror=()=>{if(alive)setConnected(false)};
-    es.addEventListener('update',()=>{api<RoomState>(`/api/rooms/${code}`).then(next=>{if(alive)accept(next)}).catch(()=>{if(alive)setConnected(false)})});
-    return()=>{alive=false;es.close()};},[code,memberId]);
+  useEffect(()=>{
+    if(!memberId)return;
+    let alive=true;let stream:EventSource|undefined;
+    const sync=()=>{void api<RoomState>(`/api/rooms/${code}`).then(next=>{if(alive)accept(next)}).catch(()=>{if(alive)setConnected(false)})};
+    const connect=()=>{
+      stream?.close();
+      stream=new EventSource(`/api/rooms/${code}/events`);
+      stream.onopen=()=>{if(alive){setConnected(true);sync()}};
+      stream.onerror=()=>{if(alive)setConnected(false)};
+      stream.addEventListener('update',sync);
+    };
+    const offline=()=>{stream?.close();setConnected(false)};
+    // A brief network outage can leave a nominally open stream missing an update.
+    // Explicitly reopen and fetch a snapshot when the browser reports recovery.
+    const online=()=>{connect();sync()};
+    const visible=()=>{if(document.visibilityState==='visible'&&navigator.onLine)sync()};
+    connect();window.addEventListener('offline',offline);window.addEventListener('online',online);document.addEventListener('visibilitychange',visible);
+    return()=>{alive=false;stream?.close();window.removeEventListener('offline',offline);window.removeEventListener('online',online);document.removeEventListener('visibilitychange',visible)};
+  },[code,memberId]);
   useEffect(()=>{if(!notice)return;const timer=setTimeout(()=>setNotice(''),4500);return()=>clearTimeout(timer)},[notice]);
   async function mutate(action:string,data:unknown){setError('');setBusy(true);try{const next=await api<RoomState>(`/api/rooms/${code}/${action}`,data);accept(next);setNotice(action==='publish'?'Evidence added. Saved to your investigation.':action==='board'?'Chronology saved.':action==='theory'?next.lastFeedback??'Explanation saved.':'');if(next.status==='solved')setModal(null);return next}catch(e){setError((e as Error).message);if(e instanceof ApiError&&e.status===409)await refresh().catch(()=>{});return null}finally{setBusy(false)}}
   async function openClue(c:Clue){setSelected(c.id);if(!c.read){try{accept(await api<RoomState>(`/api/rooms/${code}/read`,{id:c.id}))}catch{/* Reading the already loaded document remains possible. */}}}

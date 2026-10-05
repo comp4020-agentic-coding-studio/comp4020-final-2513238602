@@ -1,7 +1,7 @@
 import { it, expect } from 'vitest';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, resolve, dirname, basename } from 'node:path';
 import { spawn } from 'node:child_process';
 import type { ChildProcess } from 'node:child_process';
 import { createServer } from 'node:net';
@@ -14,5 +14,10 @@ it('retains a real investigation when a new server process reopens the same SQLi
   try{await start();const initial=await fetch(`${base}/api/me`);const cookie=initial.headers.get('set-cookie')!.split(';')[0];const headers={cookie,'content-type':'application/json'};const created=await fetch(`${base}/api/rooms`,{method:'POST',headers,body:JSON.stringify({name:'Return visitor',mode:'solo'})});const room=await created.json();expect(created.status).toBe(201);
     await fetch(`${base}/api/rooms/${room.code}/publish`,{method:'POST',headers,body:JSON.stringify({id:'F1'})});await stop(child!);await start();
     const restored=await fetch(`${base}/api/rooms/${room.code}`,{headers});expect(restored.status).toBe(200);const state=await restored.json();expect(state.me.name).toBe('Return visitor');expect(state.clues[0].published).toBe(true);
-  }finally{if(child)await stop(child);rmSync(directory,{recursive:true,force:true});}
+  }finally{
+    if(child)await stop(child);
+    const target=resolve(directory);
+    if(dirname(target)!==resolve(tmpdir())||!basename(target).startsWith('lost-found-restart-'))throw Error('Refusing cleanup outside the restart-test directory');
+    rmSync(target,{recursive:true,force:true});
+  }
 },15000);

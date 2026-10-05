@@ -14,7 +14,8 @@ Thin rules separate real content. Square paper edges; 3px controls. No nested ca
 Light appearance intentionally imitates printed evidence, matching the approved brief.
 Header 76px desktop, 64px mobile. Content maximum 1440px. Investigation layout:
 folder sidebar, central readable document, chronology panel. Mobile stacks them
-with navigation anchors. Controls at least 44px. Layers: header 10, dialog native.
+with navigation anchors. Primary actions and touch sorting targets are at least
+44px; compact desktop sorting buttons have accessible labels. Layers: header 10, dialog native.
 Motion only uses short opacity/transform feedback with reduced-motion support.
 Sorting always has labeled up/down buttons. Status uses text, not color alone.
 

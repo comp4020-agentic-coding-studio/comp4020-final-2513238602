@@ -1,10 +1,7 @@
 # syntax = docker/dockerfile:1
 
-# A placeholder, and yours to replace: it serves one page, plus README.md
-# verbatim at /readme/, which is enough to prove the deploy path end to end.
-# Whatever your app is built with, the image that replaces this one must serve
-# HTTP on 0.0.0.0:$PORT (fly.toml sets PORT) and publish README.md at /readme/
-# (spec/README.md says what's checked).
+# Build the React client, then run one Node service with SQLite in /data.
+# Preserve the course HTTP contract: 0.0.0.0:$PORT and full README at /readme/.
 
 FROM docker.io/library/node:24.21.0-bookworm-slim AS build
 WORKDIR /app

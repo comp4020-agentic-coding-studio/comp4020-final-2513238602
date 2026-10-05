@@ -10,6 +10,8 @@
 - Authoring check: neither folder alone may disclose the full named person,
   destination and corrected movement time. Match codes across the two folders.
 - Reject stale timeline writes explicitly; never silently overwrite.
+- Reopen the event stream and retrieve current state after the browser returns
+  online. Test a partner publishing while the other browser is offline.
 - Validate request shape, length, origin and clue ownership server-side.
 - Keep clues readable as text and actions usable by keyboard and touch.
 - Render the full README in server HTML at /readme/.
