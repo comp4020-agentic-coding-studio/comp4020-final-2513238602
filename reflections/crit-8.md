@@ -27,5 +27,6 @@ means to promise cooperation, to distinguish an attractive interface from a
 reliable interaction, or to make claims supported by tests and human observation.
 These are possibilities to reflect on, not conclusions attributed to you.
 
-No human playtest or public deployment has happened in the recorded local work.
-Do not claim either. See PROCESS.md for factual evidence and outstanding work.
+No human playtest has been recorded. The app has now been deployed on Fly, with
+restart and redeployment persistence verified. See PROCESS.md for that evidence;
+do not turn automated browser checks into a claimed personal playtest.

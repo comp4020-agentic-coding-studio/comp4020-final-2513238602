@@ -1,9 +1,12 @@
 # Process overview
 
-This is an agent-assisted factual account of the local C8 build, dated 5 October
-2026. It records actions that happened in this workspace. The student still needs
-to review the account, conduct human playtesting and write the personal reflection.
-No public deployment or independent user research is claimed.
+This agent-assisted account describes the deployed C8 project and its preparation
+for public release. It distinguishes the student's direction from implementation
+and verification performed by the coding agent. The student challenged an apparent
+assignment mismatch, requested an original direction, approved implementation,
+and subsequently authorised deployment and public release. No independent human
+playtest is claimed. The recorded evidence supports technical behaviour; the
+student's judgement of the experience remains a separate contribution.
 
 ## Establishing the right assignment
 
@@ -44,8 +47,8 @@ partner's newer move. Transactions commit before the app reports a successful sa
 
 These choices also have limits. Clearing the cookie loses access; there is no
 cross-device account recovery. One case is replayable but cannot surprise someone
-who already knows its answer. This local iteration does not establish that the
-app fits its production memory budget under load.
+who already knows its answer. Running successfully on the allocated machine
+does not establish capacity under sustained production load.
 
 ## Visual direction and a content correction
 
@@ -94,23 +97,28 @@ acceptance passed full playthroughs at 1920px and 390px, keyboard dialog actions
 no horizontal overflow, failed-save feedback and recovery of missed evidence.
 These runs are summarised in [local verification](docs/local-verification.md).
 
-The user explicitly requested local completion because Fly credentials were not
-configured. No push, repository visibility change or deployment was performed.
-Docker and persistent-volume behaviour on Fly remain unverified. The next human
-evaluation should observe two first-time players without explaining the controls:
-do both contribute an inference, can they correct the clock, and does the final
-explanation feel earned? Those observations should guide the next edit and the
-student's personal reflection. A passing automated suite cannot supply them.
+## Deployment and release evidence
 
-## Hosting follow-up, 5 October 2026
+The first iteration stayed local because credentials were unavailable. Once the
+user supplied the final-specific token, the course's remote build deployed the
+same application. This transition is recorded in
+[`acc6483`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/acc6483).
+Credentials stayed in an ignored local configuration file, outside both Git and
+the Docker upload. The course machine and volume limits were preserved. The image
+built remotely, avoiding a local Docker installation and exercising the actual
+Linux build path that CI later uses.
 
-After the local iteration, the user requested completion of the course hosting
-instructions and supplied the final-app token. Fly CLI was installed through
-mise, credentials were kept out of Git and the Docker context, and the unchanged
-course Fly configuration was used to deploy. Remote image builds succeeded.
-The same machine and 1GB volume survived a restart and a second deployment;
-the dedicated test investigation remained accessible with its published evidence.
-The real HTTPS site passed the HTTP suite and browser acceptance scenarios.
-See [hosting verification](docs/hosting-verification.md) for the precise boundary
-between these checks and the earlier local-only evidence. The repository remains
-private; the course ship flow and personal reflection are still separate work.
+Deployment was verified by action rather than an online homepage alone. A test
+investigation was saved, the Fly machine restarted, and its identity and evidence
+were retrieved. A second deployment preserved the same records and volume. The
+real HTTPS app also passed the HTTP and browser suites. [Hosting verification](docs/hosting-verification.md)
+records the machine, image and limitations. Local and hosted results are separate
+records, so later evidence does not rewrite what was known earlier.
+
+Public release uses the course secret scan and existing CI checks before the
+deployed commit is marked for C8. It preserves the incremental development history
+rather than replacing it with a finished-code dump. The next evaluation still
+needs two first-time players: do both contribute an inference, can they correct
+the clock, and does the explanation feel earned? These are questions for observed
+use and the student's reflection. Automated success cannot answer them, and the
+presence of real-time foundations does not complete later crits or the final note.

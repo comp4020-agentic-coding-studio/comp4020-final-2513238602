@@ -1,7 +1,7 @@
 # 本地试玩与课程边界
 
 项目：Lost & Found / 失物档案。现已部署到课程分配的 Fly 应用；
-GitHub 仓库仍保持私有。线上地址：https://comp4020-final-2513238602.fly.dev/
+GitHub 仓库按用户要求进入公开发布流程。线上地址：https://comp4020-final-2513238602.fly.dev/
 下方为本地运行方法；部署操作见 [HOSTING.md](HOSTING.md)。
 
 ## 启动
