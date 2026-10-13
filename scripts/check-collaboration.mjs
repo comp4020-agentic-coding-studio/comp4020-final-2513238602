@@ -76,6 +76,9 @@ try {
   checks.push('Timeline moves render in the other browser without reload');
   for(const page of [pa,pb]){
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    await page.evaluate(()=>{if(document.activeElement instanceof HTMLElement)document.activeElement.blur();window.scrollTo(0,0)});
+    mkdirSync('evidence',{recursive:true});
+    await page.screenshot({path:`evidence/cooperative-${page.viewportSize().width}.png`,fullPage:true});
     const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
     assert.deepEqual(audit.violations.map(v=>v.id),[]);
   }

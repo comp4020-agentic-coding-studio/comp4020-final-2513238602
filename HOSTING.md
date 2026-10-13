@@ -14,22 +14,21 @@ Fly 账户、运行 `fly launch`、新建应用或绑定银行卡。
 - `fly.toml` 保留课程资源配置：悉尼单机、shared CPU 1 核、256MB 内存、
   一个 1GB 卷挂载 `/data`、共享 IPv4、HTTPS 和闲置自动停止。
 - GitHub 已有课程预设的 `FLY_API_TOKEN` secret。只确认其存在，未改写。
-- 原课程 CI 工作流保持不变：main 推送通过检查后部署。
-  用户现已明确授权按课程 ship 流程公开仓库。
+- 课程 CI 的部署门槛和资源限制保留；在原有检查之外加入桌面、手机、
+  协作及弱网浏览器测试。仓库已公开，main 推送通过所有检查后部署。
 
 ## 更新网站
 
-在本仓库 PowerShell 中运行，保留 `mise exec --` 前缀：
+先按 LOCAL_RUN.md 完成本地检查，再提交并推送 main：
 
 ```powershell
-mise install
-mise exec -- flyctl config validate -a comp4020-final-2513238602
-mise exec -- flyctl deploy --remote-only --ha=false -a comp4020-final-2513238602
+git push origin main
+gh run list --limit 1
+gh run watch <run-id> --exit-status
 ```
 
-公开之后优先推送 main 让课程 CI 检查并部署；上面的手动命令保留作
-原先私有开发阶段的操作记录。部署之前先按 LOCAL_RUN.md 运行测试。
-不要添加第二台机器、额外卷、
+仓库公开之后由 CI 部署；不要用手动部署绕过检查。首次私有阶段的部署记录
+保留在 docs/hosting-verification.md。不要添加第二台机器、额外卷、
 专用 IPv4 或扩大内存。数据库只保存在 `/data`；本地测试数据不会上传。
 
 ## 检查和日志
@@ -49,13 +48,13 @@ token 学期末失效，失效时回复原 Ed 私信申请更新；不要注册�
 ## 持久化复验
 
 ```powershell
-mise exec -- node scripts/check-hosted-persistence.mjs seed
-# 重启现有机器或按上文重新部署后：
 mise exec -- node scripts/check-hosted-persistence.mjs verify
 ```
 
-脚本创建一条专用测试调查，将恢复它所需的会话保存在被忽略的
-`evidence/hosted-persistence.json`。不要提交这个文件。
+本机已有原始验证调查，直接 verify，不能重新 seed 后声称旧数据仍在。
+仅首次设置新验证环境时使用 seed。恢复所需会话在被忽略的
+`evidence/hosted-persistence.json`；不要提交。脱敏结果写入
+`evidence/persistence-results.json`，包含真实创建／验证日期，不含 cookie。
 
 ## 课程提交仍需单独完成
 

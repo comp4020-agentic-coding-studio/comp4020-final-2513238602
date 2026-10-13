@@ -1,124 +1,127 @@
 # Process overview
 
-This agent-assisted account describes the deployed C8 project and its preparation
-for public release. It distinguishes the student's direction from implementation
-and verification performed by the coding agent. The student challenged an apparent
-assignment mismatch, requested an original direction, approved implementation,
-and subsequently authorised deployment and public release. No independent human
-playtest is claimed. The recorded evidence supports technical behaviour; the
-student's judgement of the experience remains a separate contribution.
+This agent-assisted account describes the project at C9, including technical
+preparation for C10. It separates the student's instructions from implementation
+and verification performed by the coding agent. The student challenged an
+assignment mismatch, requested an original direction, authorised implementation
+and public deployment, and then required meaningful incremental uploads. Each
+step had to explain its purpose and evidence. No independent human playtest or
+completed classroom exercise is claimed. Personal reflections and the research
+position still need the student's own judgement.
 
-## Establishing the right assignment
+## Choosing the right problem
 
-The starting problem was a mismatch between a proposed direction and a remembered
-course repository. Course briefs and repositories were checked before coding.
-RoomFlow belonged to C7. C8 begins work in the final-project repository, which also
-holds C9 and C10. The open topic allows an original app, while the published
-invariants and deployment limits constrain how it must operate. This distinction
-prevented a visually attractive implementation from becoming work for the wrong
-assessment. The original course HTTP tests and fly.toml were retained.
+The initial risk was building for the wrong assessment. The remembered RoomFlow
+repository belonged to C7; C8 begins the final-project repository, continued
+through C9 and C10. Checking the official briefs established that the topic is
+open, while multi-user operation, real-time updates and persistent state are
+fixed. The original course HTTP invariants and Fly resource limits were retained.
 
-The selected direction was a small cooperative mystery called Lost & Found.
-The first local planning commit,
-[`1a0ca88`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/1a0ca88),
-established one original case, a bounded set of eight clues and a definition of
-good. The central claim is that a detail from a partner changes how another clue
-is understood. Five minutes is a design target, not an observed result. Solo mode
-lets a visitor experience the whole case without finding a partner first.
+[`1a0ca88`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/1a0ca88)
+bounded Lost & Found to one original mystery, eight clues and four events. Its
+definition of good is a partner's detail changing the meaning of another clue.
+The Past Within supplied a communication principle; Robin Sloan's home-cooked
+software essay supported designing for a few classmates rather than a generic
+social platform. Their links are in README.md. These are design arguments, not
+evidence that this implementation is enjoyable. Solo mode trades away information
+asymmetry so someone arriving alone can still complete the experience.
 
-## Harness and implementation choices
+## Stack and harness
 
-PRODUCT.md defines scope; docs/case-design.md records the ground truth and clue
-dependencies; CLAUDE.md turns those intentions into instructions for subsequent
-agent work. The implementation uses React and plain CSS for the client, with one
-Node service and SQLite. This keeps the database within the course's single
-machine and persistent-volume model. It avoids an unrelated hosted database or
-an AI API dependency. The concrete architecture is recorded in the
-[decision note](docs/decisions/001-small-persistent-service.md).
+React and plain CSS provide the working surface. One Node service and SQLite
+fit the course's single machine and persistent volume. This avoids an unrelated
+hosted database, managed identity service or gameplay AI dependency. SQLite's
+synchronous transactions simplify atomic state changes at this scale; they also
+block the service while executing. The choice is for two-person rooms, not a
+claim of production capacity. [ADR 001](docs/decisions/001-small-persistent-service.md)
+records the architecture and alternatives.
 
 [`84f4d51`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/84f4d51)
-introduced the service and persistence model. An opaque browser cookie identifies
-a session; every room endpoint checks membership. Clients receive only their own
-clues and clues their partner has published. The event stream announces a changed
-version, then the client retrieves an authorised snapshot. It does not broadcast
-private evidence to every participant. A timeline write includes the version it
-was based on, allowing a stale write to fail visibly rather than overwrite a
-partner's newer move. Transactions commit before the app reports a successful save.
+introduced membership checks, withheld private clues and versioned shared state.
+PRODUCT.md bounds scope; docs/case-design.md fixes the ground truth; CLAUDE.md
+turns the argument into instructions. Tests protect observable promises instead
+of merely checking that components render. Browser sessions are separate cookie
+jars, so apparent cooperation cannot depend on accidentally sharing an identity.
 
-These choices also have limits. Clearing the cookie loses access; there is no
-cross-device account recovery. One case is replayable but cannot surprise someone
-who already knows its answer. Running successfully on the allocated machine
-does not establish capacity under sustained production load.
+## Correcting the experience
 
-## Visual direction and a content correction
+The archive folder initially disclosed too much by itself. An authoring review
+changed the receipt to a location code requiring the field map, the instruction
+to a role requiring the access record, and the camera time to require a clock
+correction. The rule that neither folder contains the complete explanation went
+into CLAUDE.md. This content correction is evidence of checking the product
+claim; it is not a substitute for watching new players reason together.
 
-Taste Skill informed the editorial entrance; Impeccable's audit/polish approach and
-Vercel's interface guidelines informed review. Their sources and the generated
-fictional gallery image are documented in [assets.md](docs/assets.md). The visual
-system uses paper, dark ink, one archival red, serif headings and document labels.
-The investigation uses readable evidence sheets and labeled sort buttons. The
-image supplies atmosphere; every relevant observation is also text.
+[`63989e3`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/63989e3)
+records the interface and browser harness. Taste Skill informed the editorial
+entrance; Impeccable and Vercel guidance informed review. Asset provenance is in
+docs/assets.md. The paper treatment supports readable records, while text carries
+every inference. An accessibility scan caught the case number's contrast, which
+was corrected before the recorded screenshots. Visual polish was checked against
+the working investigation, not accepted from a static mockup.
 
-During authoring review, the archive folder was found to disclose too much of the
-answer by itself. That contradicted the promised cooperative experience even
-though the interface and persistence could work perfectly. The receiving slip
-was changed to a location code that needs the field map; the instruction names a
-role that needs the field access key; the camera requires a separate clock
-correction. The authoring boundary was added to CLAUDE.md. This is a content
-inspection, not evidence that real players found the puzzle balanced.
+## Making cooperation observable
 
-The interface, corrected case and browser acceptance script are recorded in
-[`63989e3`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/63989e3).
-The first accessibility scan also caught insufficient contrast on the decorative
-case number. Its ink was darkened before the completed screenshots were captured.
-
-## A failure that changed the workflow
-
-The browser script exercised more than the happy path. It completed a solo case
-at desktop and phone sizes, tried an incorrect explanation, restored saved work,
-opened two isolated browser sessions and interrupted one session's connection.
-The interrupted session sometimes failed to receive evidence published while it
-was offline. Relying only on EventSource's implicit recovery was insufficient in
-this experiment: a nominally open stream could miss the update.
-
+The C8 browser harness exposed a missed update after an offline interval.
 [`bb98630`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/bb98630)
-explicitly closes the stream on offline, opens a new one on online, and retrieves
-the current snapshot. Returning to a visible tab also refreshes state. The same
-browser scenario then passed. CLAUDE.md now requires this failure case to be
-retained. This is a concrete example of using an observed failure to improve the
-harness instead of accepting a convincing screenshot as proof of reliability.
+explicitly reconnects and retrieves current state. Returning to a visible tab also
+refreshes. The regression scenario and rule remain in the harness.
 
-## What the evidence establishes
+For C9,
+[`cff71d1`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/cff71d1)
+adds an attributed latest action without switching the reader's selected clue.
+A remote resolution closes an obsolete explanation dialog. The important choice
+is conflict behaviour: stale chronology writes are rejected rather than silently
+overwriting another move. [ADR 002](docs/decisions/002-shared-desk-conflicts.md)
+compares last-write-wins, desk locking and merging. A conservative room version
+can reject a move after unrelated evidence publication; that cost is explicit.
 
-The local HTTP suite passed 14 tests, including the supplied invariants, private
-clue access, competing joins, conflicting writes, correct and incorrect theories,
-live events, and reopening a real SQLite database in a new process. Browser
-acceptance passed full playthroughs at 1920px and 390px, keyboard dialog actions,
-no horizontal overflow, failed-save feedback and recovery of missed evidence.
-These runs are summarised in [local verification](docs/local-verification.md).
+The new browser test holds two real requests and releases them together. One
+succeeds, one receives a visible conflict, and both screens converge. It measures
+publication, chronology and resolution rendering, not merely receipt of an SSE
+packet. The first hosted run measured eleven updates at 48–71 milliseconds.
+Those observations describe that connection and run, not every user's network.
 
-## Deployment and release evidence
+## Logs and honest recovery
 
-The first iteration stayed local because credentials were unavailable. Once the
-user supplied the final-specific token, the course's remote build deployed the
-same application. This transition is recorded in
-[`acc6483`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/acc6483).
-Credentials stayed in an ignored local configuration file, outside both Git and
-the Docker upload. The course machine and volume limits were preserved. The image
-built remotely, avoiding a local Docker installation and exercising the actual
-Linux build path that CI later uses.
+[`dee5c79`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/dee5c79)
+prepares the C10 instrument panel. Logs previously lacked useful actor context
+and printed before transaction completion. They now describe committed actions
+with role, member, saved detail and version; rejected requests are separate.
+Tests compare emitted event IDs with persisted activity and check that credentials
+and nicknames are absent. [ADR 003](docs/decisions/003-identities-permissions-and-logs.md)
+explains browser-owned seats, equal authority over shared reasoning, and the
+limits of invitation links and lost cookies.
 
-Deployment was verified by action rather than an online homepage alone. A test
-investigation was saved, the Fly machine restarted, and its identity and evidence
-were retrieved. A second deployment preserved the same records and volume. The
-real HTTPS app also passed the HTTP and browser suites. [Hosting verification](docs/hosting-verification.md)
-records the machine, image and limitations. Local and hosted results are separate
-records, so later evidence does not rewrite what was known earlier.
+[`47e2c37`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/47e2c37)
+corrects another false promise: a conflict message claimed the latest state had
+loaded before its recovery request succeeded. The client now distinguishes failed
+confirmation from rejected writes and verifies the saved state before suggesting
+a retry. Browser tests delay requests, lose a response after commit, exceed the
+request timeout and fail the recovery fetch. They run in CI before deployment.
 
-Public release uses the course secret scan and existing CI checks before the
-deployed commit is marked for C8. It preserves the incremental development history
-rather than replacing it with a finished-code dump. The next evaluation still
-needs two first-time players: do both contribute an inference, can they correct
-the clock, and does the explanation feel earned? These are questions for observed
-use and the student's reflection. Automated success cannot answer them, and the
-presence of real-time foundations does not complete later crits or the final note.
+The expanded browser harness itself needed correction. It could compute another
+move before the sending screen rendered its previous change, even though the
+receiving screen was current. Detailed logs exposed the extra move. Waiting for
+both screens and checking the response fixed the test's inference. A test is
+evidence only when its observation matches the claim it is supposed to establish.
+
+## Release and remaining judgement
+
+Work was uploaded after each coherent, verified step, with commit bodies recording
+the problem, choice and validation. Public main pushes use the course CI and Fly
+deployment. Secrets remain ignored; previous cutoff tags are preserved. The C8
+public release was after the Liuru cutoff; later work does not repair that timing.
+
+Fifteen service/process tests cover permissions, competing writes, log attribution
+and real restarts. Browser checks cover both marking viewports, offline recovery,
+uncertain writes and full resolution. The old hosted verification investigation
+remains retrievable after multiple deployments and days. Current release evidence
+and limits are indexed in [readiness](docs/final-readiness.md).
+
+The remaining evaluation needs people: whether each player contributes, whether
+the clock correction is discoverable, and whether the explanation feels earned.
+C10 also requires actual classmates and narration from logs alone. A repeatable
+protocol is prepared, but observations are not invented. The student must use
+those experiences and their own reading to finish the personal portfolio; passing
+the evidence filename check cannot establish that contribution.

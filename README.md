@@ -48,8 +48,10 @@ belong in the HTTP tests, not just this document.
 
 Every meaningful clue is readable text. The photograph is atmosphere, not a hidden
 pixel puzzle. Sorting uses labeled buttons, and the investigation must remain
-usable by keyboard and on a narrow phone screen. Live updates use server-sent
-events; reconnecting clients retrieve the current authorised state.
+usable by keyboard and on a narrow phone screen. Live publications, chronology
+and resolution use server-sent events. Updates name the latest actor without
+changing the reader's selected clue. Reconnecting clients retrieve current state.
+Lost save responses trigger a state check, not an automatic repeated action.
 
 ## Promises that need people
 

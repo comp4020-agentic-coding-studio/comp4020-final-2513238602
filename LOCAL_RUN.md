@@ -1,7 +1,7 @@
 # 本地试玩与课程边界
 
 项目：Lost & Found / 失物档案。现已部署到课程分配的 Fly 应用；
-GitHub 仓库按用户要求进入公开发布流程。线上地址：https://comp4020-final-2513238602.fly.dev/
+GitHub 仓库已公开，main 推送经 CI 检查后部署。线上地址：https://comp4020-final-2513238602.fly.dev/
 下方为本地运行方法；部署操作见 [HOSTING.md](HOSTING.md)。
 
 ## 启动
@@ -21,7 +21,7 @@ mise exec -- pnpm start
 
 ## 试玩
 
-- 单人：Open the case → 输入昵称 → Just me → Begin investigation。
+- 单人：Open the case → 输入昵称 → Go solo → Begin investigation。
 - 双人同机：选择 Bring a partner，在 Invite your partner 中复制链接，
   用另一个浏览器或独立无痕窗口打开。两人需要不同的 cookie 会话。
 - localhost 链接只能在这台电脑使用。跨设备试玩请使用线上网站生成邀请。
@@ -45,17 +45,21 @@ mise exec -- pnpm start
 $env:APP_URL = 'http://localhost:8082'
 mise exec -- pnpm check
 mise exec -- pnpm check:browser
+mise exec -- pnpm check:collaboration
+mise exec -- pnpm check:resilience
 mise exec -- pnpm check:evidence
 ```
 
-浏览器脚本需要已安装 Microsoft Edge。输出在 evidence/。
-服务端测试包括重启数据库恢复；浏览器测试包括断网后补回同伴线索。
+浏览器脚本默认使用 Microsoft Edge。Linux CI 会安装 Chromium，并设置
+`BROWSER_CHANNEL=chromium`。输出在 evidence/，截图和原始会话不提交。
+服务端测试包括双人完整记录在重启后恢复；浏览器测试包括实时协作、
+断网补回线索、保存回执丢失及冲突恢复失败。CI 在部署前运行全部三组浏览器检查。
 
 ## 提交前尚需完成
 
-上线不等于课程已提交。先做一次真实双人试玩，再由学生核实 README 的立场、
-PROCESS 的过程描述，并亲自完成 reflections/crit-8.md 的个人反思。
-COMP8020 期末研究写作及后续 crit 的增量要求仍需按对应 brief 完成。
+技术实现及验证见 [final-readiness](docs/final-readiness.md)。真实双人试玩、
+C10 课堂中看日志讲述他人操作、个人反思以及研究笔记的个人立场仍需学生完成。
+准备材料已提供，但不能把草稿或自动测试当成亲身经历。
 
 同一个 final 仓库用于 C8–C10 和期末；C7 RoomFlow 是另一份旧作业。
 不要因为本地已包含双人基础功能就声称 C9/C10 或期末全部达标。

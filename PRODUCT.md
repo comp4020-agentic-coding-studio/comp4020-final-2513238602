@@ -8,8 +8,9 @@ one visitor both folders and a complete, independent experience.
 ## Scope
 One original fictional case, The Blue Hour; eight clues; four timeline events;
 one evidence-backed conclusion; persistent investigations and an activity record.
-The local implementation may include two-player foundations, but C8 is judged on
-the completed core interaction, persistence and definition of good.
+The live implementation supports two-player investigations. C9 develops shared
+behaviour; C10 adds a logs-only classroom exercise. Their human reflections and
+the final portfolio remain distinct from automated technical verification.
 
 ## Quality claims
 - A new visitor can start without an account and understand the next action.
