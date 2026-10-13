@@ -20,6 +20,9 @@
 - Keep clues readable as text and actions usable by keyboard and touch.
 - Render the full README in server HTML at /readme/.
 - Log pseudonymous actions, not tokens or private clue contents.
+- Emit saved-action logs only after COMMIT, with room, member, role and saved
+  detail. Distinguish rejected requests from committed activity. Keep cookies,
+  nicknames, request bodies and private reading activity out of stdout/stderr.
 - Never invent reflection, human research, measured play time or deployment.
 - Document mistakes and fix the contract or test that allowed them.
 - Pushing and publicly shipping this final repo are now explicitly authorised.

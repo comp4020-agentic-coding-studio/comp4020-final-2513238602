@@ -28,7 +28,20 @@ const now = () => new Date().toISOString();
 const id = () => randomBytes(12).toString('hex');
 class HttpError extends Error { status: number; constructor(status: number, message: string) { super(message); this.status = status; } }
 const fail = (status: number, message: string): never => { throw new HttpError(status, message); };
-function transaction<T>(fn: () => T): T { db.exec('BEGIN IMMEDIATE'); try { const value = fn(); db.exec('COMMIT'); return value; } catch (e) { db.exec('ROLLBACK'); throw e; } }
+let pendingActivity: number[] | null = null;
+function transaction<T>(fn: () => T): T {
+  db.exec('BEGIN IMMEDIATE');pendingActivity=[];
+  let value:T;let committed:number[];
+  try { value=fn();db.exec('COMMIT');committed=pendingActivity; }
+  catch(e) { db.exec('ROLLBACK');throw e; }
+  finally { pendingActivity=null; }
+  // Emit only committed facts. A failed transaction must never look like a save.
+  for(const eventId of committed){
+    const event=one('SELECT a.id AS eventId,a.at,a.room,a.member,m.role,a.action,a.detail,r.version FROM activity a JOIN members m ON m.id=a.member JOIN rooms r ON r.code=a.room WHERE a.id=?',eventId);
+    console.log(JSON.stringify({outcome:'committed',...event}));
+  }
+  return value;
+}
 function json(res: ServerResponse, status: number, value: unknown) { res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' }); res.end(JSON.stringify(value)); }
 function session(req: IncomingMessage, res: ServerResponse): string {
   const value = req.headers.cookie?.match(/(?:^|;\s*)lf_session=([a-f0-9]{64})(?:;|$)/)?.[1];
@@ -50,8 +63,8 @@ function nameFrom(value: unknown) { if (typeof value !== 'string' || !value.trim
 function getRoom(code: string) { return one('SELECT * FROM rooms WHERE code=?', code) ?? fail(404, 'This investigation was not found. Check the invitation link.'); }
 function member(code: string, sid: string) { getRoom(code); return one('SELECT * FROM members WHERE room=? AND session=?', code, sid) ?? fail(403, 'Join this investigation before opening its evidence.'); }
 function log(code: string, mid: string, action: string, detail: string) {
-  run('INSERT INTO activity(room,member,action,detail,at) VALUES (?,?,?,?,?)', code, mid, action, detail, now());
-  console.log(JSON.stringify({ at: now(), room: code, member: mid, action }));
+  const result=run('INSERT INTO activity(room,member,action,detail,at) VALUES (?,?,?,?,?)', code, mid, action, detail, now());
+  pendingActivity?.push(Number(result.lastInsertRowid));
 }
 const streams = new Map<string, Set<ServerResponse>>();
 function broadcast(code: string) { for (const res of streams.get(code) ?? []) res.write(`event: update\ndata: ${JSON.stringify({ version: getRoom(code).version })}\n\n`); }
@@ -71,6 +84,7 @@ const MIME: Record<string,string> = { '.html':'text/html; charset=utf-8', '.js':
 function staticFile(res: ServerResponse, path: string) { const ext=extname(path); res.writeHead(200, { 'Content-Type': MIME[ext] ?? 'application/octet-stream', 'Cache-Control': path.includes(`${sep}assets${sep}`) ? 'public, max-age=31536000, immutable' : 'no-cache' }); res.end(readFileSync(path)); }
 const escape = (s: string) => s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const server = createServer(async (req,res) => {
+  const trace:{requestId:string;operation:string;room?:string;member?:string;role?:string}={requestId:id(),operation:'request'};
   res.setHeader('X-Content-Type-Options','nosniff');
   res.setHeader('Referrer-Policy','same-origin');
   res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'");
@@ -99,6 +113,7 @@ const server = createServer(async (req,res) => {
       const match = path.match(/^\/api\/rooms\/([a-f0-9]{12})(?:\/(join|events|read|publish|board|theory))?$/);
       if (!match) fail(404,'This endpoint was not found.');
       const [,code,action] = match!;
+      trace.room=code;trace.operation=action??'snapshot';
       if (action === 'join' && method === 'POST') {
         const data=await body(req); const name=nameFrom(data.name);
         transaction(() => { const room=getRoom(code); if (one('SELECT id FROM members WHERE room=? AND session=?',code,sid)) return;
@@ -107,6 +122,7 @@ const server = createServer(async (req,res) => {
         }); broadcast(code); return json(res,200,roomState(code,sid));
       }
       const me=member(code,sid);
+      trace.member=String(me.id);trace.role=String(me.role);
       if (!action && method === 'GET') return json(res,200,roomState(code,sid));
       if (action === 'events' && method === 'GET') {
         const clients=streams.get(code) ?? new Set<ServerResponse>();
@@ -130,7 +146,8 @@ const server = createServer(async (req,res) => {
         } else if (action === 'board') {
           if (data.version !== room.version) fail(409,'Your partner updated the desk. The latest order has been loaded; please make your move again.');
           if (!Array.isArray(data.order) || data.order.length !== 4 || new Set(data.order).size !== 4 || data.order.some(x => !events.some(e => e.id === x))) fail(400,'The timeline must contain each event exactly once.');
-          run('UPDATE rooms SET ordering=? WHERE code=?',JSON.stringify(data.order),code); log(code,mid,'arranged','Reordered the shared chronology.');
+          const ordering=data.order as string[];
+          run('UPDATE rooms SET ordering=? WHERE code=?',JSON.stringify(ordering),code); log(code,mid,'arranged',`Chronology: ${ordering.map(id=>events.find(e=>e.id===id)!.title).join(' → ')}.`);
         } else if (action === 'theory') {
           if (!['eli','mara','jules'].includes(String(data.who)) || !['north','studio','loading'].includes(String(data.where)) || !['light','repair','collection'].includes(String(data.why)) || !['17:30','17:34','17:36'].includes(String(data.when))) fail(400,'Complete all four parts of your explanation.');
           if (!Array.isArray(data.evidence) || data.evidence.length < 2 || data.evidence.length > 8 || new Set(data.evidence).size !== data.evidence.length || data.evidence.some(x => typeof x !== 'string')) fail(400,'Cite at least two different pieces of evidence.');
@@ -158,7 +175,12 @@ const server = createServer(async (req,res) => {
       return staticFile(res,resolve(root,'index.html'));
     }
     res.writeHead(404,{'Content-Type':'text/html; charset=utf-8'}); res.end('<!doctype html><html lang="en"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Not found | Lost &amp; Found</title><link rel="stylesheet" href="/readme.css"><main><h1>This file is missing.</h1><p>The page could not be found.</p><a href="/">Return to the case files</a></main></html>');
-  } catch(e) { if (res.headersSent) { res.end(); return; } const status=e instanceof HttpError?e.status:500; if (status===500) console.error(JSON.stringify({ at:now(),action:'server_error',message:e instanceof Error?e.message:'Unknown error' })); json(res,status,{error:status===500?'Something went wrong. Your saved investigation is safe; please try again.':escape((e as Error).message)}); }
+  } catch(e) {
+    if(res.headersSent){res.end();return}
+    const status=e instanceof HttpError?e.status:500;
+    console.error(JSON.stringify({at:now(),...trace,outcome:'rejected',status,action:status===500?'server_error':'request_rejected'}));
+    json(res,status,{error:status===500?'Something went wrong. Please reload to check your saved investigation before retrying.':escape((e as Error).message),requestId:trace.requestId});
+  }
 });
 server.listen(Number(process.env.PORT ?? 8080),process.env.HOST ?? '0.0.0.0',() => console.log(JSON.stringify({action:'listening',port:Number(process.env.PORT ?? 8080)})));
 function shutdown() { for (const clients of streams.values()) for (const res of clients) res.end(); server.close(() => { db.close(); process.exit(0); }); setTimeout(() => process.exit(0),3000).unref(); }
