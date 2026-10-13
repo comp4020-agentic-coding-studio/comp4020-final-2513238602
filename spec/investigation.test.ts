@@ -30,8 +30,10 @@ it('allows exactly one second participant under competing join requests',async()
   const results=await Promise.all([a.call(`/api/rooms/${room.code}/join`,{name:'A'}),b.call(`/api/rooms/${room.code}/join`,{name:'B'})]);expect(results.map(x=>x.status).sort()).toEqual([200,409]);
 });
 it('rejects a stale chronology instead of silently overwriting it',async()=>{
-  const {c,room}=await create();const results=await Promise.all([c.call(`/api/rooms/${room.code}/board`,{order,version:room.version}),c.call(`/api/rooms/${room.code}/board`,{order:[...order].reverse(),version:room.version})]);
-  expect(results.map(x=>x.status).sort()).toEqual([200,409]);expect((await c.call(`/api/rooms/${room.code}`)).value.version).toBe(1);
+  const {c,room}=await create('duo');const partner=await client();const joined=await partner.call(`/api/rooms/${room.code}/join`,{name:'Other investigator'});const version=joined.value.version;
+  const results=await Promise.all([c.call(`/api/rooms/${room.code}/board`,{order,version}),partner.call(`/api/rooms/${room.code}/board`,{order:[...order].reverse(),version})]);
+  expect(results.map(x=>x.status).sort()).toEqual([200,409]);const saved=(await c.call(`/api/rooms/${room.code}`)).value;
+  expect(saved.version).toBe(version+1);expect(saved.order).toEqual(results.find(x=>x.status===200)!.value.order);expect(saved.activity.filter((x:{action:string})=>x.action==='arranged')).toHaveLength(1);
 });
 it('validates mode, nickname, unique events and known evidence',async()=>{
   const {c,room}=await create();expect((await c.call('/api/rooms',{name:'',mode:'solo'})).status).toBe(400);expect((await c.call('/api/rooms',{name:'A',mode:'other'})).status).toBe(400);

@@ -8,6 +8,7 @@
     "start": "node --experimental-strip-types server/index.ts",
     "build": "vite build",
     "check:browser": "node scripts/check-browser.mjs",
+    "check:collaboration": "node scripts/check-collaboration.mjs",
     "typecheck": "tsc --noEmit",
     "check": "pnpm typecheck && pnpm test",
     "check:evidence": "node scripts/check-evidence.ts",

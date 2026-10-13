@@ -1,0 +1,62 @@
+{
+  "checkedAt": "2026-10-13T01:48:03.153Z",
+  "base": "http://localhost:8082",
+  "browser": "Chromium",
+  "checks": [
+    "Two isolated browser identities join from the visible interface and receive different folders",
+    "Eight cross-browser publications preserve the reader’s selected document and identify the actor",
+    "Simultaneous UI moves produce one saved order and one visible conflict; both browsers converge",
+    "Timeline moves render in the other browser without reload",
+    "Partner completion dismisses an obsolete explanation dialog and reveals the shared conclusion",
+    "Both identities recover shared evidence and solution after refresh",
+    "All 11 request-to-observed-render measurements below 1000ms"
+  ],
+  "samples": [
+    {
+      "action": "publish",
+      "ms": 21
+    },
+    {
+      "action": "publish",
+      "ms": 20
+    },
+    {
+      "action": "publish",
+      "ms": 21
+    },
+    {
+      "action": "publish",
+      "ms": 21
+    },
+    {
+      "action": "publish",
+      "ms": 22
+    },
+    {
+      "action": "publish",
+      "ms": 34
+    },
+    {
+      "action": "publish",
+      "ms": 19
+    },
+    {
+      "action": "publish",
+      "ms": 70
+    },
+    {
+      "action": "board",
+      "ms": 20
+    },
+    {
+      "action": "board",
+      "ms": 20
+    },
+    {
+      "action": "theory",
+      "ms": 20
+    }
+  ],
+  "errors": [],
+  "limitMs": 1000
+}

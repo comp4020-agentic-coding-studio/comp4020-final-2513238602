@@ -10,6 +10,10 @@
 - Authoring check: neither folder alone may disclose the full named person,
   destination and corrected movement time. Match codes across the two folders.
 - Reject stale timeline writes explicitly; never silently overwrite.
+- Preserve the selected document on partner updates. Show who changed the shared
+  desk, and close an obsolete theory dialog when a partner solves the case.
+- Race two distinct browser identities in acceptance checks; measure publication,
+  chronology and resolution rendering, not only arrival of an SSE message.
 - Reopen the event stream and retrieve current state after the browser returns
   online. Test a partner publishing while the other browser is offline.
 - Validate request shape, length, origin and clue ownership server-side.
