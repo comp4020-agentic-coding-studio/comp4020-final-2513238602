@@ -24,9 +24,10 @@ if(mode==='seed'){
   writeFileSync(file,JSON.stringify({cookie,code:room.code,createdAt:new Date().toISOString()}));
   console.log('Saved one hosted verification investigation and published evidence. Session kept in ignored local file.');
 }else if(mode==='verify'){
-  const {cookie,code}=JSON.parse(readFileSync(file,'utf8'));
+  const {cookie,code,createdAt}=JSON.parse(readFileSync(file,'utf8'));
   const {state}=await request(`/api/rooms/${code}`,cookie);
   assert.equal(state.me.name,'Deployment verification');
   assert.ok(state.clues.find(c=>c.id==='F1')?.published);
+  writeFileSync('evidence/persistence-results.json',JSON.stringify({base,seededAt:createdAt,verifiedAt:new Date().toISOString(),elapsedDays:Math.floor((Date.now()-Date.parse(createdAt))/86400000),checks:['Original hosted browser identity restored','Original F1 publication retained'],limitations:'Uses the original ignored test cookie; does not establish access from a new identity.'},null,2));
   console.log('PASS: hosted identity and published evidence survived.');
 }else throw Error('Use seed before deployment/restart; verify afterwards.');

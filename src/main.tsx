@@ -11,8 +11,11 @@ import type { Clue, Investigation, Mode, RoomState, Theory } from '../shared/typ
 
 class ApiError extends Error { status: number; constructor(status: number, message: string) { super(message); this.status=status; } }
 async function api<T>(path: string, data?: unknown): Promise<T> {
-  const res=await fetch(path,{method:data===undefined?'GET':'POST',headers:data===undefined?{}:{'Content-Type':'application/json'},body:data===undefined?undefined:JSON.stringify(data)});
-  const value=await res.json(); if(!res.ok) throw new ApiError(res.status,value.error ?? 'Please try again.'); return value as T;
+  const control=new AbortController();const timeout=setTimeout(()=>control.abort(),12000);
+  try {
+    const res=await fetch(path,{method:data===undefined?'GET':'POST',headers:data===undefined?{}:{'Content-Type':'application/json'},body:data===undefined?undefined:JSON.stringify(data),signal:control.signal});
+    const value=await res.json();if(!res.ok)throw new ApiError(res.status,value.error??'Please try again.');return value as T;
+  } finally {clearTimeout(timeout)}
 }
 const roleName=(role:string)=>role==='solo'?'Both folders':role==='field'?'Field investigator':'Archive investigator';
 const time=(value:string)=>new Intl.DateTimeFormat('en-AU',{hour:'2-digit',minute:'2-digit'}).format(new Date(value));
@@ -105,7 +108,23 @@ function Desk({code}:{code:string}){
     return()=>{alive=false;stream?.close();window.removeEventListener('offline',offline);window.removeEventListener('online',online);document.removeEventListener('visibilitychange',visible)};
   },[code,memberId]);
   useEffect(()=>{if(!notice)return;const timer=setTimeout(()=>setNotice(''),4500);return()=>clearTimeout(timer)},[notice]);
-  async function mutate(action:string,data:unknown){setError('');setBusy(true);try{const next=await api<RoomState>(`/api/rooms/${code}/${action}`,data);accept(next);setNotice(action==='publish'?'Evidence added. Saved to your investigation.':action==='board'?'Chronology saved.':action==='theory'?next.lastFeedback??'Explanation saved.':'');if(next.status==='solved')setModal(null);return next}catch(e){setError((e as Error).message);if(e instanceof ApiError&&e.status===409)await refresh().catch(()=>{});return null}finally{setBusy(false)}}
+  async function mutate(action:string,data:unknown){
+    setError('');setNotice('');setBusy(true);
+    try {
+      const next=await api<RoomState>(`/api/rooms/${code}/${action}`,data);accept(next);
+      setNotice(action==='publish'?'Evidence added. Saved to your investigation.':action==='board'?'Chronology saved.':action==='theory'?next.lastFeedback??'Explanation saved.':'');
+      if(next.status==='solved')setModal(null);return next;
+    } catch(e) {
+      const uncertain=!(e instanceof ApiError);
+      const message=e instanceof ApiError?e.message:'No save confirmation arrived. The action may already be saved.';
+      setError(message);
+      if(uncertain||(e instanceof ApiError&&e.status===409)){
+        try {await refresh();setError(`${message} Latest saved state loaded; review it before trying again.`)}
+        catch {setError(`${message} Could not refresh the desk. Check your connection and reload before trying again.`)}
+      }
+      return null;
+    } finally {setBusy(false)}
+  }
   async function openClue(c:Clue){setSelected(c.id);if(!c.read){try{accept(await api<RoomState>(`/api/rooms/${code}/read`,{id:c.id}))}catch{/* Reading the already loaded document remains possible. */}}}
   async function move(index:number,direction:number){if(!room)return;const order=[...room.order];[order[index],order[index+direction]]=[order[index+direction],order[index]];await mutate('board',{order,version:room.version})}
   if(!room)return <><Header/><main className="shell loading-page">{join?<><p className="label">AN INVITATION TO INVESTIGATE</p><h1>Your other half<br/>of the story.</h1><div className="join-panel"><StartForm code={code} onClose={()=>location.assign('/')}/></div></>:error?<><h1>This file won’t open.</h1><p role="alert">{error}</p><a href="/" className="button primary">Return to the case files <ArrowLeft size={18}/></a></>:<p role="status"><SpinnerGap size={24} className="spin"/> Opening the case file…</p>}</main></>;

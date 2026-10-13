@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import AxeBuilder from '@axe-core/playwright';
 import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
 
@@ -12,7 +13,11 @@ async function measured(sender,receiver,action,click,observed,arg){
   let started;
   const listener=request=>{if(request.method()==='POST'&&request.url().endsWith(`/${action}`))started=performance.now()};
   sender.on('request',listener);
-  try { await click();await poll(receiver,observed,arg);assert.ok(started);samples.push({action,ms:Math.round(performance.now()-started)}); }
+  try {
+    const response=sender.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith(`/${action}`));
+    await click();await poll(receiver,observed,arg);assert.ok(started);const elapsed=Math.round(performance.now()-started);
+    assert.equal((await response).status(),200);samples.push({action,ms:elapsed});
+  }
   finally {sender.off('request',listener)}
 }
 try {
@@ -63,9 +68,18 @@ try {
       const before=await pa.locator('.timeline-list strong').allTextContents();const i=before.indexOf(title);[before[i-1],before[i]]=[before[i],before[i-1]];
       await measured(pa,pb,'board',()=>pa.getByRole('button',{name:`Move ${title} earlier`,exact:true}).click(),
         titles=>JSON.stringify([...document.querySelectorAll('.timeline-list strong')].map(el=>el.textContent))===JSON.stringify(titles),before);
+      // The receiving screen may render first. Wait for the sender as well before
+      // calculating another move, or the harness itself can issue an extra move.
+      await poll(pa,titles=>JSON.stringify([...document.querySelectorAll('.timeline-list strong')].map(el=>el.textContent))===JSON.stringify(titles),before);
     }
   }
   checks.push('Timeline moves render in the other browser without reload');
+  for(const page of [pa,pb]){
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
+    assert.deepEqual(audit.violations.map(v=>v.id),[]);
+  }
+  checks.push('Both cooperative viewports pass axe A/AA checks with the live action and full chronology visible');
   await pb.getByRole('button',{name:'Make your case',exact:true}).click();
   await pa.getByRole('button',{name:'Make your case',exact:true}).click();
   await pa.getByLabel('Who moved the sculpture?').selectOption('eli');await pa.getByLabel('Where did it go?').selectOption('north');

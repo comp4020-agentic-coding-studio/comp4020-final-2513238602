@@ -9,6 +9,7 @@
     "build": "vite build",
     "check:browser": "node scripts/check-browser.mjs",
     "check:collaboration": "node scripts/check-collaboration.mjs",
+    "check:resilience": "node scripts/check-resilience.mjs",
     "typecheck": "tsc --noEmit",
     "check": "pnpm typecheck && pnpm test",
     "check:evidence": "node scripts/check-evidence.ts",

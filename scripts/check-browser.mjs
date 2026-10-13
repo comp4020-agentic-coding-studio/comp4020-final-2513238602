@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
 const base=process.env.APP_URL??'http://localhost:8082';
 mkdirSync('evidence',{recursive:true});
-const browser=await chromium.launch({channel:'msedge',headless:true});
+const browser=await chromium.launch({channel:process.env.BROWSER_CHANNEL??'msedge',headless:true});
 const checks=[];const errors=[];const axeReports=[];
 function watch(page){page.on('pageerror',e=>errors.push(e.message))}
 async function checkLayout(page,label){assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${label}: horizontal overflow`);checks.push(`${label}: no horizontal overflow`)}

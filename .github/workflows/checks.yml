@@ -44,6 +44,16 @@ jobs:
         # what the container printed, so a crash or slow boot is visible
         if: ${{ failure() }}
         run: docker logs app
+      - name: Install browser for interaction checks
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Check both viewports, shared actions and network recovery
+        run: |
+          pnpm check:browser
+          pnpm check:collaboration
+          pnpm check:resilience
+        env:
+          APP_URL: http://localhost:8080
+          BROWSER_CHANNEL: chromium
       - name: Check the process evidence
         # skipped in the template repo itself, where PROCESS.md is still the
         # boilerplate every student replaces

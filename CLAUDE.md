@@ -4,6 +4,9 @@
 - Preserve shipped invariants and course Fly machine/volume limits.
 - Use SQLite on DATA_DIR (production /data). No browser-only persistence.
 - Say saved only after the transaction commits.
+- Bound HTTP waiting. If a save response is lost, do not assume the write failed
+  or silently retry it: fetch current state and explain uncertainty. Claim a
+  conflict refresh succeeded only after that refresh actually returns.
 - Authenticate membership on every room read, mutation and event stream.
 - Never send unpublished clues from the other role to a cooperative client.
 - Keep solution data on the server, out of the frontend bundle.

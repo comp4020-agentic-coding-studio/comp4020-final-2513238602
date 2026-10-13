@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-10-13T01:57:12.157Z",
+  "base": "http://localhost:8082",
+  "checks": [
+    "A delayed request remains pending with disabled controls and no invented save confirmation",
+    "A lost response after server commit refreshes the saved clue without claiming the write failed or automatically retrying it",
+    "An unanswered write times out and recovers controls (12023ms); no publication was invented",
+    "A real stale-write rejection with a failed recovery request does not falsely claim the latest order was loaded"
+  ],
+  "errors": []
+}

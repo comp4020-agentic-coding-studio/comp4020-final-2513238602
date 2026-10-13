@@ -144,7 +144,7 @@ const server = createServer(async (req,res) => {
           run('INSERT OR IGNORE INTO reads VALUES (?,?)',mid,clue!.id);
           if (action === 'publish' && !published) { run('INSERT INTO publications VALUES (?,?,?)',code,clue!.id,mid); log(code,mid,'published',`${clue!.id}: ${clue!.title}`); }
         } else if (action === 'board') {
-          if (data.version !== room.version) fail(409,'Your partner updated the desk. The latest order has been loaded; please make your move again.');
+          if (data.version !== room.version) fail(409,'Your partner updated the desk. Your move was not saved.');
           if (!Array.isArray(data.order) || data.order.length !== 4 || new Set(data.order).size !== 4 || data.order.some(x => !events.some(e => e.id === x))) fail(400,'The timeline must contain each event exactly once.');
           const ordering=data.order as string[];
           run('UPDATE rooms SET ordering=? WHERE code=?',JSON.stringify(ordering),code); log(code,mid,'arranged',`Chronology: ${ordering.map(id=>events.find(e=>e.id===id)!.title).join(' → ')}.`);
