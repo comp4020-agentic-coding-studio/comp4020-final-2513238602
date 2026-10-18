@@ -76,7 +76,7 @@ function roomState(code: string, sid: string) {
     me: { id: me.id, name: me.name, role: me.role }, members: all('SELECT id,name,role FROM members WHERE room=? ORDER BY rowid', code),
     clues: clues.filter(c => me.role === 'solo' || c.role === me.role || published.has(c.id)).map(c => ({ ...c, published: published.has(c.id), read: read.has(c.id) })),
     publishedCount: published.size, order: JSON.parse(String(room.ordering)), events,
-    activity: all('SELECT a.id,m.name,a.action,a.detail,a.at FROM activity a JOIN members m ON m.id=a.member WHERE a.room=? ORDER BY a.id DESC LIMIT 40', code),
+    activity: all('SELECT a.id,a.member AS memberId,m.name,m.role,a.action,a.detail,a.at FROM activity a JOIN members m ON m.id=a.member WHERE a.room=? ORDER BY a.id DESC LIMIT 40', code),
     attempts: one('SELECT COUNT(*) AS count FROM attempts WHERE room=?', code)!.count,
     lastFeedback: room.feedback, solution: room.status === 'solved' ? solution : null };
 }
@@ -134,7 +134,7 @@ const server = createServer(async (req,res) => {
       }
       if (method !== 'POST') fail(405,'This action needs a POST request.');
       const data=await body(req);
-      transaction(() => {
+      const changed=transaction(() => {
         const room=getRoom(code); const mid=String(me.id);
         if (room.status === 'solved' && action !== 'read') fail(409,'This case is closed. Its record is preserved; start a new investigation to play again.');
         if (action === 'read' || action === 'publish') {
@@ -142,7 +142,8 @@ const server = createServer(async (req,res) => {
           const published=one('SELECT clue FROM publications WHERE room=? AND clue=?',code,clue!.id);
           if (me.role !== 'solo' && clue!.role !== me.role && !published) fail(403,'That evidence belongs to the other folder.');
           run('INSERT OR IGNORE INTO reads VALUES (?,?)',mid,clue!.id);
-          if (action === 'publish' && !published) { run('INSERT INTO publications VALUES (?,?,?)',code,clue!.id,mid); log(code,mid,'published',`${clue!.id}: ${clue!.title}`); }
+          if (action === 'read' || published) return false;
+          run('INSERT INTO publications VALUES (?,?,?)',code,clue!.id,mid); log(code,mid,'published',`${clue!.id}: ${clue!.title}`);
         } else if (action === 'board') {
           if (data.version !== room.version) fail(409,'Your partner updated the desk. Your move was not saved.');
           if (!Array.isArray(data.order) || data.order.length !== 4 || new Set(data.order).size !== 4 || data.order.some(x => !events.some(e => e.id === x))) fail(400,'The timeline must contain each event exactly once.');
@@ -160,9 +161,10 @@ const server = createServer(async (req,res) => {
           run('UPDATE rooms SET status=?,feedback=? WHERE code=?',result.correct?'solved':'open',result.feedback,code);
           log(code,mid,result.correct?'solved':'hypothesis',result.correct?'Resolved The Blue Hour with evidence.':`Tested a hypothesis. ${result.feedback}`);
         } else fail(404,'Unknown action.');
-        if (action !== 'read') run('UPDATE rooms SET updated=?,version=version+1 WHERE code=?',now(),code);
+        run('UPDATE rooms SET updated=?,version=version+1 WHERE code=?',now(),code);
+        return true;
       });
-      if (action !== 'read') broadcast(code);
+      if (changed) broadcast(code);
       return json(res,200,roomState(code,sid));
     }
     if (method !== 'GET' && method !== 'HEAD') fail(405,'Method not supported.');

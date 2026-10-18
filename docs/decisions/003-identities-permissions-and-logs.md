@@ -12,6 +12,8 @@ stores its hash. A room member has a separate random ID and one assigned role.
 Nicknames are display labels, not authentication; identical names do not merge
 identities. Different profiles can therefore play side by side. No cross-device
 recovery is promised. Clearing cookies loses that browser's existing seats.
+Activity snapshots retain member ID and role, and the UI shows role beside the
+nickname. Two people choosing the same label remain distinguishable in history.
 
 | Actor | Read | Change |
 | --- | --- | --- |
@@ -35,6 +37,9 @@ change. Only after COMMIT does the server print a JSON event with `eventId`,
 distinguish actors without copying user-supplied nicknames into infrastructure
 logs. Chronology events include the saved order, publications identify the now
 public clue, and attempts distinguish an unsuccessful hypothesis from resolution.
+Repeated publication returns the current state without creating another event,
+changing its version or notifying peers. It cannot manufacture a conflict with
+a timeline move based on the already-published state.
 
 Rejected requests have `outcome: rejected`, HTTP `status`, `requestId`, operation
 and known room/member/role. They are diagnostic observations, not saved actions.

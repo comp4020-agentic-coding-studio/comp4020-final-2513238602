@@ -26,13 +26,13 @@ try {
   const pa=await a.newPage(),pb=await b.newPage();
   for(const page of [pa,pb])page.on('pageerror',e=>errors.push(e.message));
   await pa.goto(base);await pa.getByRole('button',{name:'Open the case'}).click();
-  await pa.getByLabel('What should we call you?').fill('Field tester');
+  await pa.getByLabel('What should we call you?').fill('Alex');
   await pa.getByRole('radio',{name:/Bring a partner/}).check();
   await pa.getByRole('button',{name:'Begin investigation'}).click();await pa.locator('.evidence-document').waitFor();
   const path=new URL(pa.url()).pathname;const apiPath=`/api/rooms/${path.split('/').pop()}`;
-  await pb.goto(`${base}${path}`);await pb.getByLabel('What should we call you?').fill('Archive tester');
+  await pb.goto(`${base}${path}`);await pb.getByLabel('What should we call you?').fill('Alex');
   await pb.getByRole('button',{name:'Join investigation'}).click();await pb.locator('.evidence-document').waitFor();
-  await poll(pa,()=>document.querySelector('.shared-update')?.textContent.includes('Archive tester'));
+  await poll(pa,()=>document.querySelector('.shared-update')?.textContent.includes('Alex · Archive investigator'));
   assert.equal(await pa.locator('.clue-button').count(),4);assert.equal(await pb.locator('.clue-button').count(),4);
   checks.push('Two isolated browser identities join from the visible interface and receive different folders');
   for(const [sender,receiver,prefix] of [[pb,pa,'A'],[pa,pb,'F']]){
@@ -46,6 +46,11 @@ try {
     }
   }
   checks.push('Eight cross-browser publications preserve the reader’s selected document and identify the actor');
+  await pa.getByRole('button',{name:'Case record',exact:true}).click();
+  assert.ok(await pa.locator('.activity-list strong').filter({hasText:'Alex · Field investigator'}).count());
+  assert.ok(await pa.locator('.activity-list strong').filter({hasText:'Alex · Archive investigator'}).count());
+  await pa.keyboard.press('Escape');
+  checks.push('Identical nicknames remain distinguishable by role in the latest action and persisted history');
 
   // Hold both real UI requests until both were made against the same version.
   const held=[];

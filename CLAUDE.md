@@ -9,6 +9,10 @@
   conflict refresh succeeded only after that refresh actually returns.
 - Authenticate membership on every room read, mutation and event stream.
 - Never send unpublished clues from the other role to a cooperative client.
+- Nicknames are labels, never authority. Keep member ID and role on persisted
+  activity responses; show the role with the nickname in shared-action history.
+- Publishing an already shared clue is idempotent: no version/timestamp change,
+  duplicate activity, or notification that could invalidate a partner's move.
 - Keep solution data on the server, out of the frontend bundle.
 - Authoring check: neither folder alone may disclose the full named person,
   destination and corrected movement time. Match codes across the two folders.
