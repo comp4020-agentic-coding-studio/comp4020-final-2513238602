@@ -1,62 +1,71 @@
-# Delivery status — 18 October 2026
+# Final readiness — 18 October 2026
 
 [Live app](https://comp4020-final-2513238602.fly.dev/) ·
 [Public repository](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602)
 
-The C10 implementation and assisted pre-crit reflection are complete. The release
-record and technical checks are in [C10 verification](c10-verification.md).
-The classroom exercise remains an in-person requirement; this is not a claim
-that the student has already narrated a pair's actions or finished the final
-portfolio's human evaluation.
+The required application and written artefacts are implemented and available for
+review. This final preparation pass completed the remaining assisted writing,
+strengthened the portfolio checks, and repaired entry and returning-user failures.
+[Final verification](final-verification.md) records the checks and release evidence.
+It does not establish that the student has reviewed the positions, read the
+literature, or completed the classroom exercise.
 
-## C10 requirements
+## Requirement-to-evidence map
 
-| Requirement | Evidence | Boundary |
+| Requirement | Current evidence | Limit or remaining judgement |
 | --- | --- | --- |
-| Distinct people changing shared state | Separate cookie jars, same-name actors identified by member and role; HTTP and two-browser tests | A nickname is a label, not an account |
-| Server-enforced permissions with reasons | [ADR 003](decisions/003-identities-permissions-and-logs.md), private-clue filtering, membership on snapshots, mutations and streams; forged-cookie and cross-room tests | No account recovery; invitation can claim an empty second seat |
-| Logs identify who did what | Committed events follow COMMIT; rejections are separate; terminal reader supports actual Fly multiline JSON | SQLite is durable history; stdout is not an exactly-once ledger |
-| Process and weekly reflection | Rewritten PROCESS, substantive [crit-10 reflection](../reflections/crit-10.md), meaningful staged commits | Assistance is disclosed; classroom observations are not invented |
-| URL-only class exercise | [Terminal commands and narration guide](crit-10-rehearsal.md) | Two classmates must actually participate at the session |
+| Public, deployed application | Course repository and Fly URL; CI checks the container before deploying main | Recheck after any later change; current availability cannot guarantee deadline-day availability |
+| Multi-user | Separate browser identities, private folders, shared reasoning and attributed actions; same-name and permissions regressions | A browser cookie owns a seat; nicknames are labels, and clearing cookies loses access |
+| Real-time | Two-browser publication, chronology and resolution checks, with competing writes explicitly rejected | Hosted timings describe the measured run and connection |
+| Persistence | Real server restarts, the original 5 October hosted record, and both original identities of the earlier solved duo | Saved records survive redeployment; this is not account recovery |
+| Both marking viewports | 1920×1080 and 390×844 complete playthroughs, keyboard/overflow checks and 16 axe scans | Automated accessibility cannot establish human ease of use |
+| Concurrent and interrupted use | Stale-write, slow-save, missing-response, reconnect, entry and history recovery checks | A write without acknowledgement stays uncertain until saved state can be checked |
+| Returning to saved work | Thirteen investigations remain reachable; immutable pagination avoids omissions when a partner updates an unseen room | Files are ordered by creation, not latest activity; new files appear on a fresh first-page read |
+| Argument, rules and checks agree | 585-word README served in full at /readme/, CLAUDE rules, three ADRs and [test map](../spec/README.md) | Both people contributing an inference and an earned conclusion still need human judgement |
+| Process portfolio | Rewritten PROCESS, all three substantive reflections, resolving commit links and staged history | C8/C9 are disclosed 18 October retrospectives; later writing cannot repair their old cutoff state |
+| COMP8020 research | 735-word argued review, primary-source comparisons, counter-case and [source audit](research-source-audit.md) | Student reading and endorsement are unconfirmed; these must not be inferred from the draft |
 
-For Liuru, submit before **21 October 2026, 13:30 Sydney**, two hours before the
-15:30–17:00 session. The reflection belongs in that pre-cutoff submission. A later
-classroom account may record observations without moving the frozen cutoff tag.
-C8 and C9 tags remain unchanged; later improvements do not backdate their state.
+Word counts include whitespace-separated headings and links. Length checks are
+guidance, not proof of writing quality. The course check:evidence checks its
+evidence contract; check:portfolio additionally requires all three reflections
+and checks final artefact links and lengths. Neither can certify personal
+understanding or authentic experience.
 
-## What carries forward to final
+## What must involve the student
 
-| Requirement | Current evidence | Remaining judgement |
-| --- | --- | --- |
-| Multi-user and real-time | Separate-browser publication, chronology and resolution; stale competing moves are rejected explicitly | Test timings describe the measured run, not every network |
-| Persists | Two real process restarts recover both identities and a solved case; original 5 October hosted record still restores | Original cookies are required; losing identity is not recovered |
-| Both marking viewports | Full 1920×1080 and 390×844 playthroughs, keyboard and overflow checks, 14 combined axe scans | Automated accessibility is not a human usability study |
-| Slow or interrupted connection | Delayed writes, lost acknowledgements, 12-second timeout and failed conflict refresh | Uncertain saves retrieve state rather than automatically repeating |
-| Definition, rules and checks agree | README, CLAUDE, three ADRs and [test map](../spec/README.md) | Both players contributing and an earned conclusion require observed use |
-| Process portfolio | Rewritten PROCESS, C10 reflection and substantive assisted C8/C9 retrospectives completed on 18 October | Student must review the positions; past cutoff states stay frozen |
-| COMP8020 research | 735-word review draft (whitespace count including headings and links), updated through the dated May 2026 survey, and [source audit](research-source-audit.md) | Student must read, weigh the sources and defend or revise the argument |
+The [personal review guide](final-personal-review.md) gives the actual links,
+commands and questions. Three things cannot be completed by an agent's claim:
 
-The core required functionality is implemented. There is no mandatory additional
-feature simply for final credit. Remaining work is evaluation and a defensible
-portfolio, plus corrections justified by what that evaluation reveals:
+1. **C10 participation:** give two classmates the URL and narrate their actions
+   from the terminal without operating the app. The assisted pre-crit reflection
+   is already written; classroom observations are not yet available.
+2. **Ownership of the portfolio:** read the argument, process and reflections,
+   revise positions that do not represent the student, and be able to explain the
+   consequential choices and corrections.
+3. **Research judgement:** engage with the retained sources and defend or revise
+   the research note's position. Agent source checking does not establish a
+   student's reading history.
 
-1. Run the [blind playtest](playtest-protocol.md) with a first-time pair; preserve
-   confusion and contrary observations. Allow 30–45 minutes for play and notes.
-2. Complete the actual C10 logs-only classroom exercise. Record a subsequent
-   account of what could and could not be inferred; do not rewrite the past.
-3. Review the personal portfolio and research argument against the original
-   sources. Allow roughly 2–4 hours for reading/revision and 1–2 hours for final
-   evidence review. These are planning allowances, not measured durations.
-4. Implement any resulting correction as a justified step, rerun affected checks,
-   and verify the final public commit and deployed site before the deadline.
+To evaluate the app's human claims, the [blind playtest](playtest-protocol.md)
+suggests a first-time pair and roughly 30–45 minutes for play and discussion.
+That is a proposed method, not an additional official requirement for a fixed
+number of people, time allocation or report. Real classroom feedback can also
+inform the judgement if observed behaviour and reported impressions are separated.
+No human playtest result has been invented.
 
-Final is due **9 November 2026 at noon**. The same final repository serves C8–C10
-and A3. Passing `check:evidence` establishes file presence and resolving commit
-links; it does not certify authentic human experience or the quality of an argument.
-`pnpm check:portfolio` additionally requires all three reflections and checks the
-final documents' links, citations and length guidance. Completing a retrospective
-now improves the final portfolio without changing its earlier crit cutoff record.
+Corrections supported by that feedback, writing revisions, technical checks and
+deployment can still be delegated. No known additional core feature is required
+by the brief. Further code work depends on actual findings, not a feature quota.
 
-Sources: [C10](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/crits/10-fly-by-instruments/),
-[final brief](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/assessments/final-project/),
-[assessment mechanics](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/).
+## Cutoffs and submission
+
+Final is due **9 November 2026 at noon, Sydney time**, in this same repository and
+at its course Fly URL. The C10 Liuru session is **21 October, 15:30–17:00**, with
+the pre-crit cutoff at **13:30**. [C10 verification](c10-verification.md) and the
+[classroom guide](crit-10-rehearsal.md) remain the record for that exercise.
+C8/C9 cutoff tags remain frozen. Subsequent main commits improve the final
+portfolio without backdating earlier submissions.
+
+Sources: [final brief](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/assessments/final-project/),
+[assessment mechanics](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/),
+[C10](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/crits/10-fly-by-instruments/).

@@ -1,0 +1,155 @@
+{
+  "revision": "f0b351220d5803ef6ee50e4e919358f066ee5cd0",
+  "ci": "https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/actions/runs/39104715925",
+  "checkedAt": "2026-10-18T06:41:57.5429773Z",
+  "scope": "Agent-run hosted verification after successful CI deployment. Cooperative persistence compares the original saved history and previously collected C10 log snapshot, not a newly observed classroom session.",
+  "routes": [
+    {
+      "path": "/",
+      "status": 200
+    },
+    {
+      "path": "/readme/",
+      "status": 200
+    },
+    {
+      "path": "/health",
+      "status": 200
+    }
+  ],
+  "frontendAsset": "/assets/index-BGgV9nQs.js",
+  "reports": {
+    "collaboration": {
+      "checkedAt": "2026-10-18T06:41:26.758Z",
+      "base": "https://comp4020-final-2513238602.fly.dev",
+      "browser": "Chromium",
+      "checks": [
+        "Two isolated browser identities join from the visible interface and receive different folders",
+        "Eight cross-browser publications preserve the reader’s selected document and identify the actor",
+        "Identical nicknames remain distinguishable by role in the latest action and persisted history",
+        "Simultaneous UI moves produce one saved order and one visible conflict; both browsers converge",
+        "Timeline moves render in the other browser without reload",
+        "Both cooperative viewports pass axe A/AA checks with the live action and full chronology visible",
+        "Partner completion dismisses an obsolete explanation dialog and reveals the shared conclusion",
+        "Both identities recover shared evidence and solution after refresh",
+        "All 11 request-to-observed-render measurements below 1000ms"
+      ],
+      "samples": [
+        {
+          "action": "publish",
+          "ms": 71
+        },
+        {
+          "action": "publish",
+          "ms": 53
+        },
+        {
+          "action": "publish",
+          "ms": 53
+        },
+        {
+          "action": "publish",
+          "ms": 52
+        },
+        {
+          "action": "publish",
+          "ms": 46
+        },
+        {
+          "action": "publish",
+          "ms": 53
+        },
+        {
+          "action": "publish",
+          "ms": 52
+        },
+        {
+          "action": "publish",
+          "ms": 53
+        },
+        {
+          "action": "board",
+          "ms": 51
+        },
+        {
+          "action": "board",
+          "ms": 51
+        },
+        {
+          "action": "theory",
+          "ms": 237
+        }
+      ],
+      "errors": [],
+      "limitMs": 1000
+    },
+    "returning": {
+      "checkedAt": "2026-10-18T06:41:24.495Z",
+      "base": "https://comp4020-final-2513238602.fly.dev",
+      "restarted": false,
+      "checks": [
+        "An initial history failure is visible and an explicit retry restores the first four links",
+        "A failed later page preserves existing links and reconnecting retries that same page",
+        "Saved files at 1920px have no horizontal overflow and pass axe A/AA",
+        "All thirteen investigations remain reachable from home, including the earliest saved publication",
+        "Saved files at 390px have no horizontal overflow and pass axe A/AA",
+        "Initial failure recovers on reconnect at phone width, and keyboard Show more reaches all files",
+        "A new browser sees an explicit empty history without another identity’s investigations"
+      ],
+      "errors": []
+    },
+    "entry": {
+      "checkedAt": "2026-10-18T06:41:29.751Z",
+      "base": "https://comp4020-final-2513238602.fly.dev",
+      "checks": [
+        "Entry shares the pending identity confirmation; a committed creation with a lost reply stays one room and is never silently retried",
+        "The uncertain creation links back to refreshed case files, where the original room is recoverable",
+        "A committed join with a lost reply retrieves the known room and preserves the same member and single archive seat",
+        "An unavailable identity check sends no creation; a second room is created only through the explicitly labelled choice",
+        "When join recovery also fails, the next action checks saved membership without posting another join"
+      ],
+      "errors": []
+    },
+    "originalPersistence": {
+      "base": "https://comp4020-final-2513238602.fly.dev",
+      "seededAt": "2026-10-05T04:35:56.835Z",
+      "verifiedAt": "2026-10-18T06:41:21.67Z",
+      "elapsedDays": 13,
+      "checks": [
+        "Original hosted browser identity restored",
+        "Original F1 publication retained"
+      ],
+      "limitations": "Uses the original ignored test cookie; does not establish access from a new identity."
+    },
+    "earlierCooperativePersistence": {
+      "base": "https://comp4020-final-2513238602.fly.dev",
+      "exercisedAt": "2026-10-18T06:08:52.332Z",
+      "verifiedAt": "2026-10-18T06:41:21.949Z",
+      "committedActions": [
+        "opened",
+        "joined",
+        "published",
+        "published",
+        "arranged",
+        "hypothesis",
+        "solved"
+      ],
+      "committedCount": 7,
+      "rejectedStatuses": [
+        409,
+        403
+      ],
+      "checks": [
+        "Two separate same-name identities preserve member and role attribution",
+        "Repeat publication leaves version and saved time unchanged",
+        "Private partner clue rejected with 403",
+        "Stale timeline write rejected with 409",
+        "Real Fly multiline JSON formatted into seven committed actions and two rejections",
+        "Every committed action matched the persisted member, role, action and detail",
+        "Both original identities restore solved state and identical history",
+        "Formatted output omits nicknames, cookies and unknown detail"
+      ],
+      "limitations": "Automated HTTPS and real Fly log verification in an isolated test room; not a human classroom exercise. Local session cookies and raw logs are excluded from this report."
+    }
+  }
+}
