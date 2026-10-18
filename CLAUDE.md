@@ -27,6 +27,9 @@
   detail. Distinguish rejected requests from committed activity. Keep cookies,
   nicknames, request bodies and private reading activity out of stdout/stderr.
 - Never invent reflection, human research, measured play time or deployment.
+- A crit reflection must be ready before that crit's cutoff. Ground a pre-crit
+  account in real development or rehearsal; never require future classroom
+  observations as a prerequisite or invent them to fill the gap.
 - Document mistakes and fix the contract or test that allowed them.
 - Pushing and publicly shipping this final repo are now explicitly authorised.
   Follow course ship checks and preserve existing history and cutoff tags.

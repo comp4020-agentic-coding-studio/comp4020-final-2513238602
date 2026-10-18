@@ -43,8 +43,12 @@ explain why each step exists, rather than merely announcing progress.
 Use the [blind playtest protocol](playtest-protocol.md) with one first-time pair
 and record genuine confusion and reasoning. A preparation allowance is 30–45
 minutes for observation and notes; any resulting correction depends on what occurs.
-Finish the C9 reflection from actual judgement, and later the C10 reflection after
-the [logs-only exercise](crit-10-rehearsal.md). C8's existing tag remains unchanged;
+Timing correction, 18 October: C10 reflection must be submitted **before its
+cutoff**, based on actual development or pre-class rehearsal. The classroom
+[logs-only exercise](crit-10-rehearsal.md) happens later and can supply subsequent
+observations; it is not a reason to delay submission. The C10 reflection is now
+written with disclosed agent assistance from project instructions and recorded
+changes. C8/C9 personal work remains separate. C8's existing tag remains unchanged;
 a later revised reflection cannot backdate its release or repair a past cutoff.
 
 Review the README position and research sources, then revise the note in the

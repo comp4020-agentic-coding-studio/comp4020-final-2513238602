@@ -1,31 +1,34 @@
-# C10 preparation — personal reflection not yet completed
+# C10 reflection — making completion explainable
 
-Prepared before the C10 class exercise. This file records technical preparation;
-it does not claim that classmates have used the app while the student narrated
-from logs. The student must replace this preparation with an authentic response.
+Written with coding-agent assistance from my project instructions and repository
+evidence. This is a pre-crit reflection, not a report of a completed classroom
+exercise or an independent human playtest.
 
 ## What was the breakthrough that moved the work forward?
 
-The implementation finding is that logs must distinguish an attempted action
-from a committed fact. Earlier output named only a member and action, and was
-printed before the transaction completed. The revised service records activity
-atomically and prints room, member, role, detail and version only after commit.
-Rejected requests appear as rejected, not as saved progress. A real-process test
-compares logged event IDs with the persisted case record and verifies that session
-credentials and nicknames do not appear in output.
+The useful breakthrough was separating an attempted action from a saved fact.
+An entry saying someone clicked does not establish that their shared chronology
+changed. Earlier logs printed before the database transaction completed and lacked
+enough context to explain the action. In
+[`dee5c79`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/dee5c79),
+the agent changed this: committed events identify the room, member, role and saved
+detail; rejected requests are recorded separately. The test compares emitted event
+IDs with persisted activity. This gives the C10 narration a checkable basis.
 
-During the actual exercise, record an action that could be understood from this
-information and one ambiguity, if any. Explain whether the logs led to the same
-account as the players' record. Do not invent a smooth demonstration in advance.
+The same distinction exposed misleading recovery feedback in
+[`47e2c37`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/47e2c37):
+a conflict message claimed the latest order had loaded before the refresh actually
+succeeded. The correction makes the explanation follow observed state.
 
 ## What changed about the developer I want to become?
 
-This requires the student's own judgement after the exercise. Useful questions
-are whether they could explain the system without operating it, which permission
-boundary they could justify, and what responsibility remains when the agent wrote
-both code and tests. Relate the answer to an observed event rather than a general
-claim about trusting or distrusting AI.
+I asked for complete work delivered in meaningful stages, with commit comments
+that justify each upload. The standard I want to apply is that every accepted
+change has an explainable purpose, consequence and check. A green result matters,
+but I should also be able to explain why a participant has a particular permission
+and distinguish a saved move from a rejected one.
 
-The URL-only procedure is in `docs/crit-10-rehearsal.md`; ADR 003 explains the
-identity and permission choices. Neither document establishes that the human
-exercise or this personal reflection is complete.
+This keeps responsibility with me while allowing the agent to implement and test.
+The classroom exercise will test whether I can use that evidence without operating
+the interface myself. Its outcome remains unknown; this reflection does not turn
+automated success into an experience that has not happened.

@@ -2,6 +2,18 @@
 
 This is a rehearsal procedure, not a record of a completed class exercise.
 
+## Before the cutoff
+
+For the Liuru group, C10 is Wednesday 21 October 2026, 15:30–17:00 Sydney;
+the submission cutoff is 13:30 that day. Complete `reflections/crit-10.md`
+before the cutoff, using real development or pre-class rehearsal evidence.
+The two prompts do not require the future classroom exercise to have happened.
+Publish the current PROCESS, successful CI deployment and `crit-10` tag as well.
+After class, observations may be added in a later commit without changing the
+cutoff tag. Do not postpone the required reflection until after class.
+
+## In the session
+
 Give two classmates only [the live URL](https://comp4020-final-2513238602.fly.dev/).
 They use separate Chrome profiles; one opens a two-person investigation and
 shares its invitation using the on-page control. The second chooses a nickname
@@ -37,7 +49,9 @@ persisted case record with the narration and record any disagreement. A saved
 event missing from stdout after a process interruption can be recovered from the
 case record; transient rejected requests are not persisted there.
 
-Record actual observations in the reflection: how they started, an action you
+Record actual observations in a subsequent account: how they started, an action you
 could or could not interpret, a permission boundary exercised, and one change
 motivated by what happened. No successful automated test substitutes for this
 human exercise.
+
+Source: [assessment submission rules](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/).
