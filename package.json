@@ -10,6 +10,8 @@
     "check:browser": "node scripts/check-browser.mjs",
     "check:collaboration": "node scripts/check-collaboration.mjs",
     "check:resilience": "node scripts/check-resilience.mjs",
+    "check:returning": "node scripts/check-returning.mjs",
+    "check:entry": "node scripts/check-entry.mjs",
     "typecheck": "tsc --noEmit",
     "check": "pnpm typecheck && pnpm test",
     "check:evidence": "node scripts/check-evidence.ts",

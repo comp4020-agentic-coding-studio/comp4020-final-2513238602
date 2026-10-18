@@ -4,4 +4,5 @@ export type Clue = { id: string; role: 'field' | 'archive'; title: string; kind:
 export type Theory = { who: string; where: string; why: string; when: string; evidence: string[] };
 export type Activity = { id: number; memberId: string; name: string; role: Role; action: string; detail: string; at: string };
 export type RoomState = { code: string; mode: Mode; version: number; status: 'open' | 'solved'; createdAt: string; updatedAt: string; me: { id: string; name: string; role: Role }; members: { id: string; name: string; role: Role }[]; clues: Clue[]; publishedCount: number; order: string[]; events: { id: string; title: string; description: string }[]; activity: Activity[]; attempts: number; lastFeedback: string | null; solution: string[] | null };
-export type Investigation = { code: string; mode: Mode; status: 'open' | 'solved'; updatedAt: string; role: Role };
+export type Investigation = { code: string; mode: Mode; status: 'open' | 'solved'; createdAt: string; updatedAt: string; role: Role };
+export type InvestigationPage = { investigations: Investigation[]; nextCursor: string | null };

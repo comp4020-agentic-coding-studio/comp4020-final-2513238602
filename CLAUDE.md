@@ -23,6 +23,16 @@
   chronology and resolution rendering, not only arrival of an SSE message.
 - Reopen the event stream and retrieve current state after the browser returns
   online. Test a partner publishing while the other browser is offline.
+- Keep every saved investigation reachable from the home page through bounded,
+  session-scoped pagination ordered by immutable creation time and room code, so
+  partner updates cannot move an unseen case past the cursor. A failed history
+  load must show an error and retry;
+  retry that page when the browser reconnects, preserving already loaded links.
+- Confirm the browser identity before opening or joining a case. Share concurrent
+  first identity requests so their cookies cannot race. A lost entry response is
+  uncertain: recover a known seat with a read, or offer existing case files.
+  Creating another investigation must be an explicit choice, never an automatic
+  repeat or an ordinary form resubmission disguised as recovery.
 - Validate request shape, length, origin and clue ownership server-side.
 - Keep clues readable as text and actions usable by keyboard and touch.
 - Render the full README in server HTML at /readme/.

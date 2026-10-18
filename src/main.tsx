@@ -7,15 +7,23 @@ import '@fontsource/dm-sans/latin-600.css';
 import '@fontsource/libre-caslon-display/latin-400.css';
 import '@fontsource/ibm-plex-mono/latin-400.css';
 import './style.css';
-import type { Clue, Investigation, Mode, RoomState, Theory } from '../shared/types.ts';
+import type { Clue, Investigation, InvestigationPage, Mode, RoomState, Theory } from '../shared/types.ts';
 
 class ApiError extends Error { status: number; constructor(status: number, message: string) { super(message); this.status=status; } }
-async function api<T>(path: string, data?: unknown): Promise<T> {
+async function request<T>(path: string, data?: unknown): Promise<T> {
   const control=new AbortController();const timeout=setTimeout(()=>control.abort(),12000);
   try {
     const res=await fetch(path,{method:data===undefined?'GET':'POST',headers:data===undefined?{}:{'Content-Type':'application/json'},body:data===undefined?undefined:JSON.stringify(data),signal:control.signal});
     const value=await res.json();if(!res.ok)throw new ApiError(res.status,value.error??'Please try again.');return value as T;
   } finally {clearTimeout(timeout)}
+}
+let pendingIdentity:Promise<unknown>|null=null;
+function api<T>(path:string,data?:unknown):Promise<T>{
+  if(path!=='/api/me'||data!==undefined)return request<T>(path,data);
+  // The home page and entry form may request a first identity together. Share
+  // that response so two new Set-Cookie values cannot race a room creation.
+  if(!pendingIdentity)pendingIdentity=request<T>(path).finally(()=>{pendingIdentity=null});
+  return pendingIdentity as Promise<T>;
 }
 const roleName=(role:string)=>role==='solo'?'Both folders':role==='field'?'Field investigator':'Archive investigator';
 const time=(value:string)=>new Intl.DateTimeFormat('en-AU',{hour:'2-digit',minute:'2-digit'}).format(new Date(value));
@@ -31,24 +39,86 @@ function Modal({title,onClose,children}:{title:string;onClose:()=>void;children:
 }
 
 function StartForm({code,onClose}:{code?:string;onClose:()=>void}){
-  const [mode,setMode]=useState<Mode>('solo');const [name,setName]=useState('');const [error,setError]=useState('');const [busy,setBusy]=useState(false);
-  async function submit(e:React.FormEvent){e.preventDefault();setError('');setBusy(true);try{const room=await api<RoomState>(code?`/api/rooms/${code}/join`:'/api/rooms',{mode,name});location.assign(`/case/${room.code}`)}catch(e){setError((e as Error).message);setBusy(false)}}
-  return <form onSubmit={submit} className="start-form"><p>{code?'Your partner has the field folder. Your archive records may explain what they found.':'Choose how to investigate. Everything you discover is saved as you go.'}</p>
+  const [mode,setMode]=useState<Mode>('solo');const [name,setName]=useState('');const [error,setError]=useState('');const [busy,setBusy]=useState(false);const [uncertain,setUncertain]=useState(false);
+  async function recoverJoin(){
+    try {const room=await api<RoomState>(`/api/rooms/${code}`);location.assign(`/case/${room.code}`)}
+    catch(e){
+      if(e instanceof ApiError&&(e.status===403||e.status===404)){
+        setUncertain(false);setError(e.status===403?'This browser has no saved seat in this investigation. You can try joining again.':e.message);
+      }else setError('No join confirmation arrived. You may already have joined. Check this investigation to look for your saved seat, or return to your case files.');
+    }
+  }
+  async function submit(createAnother=false){
+    if(busy||(uncertain&&!code&&!createAnother))return;
+    setError('');setBusy(true);
+    try {
+      if(code&&uncertain){await recoverJoin();return;}
+      // Confirm the browser has its cookie before a response containing a newly
+      // created room could be lost. A failed preparation must never send a write.
+      try {await api<InvestigationPage>('/api/me')}
+      catch {setError('Could not prepare this browser to save your investigation. Check your connection and try again. This attempt did not open or join a case.');return;}
+      try {
+        const room=await api<RoomState>(code?`/api/rooms/${code}/join`:'/api/rooms',{mode,name});location.assign(`/case/${room.code}`);
+      }catch(e){
+        if(e instanceof ApiError&&e.status<500){setError(e.message);return;}
+        setUncertain(true);
+        if(code)await recoverJoin();
+        else setError('No creation confirmation arrived. Your investigation may already be saved. View your existing investigations before choosing to create another one.');
+      }
+    }finally {setBusy(false)}
+  }
+  const another=uncertain&&!code;
+  return <form onSubmit={e=>{e.preventDefault();void submit()}} className="start-form"><p>{code?'Your partner has the field folder. Your archive records may explain what they found.':'Choose how to investigate. Everything you discover is saved as you go.'}</p>
     <label htmlFor="investigator-name">What should we call you?</label><input id="investigator-name" name="name" value={name} onChange={e=>setName(e.target.value)} placeholder="Your name or a nickname" maxLength={24} autoComplete="nickname" required autoFocus/>
     {!code&&<fieldset className="mode-options"><legend>Investigation mode</legend><label className={mode==='solo'?'chosen':''}><input type="radio" name="mode" value="solo" checked={mode==='solo'} onChange={()=>setMode('solo')}/><User size={22}/><span><strong>Go solo</strong><small>Both folders. Your own pace.</small></span></label><label className={mode==='duo'?'chosen':''}><input type="radio" name="mode" value="duo" checked={mode==='duo'} onChange={()=>setMode('duo')}/><Users size={22}/><span><strong>Bring a partner</strong><small>Different clues. One shared desk.</small></span></label></fieldset>}
     <p className="privacy-note">No account needed. This browser remembers you for 30 days. Clearing its cookies loses access to your saved investigations.</p>
-    {error&&<p className="error" role="alert">{error}</p>}<button className="button primary wide" disabled={busy||!name.trim()}>{busy?<><SpinnerGap className="spin" size={20}/> Opening…</>:<>{code?'Join investigation':'Begin investigation'}<ArrowRight size={20}/></>}</button><button type="button" className="text-button wide" onClick={onClose}>Go back</button>
+    {error&&<p className="error" role="alert">{error}</p>}{uncertain&&<a className="button secondary wide" href="/">View existing investigations <ArrowRight size={20}/></a>}<button type={another?'button':'submit'} onClick={another?()=>void submit(true):undefined} className="button primary wide" disabled={busy||!name.trim()}>{busy?<><SpinnerGap className="spin" size={20}/> Opening…</>:<>{another?'Create another investigation':code?uncertain?'Check this investigation':'Join investigation':'Begin investigation'}<ArrowRight size={20}/></>}</button><button type="button" className="text-button wide" onClick={onClose}>Go back</button>
   </form>
 }
 
+function SavedInvestigations(){
+  const [saved,setSaved]=useState<Investigation[]>([]);
+  const [nextCursor,setNextCursor]=useState<string|null>(null);
+  const [status,setStatus]=useState<'loading'|'ready'|'error'>('loading');
+  const requestId=useRef(0);
+  const failed=useRef<{cursor:string|null}|null>(null);
+  async function load(cursor:string|null=null){
+    const current=++requestId.current;failed.current=null;setStatus('loading');
+    try {
+      const page=await api<InvestigationPage>(`/api/me${cursor?`?cursor=${encodeURIComponent(cursor)}`:''}`);
+      if(current!==requestId.current)return;
+      setSaved(previous=>cursor?[...new Map([...previous,...page.investigations].map(room=>[room.code,room])).values()]:page.investigations);
+      setNextCursor(page.nextCursor);setStatus('ready');
+    } catch {
+      if(current!==requestId.current)return;
+      failed.current={cursor};setStatus('error');
+    }
+  }
+  useEffect(()=>{
+    void load();
+    const retry=()=>{if(failed.current)void load(failed.current.cursor)};
+    const visible=()=>{if(document.visibilityState==='visible'&&navigator.onLine)retry()};
+    window.addEventListener('online',retry);document.addEventListener('visibilitychange',visible);
+    return()=>{requestId.current++;window.removeEventListener('online',retry);document.removeEventListener('visibilitychange',visible)};
+  },[]);
+  return <section className="saved-section shell" aria-labelledby="saved-heading" aria-busy={status==='loading'}>
+    <h2 id="saved-heading">Your case files</h2>
+    <p className="saved-status">Newest investigations first. Dates show the last saved change.</p>
+    {saved.length>0&&<div className="saved-list">{saved.map(r=><a className="saved-case" href={`/case/${r.code}`} key={r.code}><span className="saved-icon">{r.status==='solved'?<CheckCircle size={24}/>:<ClockCounterClockwise size={24}/>}</span><span><strong>The Blue Hour</strong><small>{r.mode==='solo'?'Solo':'Together'} · {r.status==='solved'?'Case closed':'In progress'} · {new Date(r.updatedAt).toLocaleDateString('en-AU')}</small></span><span className="resume-label">{r.status==='solved'?'Revisit':'Continue'}</span><ArrowRight size={19}/></a>)}</div>}
+    {status==='loading'&&<p className="saved-status" role="status">Loading your saved investigations…</p>}
+    {status==='ready'&&saved.length===0&&<p className="saved-status">No saved investigations in this browser yet.</p>}
+    {status==='error'&&<div className="saved-recovery"><p role="alert">{saved.length?'More investigations could not be loaded.':'Your saved investigations could not be loaded.'} Check your connection and retry.</p><button className="button secondary" onClick={()=>void load(failed.current?.cursor??null)}>Retry saved investigations</button></div>}
+    {nextCursor&&status!=='error'&&<button className="button secondary saved-more" disabled={status==='loading'} onClick={()=>void load(nextCursor)}>Show more investigations</button>}
+  </section>;
+}
+
 function Home(){
-  const [start,setStart]=useState(false);const [saved,setSaved]=useState<Investigation[]>([]);
-  useEffect(()=>{api<{investigations:Investigation[]}>('/api/me').then(x=>setSaved(x.investigations)).catch(()=>{})},[]);
+  const [start,setStart]=useState(false);
   return <><a className="skip" href="#main">Skip to content</a><Header/><main id="main">
     <section className="hero shell"><div className="hero-copy"><p className="eyebrow"><span className="tiny-rule"/> A SHORT COOPERATIVE MYSTERY</p><h1>Something’s<br/>missing.</h1><p className="hero-description">An empty plinth. Eight pieces of evidence.<br className="desktop-break"/> One story to put back together.</p><div className="hero-actions"><button className="button primary" onClick={()=>setStart(true)}>Open the case <ArrowUpRight size={21}/></button><a className="text-link" href="#how">How it works <ArrowRight size={17}/></a></div></div>
     <div className="hero-art"><div className="photo-sheet"><img src="/images/gallery.webp" alt="An empty plinth in a quiet gallery, with blue light falling on the wall." width="1536" height="1024" fetchPriority="high"/><div className="photo-caption"><span>GALLERY 2</span><span>17:40 / BEFORE OPENING</span></div></div><div className="case-tab"><span>CASE FILE</span><strong>001</strong></div><div className="art-note"><span className="note-arrow">↳</span> Everything is here.<br/>Except the obvious.</div></div></section>
     <section className="case-intro shell" id="case"><div className="case-number" aria-hidden="true">01</div><div className="case-heading"><p className="label">THE OPEN FILE</p><h2>The Blue Hour</h2><p>An exhibition is about to open. Its centrepiece has vanished. <br/>A camera, a clock and a signed note tell different stories. Or do they?</p></div><dl className="case-facts"><div><dt>PLAYERS</dt><dd>1 or 2</dd></div><div><dt>PLAY TIME</dt><dd>About 5 min</dd></div><div><dt>YOUR TASK</dt><dd>Follow the evidence</dd></div></dl></section>
-    {saved.length>0&&<section className="saved-section shell" aria-labelledby="saved-heading"><h2 id="saved-heading">Your open files</h2><div className="saved-list">{saved.slice(0,4).map(r=><a className="saved-case" href={`/case/${r.code}`} key={r.code}><span className="saved-icon">{r.status==='solved'?<CheckCircle size={24}/>:<ClockCounterClockwise size={24}/>}</span><span><strong>The Blue Hour</strong><small>{r.mode==='solo'?'Solo':'Together'} · {r.status==='solved'?'Case closed':'In progress'} · {new Date(r.updatedAt).toLocaleDateString('en-AU')}</small></span><span className="resume-label">{r.status==='solved'?'Revisit':'Continue'}</span><ArrowRight size={19}/></a>)}</div></section>}
+    <SavedInvestigations/>
     <section className="how-section shell" id="how"><div><span className="label">A LITTLE CURIOSITY GOES A LONG WAY</span><h2>Two perspectives.<br/>One discovery.</h2><p>Play at the same table, or talk over a call.<br/>Your partner might have the detail you’re missing.</p></div><ol className="how-list"><li><BookOpen size={25}/><div><h3>Open your folder</h3><p>Read the records. In a pair, each person starts with a different half of the evidence.</p></div></li><li><PaperPlaneTilt size={25}/><div><h3>Put your clues together</h3><p>Share what matters and rebuild the sequence of events on your investigation desk.</p></div></li><li><MagnifyingGlass size={25}/><div><h3>Make your case</h3><p>Explain what happened, cite your evidence, and see whether the story holds up.</p></div></li></ol></section>
   </main><Footer/>{start&&<Modal title="Open your investigation" onClose={()=>setStart(false)}><StartForm onClose={()=>setStart(false)}/></Modal>}</>
 }

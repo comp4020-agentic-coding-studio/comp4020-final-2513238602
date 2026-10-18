@@ -53,6 +53,13 @@ spec.
   axe scans.
 - `scripts/check-resilience.mjs`: delayed writes, missing acknowledgement after
   commit, unanswered request timeout and failed conflict recovery.
+- `returning.test.ts` and `scripts/check-returning.mjs`: thirteen investigations
+  remain reachable after a real restart, including concurrent history changes;
+  failed history pages recover without hiding already loaded links. The browser
+  script owns a disposable server unless APP_URL selects an existing one.
+- `scripts/check-entry.mjs`: confirm identity before a write, recover lost creation
+  and join responses without automatic duplicate writes, and require an explicit
+  choice before opening another investigation.
 
 CI runs all of these before deploying. Browser timings measure request-to-visible
 state on the tested connection. They do not establish worldwide latency, puzzle

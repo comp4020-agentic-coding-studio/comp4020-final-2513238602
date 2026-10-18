@@ -62,6 +62,24 @@ async function body(req: IncomingMessage): Promise<Record<string, unknown>> {
 function nameFrom(value: unknown) { if (typeof value !== 'string' || !value.trim() || value.trim().length > 24) fail(400, 'Use a name between 1 and 24 characters.'); return (value as string).trim(); }
 function getRoom(code: string) { return one('SELECT * FROM rooms WHERE code=?', code) ?? fail(404, 'This investigation was not found. Check the invitation link.'); }
 function member(code: string, sid: string) { getRoom(code); return one('SELECT * FROM members WHERE room=? AND session=?', code, sid) ?? fail(403, 'Join this investigation before opening its evidence.'); }
+function investigationPage(sid: string, cursor: string | null) {
+  let boundary: [string, string] | undefined;
+  if (cursor !== null) {
+    let decoded: unknown;
+    try {
+      if (cursor.length > 160 || !/^[A-Za-z0-9_-]+$/.test(cursor)) throw new Error();
+      decoded = JSON.parse(Buffer.from(cursor, 'base64url').toString('utf8'));
+    } catch { fail(400, 'This saved-file page is invalid. Reload your case files.'); }
+    if (!Array.isArray(decoded) || decoded.length !== 2 || typeof decoded[0] !== 'string' || typeof decoded[1] !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(decoded[0]) || !Number.isFinite(Date.parse(decoded[0])) || !/^[a-f0-9]{12}$/.test(decoded[1])) fail(400, 'This saved-file page is invalid. Reload your case files.');
+    boundary = decoded as [string, string];
+  }
+  // Updates by a partner must not move an unread page across the cursor boundary.
+  const rows = all(`SELECT r.code,r.mode,r.status,r.created AS createdAt,r.updated AS updatedAt,m.role FROM rooms r JOIN members m ON m.room=r.code WHERE m.session=?${boundary ? ' AND (r.created < ? OR (r.created = ? AND r.code < ?))' : ''} ORDER BY r.created DESC,r.code DESC LIMIT 5`,sid,...(boundary ? [boundary[0],boundary[0],boundary[1]] : []));
+  const investigations = rows.slice(0,4);
+  const last = investigations.at(-1);
+  const nextCursor = rows.length > investigations.length && last ? Buffer.from(JSON.stringify([last.createdAt,last.code])).toString('base64url') : null;
+  return { investigations, nextCursor };
+}
 function log(code: string, mid: string, action: string, detail: string) {
   const result=run('INSERT INTO activity(room,member,action,detail,at) VALUES (?,?,?,?,?)', code, mid, action, detail, now());
   pendingActivity?.push(Number(result.lastInsertRowid));
@@ -102,7 +120,7 @@ const server = createServer(async (req,res) => {
     }
     if (path.startsWith('/api/')) {
       const sid = session(req,res);
-      if (path === '/api/me' && method === 'GET') return json(res,200,{ investigations: all('SELECT r.code,r.mode,r.status,r.updated AS updatedAt,m.role FROM rooms r JOIN members m ON m.room=r.code WHERE m.session=? ORDER BY r.updated DESC LIMIT 12',sid) });
+      if (path === '/api/me' && method === 'GET') return json(res,200,investigationPage(sid,url.searchParams.get('cursor')));
       if (path === '/api/rooms' && method === 'POST') {
         const data = await body(req); const name = nameFrom(data.name); if (data.mode !== 'solo' && data.mode !== 'duo') fail(400,'Choose solo or duo.');
         if (Number(one('SELECT COUNT(*) AS count FROM members WHERE session=?',sid)!.count) >= 60) fail(429,'You have reached the investigation limit for this browser.');

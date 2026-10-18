@@ -51,6 +51,8 @@ jobs:
           pnpm check:browser
           pnpm check:collaboration
           pnpm check:resilience
+          pnpm check:returning
+          pnpm check:entry
         env:
           APP_URL: http://localhost:8080
           BROWSER_CHANNEL: chromium

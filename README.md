@@ -51,7 +51,7 @@ pixel puzzle. Sorting uses labeled buttons, and the investigation must remain
 usable by keyboard and on a narrow phone screen. Live publications, chronology
 and resolution use server-sent events. Updates name the latest actor without
 changing the reader's selected clue. Reconnecting clients retrieve current state.
-Lost save responses trigger a state check, not an automatic repeated action.
+Unconfirmed writes are not repeated automatically; recovery checks available saved state.
 
 ## Promises that need people
 
