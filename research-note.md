@@ -1,75 +1,84 @@
-# Agentic development should optimise the cost of justified acceptance
+# Agentic development should minimise the cost of justified acceptance
 
-**Authorship and status:** This is an agent-assisted literature discussion draft,
-prepared for the student's critical review. It does not claim that the student has
-read these works across the course or already endorses this position. It must be
-revised against their own reading before the COMP8020 final submission.
+**Status:** Agent-assisted review draft. The student has not yet confirmed their
+reading or endorsement of this argument; this text does not establish either.
 
-Good agentic software development should minimise the total effort needed to
-accept a useful change with justified confidence. Counting generated code or
-celebrating uninterrupted autonomy misses the work of establishing whether a
-change is correct, appropriate and maintainable. This position does not imply
-that every action needs human approval. It instead asks what evidence warrants
-delegation, which decisions still require judgement, and whether the cost of
-producing that evidence is proportionate to the change.
+Good agentic software development should minimise the total cost of accepting a
+useful change with justified confidence. That cost includes specifying the task,
+implementation, model use, review and subsequent correction. The qualification
+matters: rapid acceptance is no achievement if requirements are weakened or
+failures merely deferred. This position favours delegation where evidence makes
+it worthwhile, with verification proportionate to uncertainty and consequence.
+The literature supports this direction by separating three questions too often
+collapsed together: what agents can do, whether assistance improves work, and
+how to organise it.
 
-[Jimenez et al.'s SWE-bench](https://arxiv.org/abs/2310.06770) makes an important
-advance over isolated code-completion exercises: its original dataset contains
-2,294 problems drawn from issues and pull requests in twelve Python repositories.
-Models must modify an existing codebase in response to an issue. This supplies
-an inspectable task and execution-based evaluation. However, success at resolving
-a supplied issue does not establish that the issue was worth pursuing, or that
-the resulting interaction satisfies its users. The limitation is one of scope,
-not a reason to dismiss benchmarks. A benchmark can support a capability claim
-without supporting every organisational conclusion drawn from it.
+[Jimenez et al.'s SWE-bench](https://arxiv.org/abs/2310.06770v3) addresses the first
+question through 2,294 problems from twelve Python repositories. Editing an
+existing codebase to resolve an issue is a substantial advance over isolated
+completion exercises. Its execution-based evaluation makes capability claims
+testable. However, passing a supplied task's tests cannot establish whether that
+task deserved priority or whether users benefit. A benchmark score therefore
+supports bounded technical capability, while leaving the cost and value of
+deployment open. Using it as a direct productivity forecast skips those missing
+steps.
 
-[Becker et al.'s 2025 field experiment](https://metr.org/Early_2025_AI_Experienced_OS_Devs_Study-paper.pdf)
-tests a different claim: whether AI assistance reduces developers' time on their
-own work. Sixteen experienced open-source contributors completed 246 tasks, with
-AI availability randomised. In that setting, assistance increased completion
-time by 19%, although participants believed it had reduced their time. The
-contrast makes perceived fluency an inadequate productivity measure. Yet these
-developers knew mature repositories well and used early-2025 tools; the study
-cannot establish that all developers or later systems are slower. Its strongest
-lesson for practice is methodological: evaluate the actual workflow, including
-review, rather than substitute a capability score or a satisfying interaction.
+[Becker et al.'s field experiment](https://arxiv.org/abs/2507.09089v2) asks a
+different question. Sixteen experienced contributors completed 246 tasks in
+familiar open-source repositories, with AI availability randomised by task.
+Early-2025 assistance increased estimated completion time by 19%, although
+participants subsequently believed it had saved time. Randomisation gives this
+finding more causal force than satisfaction reports, within that setting. It
+does not show that every developer or later tool is slower. Nor does it contradict
+SWE-bench: agents can solve benchmark tasks while collaboration, checking and
+integration make assistance costly. The comparison makes workflow evaluation
+necessary rather than treating capability as sufficient evidence for adoption.
 
-The authors' [February 2026 update](https://metr.org/blog/2026-02-24-uplift-update/)
-complicates any simple anti-AI interpretation. Developers increasingly avoided
-participation or withheld tasks they did not want to attempt without AI. Changes
-in compensation and difficulties recording time during parallel agent use also
-affected interpretation. METR considers the later signal unreliable for estimating
-the current effect's magnitude. That is evidence of a measurement problem, not
-proof that the original result persists or has definitively reversed. A useful
-evaluation must document the tasks and people it excludes, and distinguish elapsed
-time, active human effort and delivered value. Otherwise apparent improvements
-can follow from changing the sample rather than improving the work.
+METR's [February 2026 update](https://metr.org/blog/2026-02-24-uplift-update/)
+also prevents treating the slowdown as permanent. Developers increasingly declined
+participation or withheld tasks they preferred to perform with AI; lower
+compensation and parallel agent use further complicated interpretation. The
+authors considered improved productivity likely, but their later estimates too
+affected by selection to reliably measure its size. Excluding enthusiastic users
+and favourable tasks could understate benefits. Conversely, willingness to use AI
+does not itself measure delivered value. Both objections matter: an experiment
+can identify a local effect while its changing sample weakens broader conclusions.
 
-[Anthropic's practitioner guidance](https://www.anthropic.com/engineering/building-effective-agents)
-offers a complementary engineering response: begin with simple arrangements, use
-environmental feedback, and add complexity when evaluation supports it. This
-explains how to structure delegation, whereas the empirical studies ask whether
-the resulting arrangement helps. The guidance is valuable as accumulated
-implementation experience, but it is neither a controlled comparison nor an
-independent estimate of productivity. Its simplicity principle should therefore
-be treated as a design hypothesis to test, not a guarantee that a particular
-framework or agent workflow improves outcomes.
+The [May 2026 METR survey](https://metr.org/blog/2026-05-11-ai-usage-survey/)
+extends this comparison. Among 349 technical workers, three questions about value
+produced yielded median self-reported multipliers between 1.4 and 2. These are
+neither measured causal gains nor a confidence interval. The convenience sample
+and uncertain counterfactual judgements limit their force. Nevertheless, asking
+about value identifies something task timing misses: AI may change which work
+people attempt. This strengthens the case for measuring useful outcomes, while
+the earlier mismatch between perceived and measured speed cautions against
+accepting the reported magnitude uncritically.
 
-A strong counterargument is that extensive review destroys the advantage of
-autonomous agents. If a developer must reconstruct every generated change, even
-a correct system may be economically unhelpful. The response is selective
-verification. Stable, bounded operations can be delegated behind independent
-checks; changes to requirements, permissions or the meaning of user data deserve
-closer inspection. Verification effort should track consequence and uncertainty,
-rather than line count. Tests generated alongside an implementation remain useful,
-but agreement between them is weaker evidence when both inherit the same mistaken
-assumption. Alternative examples, real execution and user observation can expose
-that shared blind spot.
+[Schluntz and Zhang's practitioner guidance](https://www.anthropic.com/engineering/building-effective-agents)
+offers an engineering response: start simply, obtain feedback from execution,
+and add complexity when evaluation supports it. This complements the empirical
+studies by proposing how to organise delegation, rather than measuring its
+productivity effect. It draws on a vendor's implementation experience, not an
+independent controlled comparison. Its advice is therefore a hypothesis to test
+locally. In particular, successful execution should inform acceptance without
+substituting for judgement about requirements and usefulness.
 
-The practical implication is to evaluate agentic work at acceptance and revisit it
-after use. Record the intended outcome, the evidence consulted, the defects found,
-and the human effort spent correcting them. Compare similar changes using those
-measures, while acknowledging that usefulness cannot be reduced to a single
-score. Autonomy can then expand where evidence supports it. The developer's role
-is to decide what merits confidence and preserve the reasons for that decision,
-so a plausible output does not silently become an accepted product.
+The strongest objection is that verification can consume the savings autonomy
+promises. Reconstructing every generated change would defeat delegation. The
+answer is selective verification, including automation: use established tests
+for stable behaviour, examine permissions and irreversible effects more closely,
+and sample routine changes where failures are cheap to detect and reverse.
+An implementation and its newly generated tests can share a mistaken assumption;
+agreement between them warrants less confidence than checks derived from
+independent requirements. None of this requires approving every action. It
+requires stating what evidence permits acceptance and revising that rule when
+failures expose its limits.
+
+In practice, compare similar work using total human effort, model cost, delivered
+usefulness and defects discovered after acceptance, while recording changes in
+task selection. Expand autonomy when it reduces those costs without sacrificing
+agreed quality or value. If cheaper review produces more serious escaped defects,
+the proposed verification policy has failed and must change. This is a practical
+decision rule inferred from the literature, not a result any source directly
+establishes. It keeps confidence accountable to outcomes instead of equating
+plausible output with completed work.

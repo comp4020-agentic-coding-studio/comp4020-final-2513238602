@@ -33,6 +33,8 @@ spec.
 
 ## Lost & Found checks
 
+- `readme-content.test.ts`: the entire README argument and source links appear
+  in server HTML, supplementing the unchanged course heading check.
 - `investigation.test.ts`: real HTTP identity, private evidence, stream access,
   simultaneous joins and moves, validation, supported theories and resolution.
 - `restart.test.ts`: two actual process restarts around a wrong attempt and a
@@ -56,3 +58,9 @@ CI runs all of these before deploying. Browser timings measure request-to-visibl
 state on the tested connection. They do not establish worldwide latency, puzzle
 quality or human accessibility. Test-generated rooms are disposable; do not use
 the harness against a person's existing investigation.
+
+`pnpm check:portfolio` supplements the per-crit evidence check for final. It
+requires all three reflections and the final written documents, checks local
+references and cited commits, and reports word-count guidance. CI runs it after
+`check:evidence`. It cannot verify personal authorship, actual classroom
+participation, a student's reading history or the quality of an argument.

@@ -1,32 +1,33 @@
-# C8 reflection — student review required
+# C8 reflection — establish the contract before building
 
-This is an agent-prepared evidence scaffold, not a completed personal reflection.
-The student must replace it with an authentic 150–300 word response to the two
-course prompts before submission.
+Retrospective completed on 18 October 2026 with coding-agent assistance, using my
+recorded instructions and repository evidence. This replaces the earlier scaffold
+for the final portfolio. It was not completed by the C8 cutoff, does not change
+that cutoff tag, and claims no personal playtest or classroom observation.
 
 ## What was the breakthrough that moved the work forward?
 
-The recorded work offers two concrete candidates. First, inspecting the clue
-dependency exposed an archive folder that gave away too much of the answer. The
-case was revised so the location code, staff identity and corrected time require
-cross-reading. Second, the browser acceptance test revealed that an offline
-participant could miss a partner's publication. Explicit online recovery and a
-fresh authorised snapshot made that test pass. The related change is
-[`bb98630`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/bb98630).
+The decisive intervention was questioning whether the proposed work matched the
+assignment. I explicitly raised the mismatch with my remembered repository and
+asked whether this crit and the final had a fixed topic. Checking that distinction
+established C8 as the start of the same final project, with an open topic and
+fixed requirements. That made Lost & Found a direction to develop across weeks.
+[`1a0ca88`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/1a0ca88)
+records a bounded case and its quality promises rather than an expanding feature
+list.
 
-Student prompt: choose the event you actually regard as your breakthrough. Explain
-what you had believed beforehand, what evidence challenged it, and what you chose
-to change. Do not turn the agent's observation into a claimed personal experience
-unless you have examined and understood it yourself.
+The implementation then exposed why a promise needs a check: an automated browser
+could miss a partner's evidence after being offline.
+[`bb98630`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/bb98630)
+added reconnection and an authorised state refresh. The agent found and corrected
+that failure; I do not present its test run as my own experience of playing.
 
 ## What did this work change about who I want to be as a software developer?
 
-Student prompt: after playing and reviewing the implementation, describe one
-genuine change in your standards or working habits. You might consider what it
-means to promise cooperation, to distinguish an attractive interface from a
-reliable interaction, or to make claims supported by tests and human observation.
-These are possibilities to reflect on, not conclusions attributed to you.
-
-No human playtest has been recorded. The app has now been deployed on Fly, with
-restart and redeployment persistence verified. See PROCESS.md for that evidence;
-do not turn automated browser checks into a claimed personal playtest.
+The standard I want to keep is to establish the task, repository and success
+condition before accepting implementation progress. My request for a distinctive
+website only becomes useful when its central claim can be explained: two people
+contribute evidence that neither folder supplies alone. I should judge each
+addition against that claim and ask what evidence supports it. This leaves a
+clear responsibility with me: choose and defend the purpose, while requiring the
+agent's work to leave a reviewable record of corrections.

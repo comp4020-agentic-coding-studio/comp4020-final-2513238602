@@ -33,8 +33,8 @@ C8 and C9 tags remain unchanged; later improvements do not backdate their state.
 | Both marking viewports | Full 1920×1080 and 390×844 playthroughs, keyboard and overflow checks, 14 combined axe scans | Automated accessibility is not a human usability study |
 | Slow or interrupted connection | Delayed writes, lost acknowledgements, 12-second timeout and failed conflict refresh | Uncertain saves retrieve state rather than automatically repeating |
 | Definition, rules and checks agree | README, CLAUDE, three ADRs and [test map](../spec/README.md) | Both players contributing and an earned conclusion require observed use |
-| Process portfolio | Rewritten C10 PROCESS and disclosed assisted reflection | Review the earlier C8/C9 reflection drafts; their past cutoff states stay frozen |
-| COMP8020 research | 706-word discussion draft and [source audit](research-source-audit.md) | Student must weigh the sources and defend the argument |
+| Process portfolio | Rewritten PROCESS, C10 reflection and substantive assisted C8/C9 retrospectives completed on 18 October | Student must review the positions; past cutoff states stay frozen |
+| COMP8020 research | 735-word review draft (whitespace count including headings and links), updated through the dated May 2026 survey, and [source audit](research-source-audit.md) | Student must read, weigh the sources and defend or revise the argument |
 
 The core required functionality is implemented. There is no mandatory additional
 feature simply for final credit. Remaining work is evaluation and a defensible
@@ -53,6 +53,9 @@ portfolio, plus corrections justified by what that evaluation reveals:
 Final is due **9 November 2026 at noon**. The same final repository serves C8–C10
 and A3. Passing `check:evidence` establishes file presence and resolving commit
 links; it does not certify authentic human experience or the quality of an argument.
+`pnpm check:portfolio` additionally requires all three reflections and checks the
+final documents' links, citations and length guidance. Completing a retrospective
+now improves the final portfolio without changing its earlier crit cutoff record.
 
 Sources: [C10](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/crits/10-fly-by-instruments/),
 [final brief](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/assessments/final-project/),

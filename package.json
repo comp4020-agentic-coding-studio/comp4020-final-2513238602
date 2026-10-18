@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit",
     "check": "pnpm typecheck && pnpm test",
     "check:evidence": "node scripts/check-evidence.ts",
+    "check:portfolio": "node scripts/check-portfolio.mjs",
     "test": "vitest run"
   },
   "dependencies": {

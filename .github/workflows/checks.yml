@@ -58,7 +58,9 @@ jobs:
         # skipped in the template repo itself, where PROCESS.md is still the
         # boilerplate every student replaces
         if: ${{ !github.event.repository.is_template }}
-        run: pnpm check:evidence
+        run: |
+          pnpm check:evidence
+          pnpm check:portfolio
       - name: Scan for committed secrets
         # Pinned in both halves (action SHA and scanner image) because this
         # runs in every repo in the course. Bump between semesters.
