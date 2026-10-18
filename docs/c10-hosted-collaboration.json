@@ -1,0 +1,64 @@
+{
+  "checkedAt": "2026-10-18T06:09:10.398Z",
+  "base": "https://comp4020-final-2513238602.fly.dev",
+  "browser": "Chromium",
+  "checks": [
+    "Two isolated browser identities join from the visible interface and receive different folders",
+    "Eight cross-browser publications preserve the reader’s selected document and identify the actor",
+    "Identical nicknames remain distinguishable by role in the latest action and persisted history",
+    "Simultaneous UI moves produce one saved order and one visible conflict; both browsers converge",
+    "Timeline moves render in the other browser without reload",
+    "Both cooperative viewports pass axe A/AA checks with the live action and full chronology visible",
+    "Partner completion dismisses an obsolete explanation dialog and reveals the shared conclusion",
+    "Both identities recover shared evidence and solution after refresh",
+    "All 11 request-to-observed-render measurements below 1000ms"
+  ],
+  "samples": [
+    {
+      "action": "publish",
+      "ms": 53
+    },
+    {
+      "action": "publish",
+      "ms": 70
+    },
+    {
+      "action": "publish",
+      "ms": 53
+    },
+    {
+      "action": "publish",
+      "ms": 53
+    },
+    {
+      "action": "publish",
+      "ms": 60
+    },
+    {
+      "action": "publish",
+      "ms": 54
+    },
+    {
+      "action": "publish",
+      "ms": 52
+    },
+    {
+      "action": "publish",
+      "ms": 51
+    },
+    {
+      "action": "board",
+      "ms": 51
+    },
+    {
+      "action": "board",
+      "ms": 54
+    },
+    {
+      "action": "theory",
+      "ms": 52
+    }
+  ],
+  "errors": [],
+  "limitMs": 1000
+}

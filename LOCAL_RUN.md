@@ -23,7 +23,8 @@ mise exec -- pnpm start
 
 - 单人：Open the case → 输入昵称 → Go solo → Begin investigation。
 - 双人同机：选择 Bring a partner，在 Invite your partner 中复制链接，
-  用另一个浏览器或独立无痕窗口打开。两人需要不同的 cookie 会话。
+  用另一个 Chrome 用户配置或另一款浏览器打开。普通窗口与无痕窗口也可以；
+  同一配置下的两个无痕窗口可能共用会话，不能当成两个身份。
 - localhost 链接只能在这台电脑使用。跨设备试玩请使用线上网站生成邀请。
 - 阅读线索后用 Add to shared desk 发布；调整右侧事件顺序；用
   Make your case 提交解释并引用两种文件夹的证据。
@@ -55,11 +56,30 @@ mise exec -- pnpm check:evidence
 服务端测试包括双人完整记录在重启后恢复；浏览器测试包括实时协作、
 断网补回线索、保存回执丢失及冲突恢复失败。CI 在部署前运行全部三组浏览器检查。
 
-## 提交前尚需完成
+## C10 课堂操作
 
-技术实现及验证见 [final-readiness](docs/final-readiness.md)。真实双人试玩、
-C10 课堂中看日志讲述他人操作、个人反思以及研究笔记的个人立场仍需学生完成。
-准备材料已提供，但不能把草稿或自动测试当成亲身经历。
+课前在本仓库打开 PowerShell，先运行：
+
+```powershell
+mise exec -- flyctl logs --json -a comp4020-final-2513238602 | mise exec -- node scripts/format-room-logs.mjs
+```
+
+只把线上网址给两位同学，让他们按页面完成开始、邀请与加入。你看终端，
+不操作自己的网页。用 room 区分案件，用 role 和 member 区分两人。
+`COMMITTED` 是已保存的操作；`REJECTED` 是拒绝，不能讲成保存成功。
+`published` 后面是哪条线索，`arranged` 后面是保存的新顺序。
+日志可能稍后才出现，空白不等于没有操作。原始日志备用命令和完整步骤见
+[C10 课堂指南](docs/crit-10-rehearsal.md)。
+
+## 提交状态与尚需完成
+
+本轮 C10 的技术实现、课前反思和过程说明已完成，验证记录见
+[C10 验证](docs/c10-verification.md)。反思已说明代理协助写作，依据真实开发
+记录，没有编写未发生的课堂体验。Liuru 截止为 10 月 21 日 13:30（悉尼）。
+
+真实双人试玩、课堂日志讲述，以及期末研究笔记和其余个人材料的审阅仍需
+完成；详见 [final-readiness](docs/final-readiness.md)。课堂观察可以之后补充，
+不移动已过截止时间的标签，也不把自动测试当成亲身经历。
 
 同一个 final 仓库用于 C8–C10 和期末；C7 RoomFlow 是另一份旧作业。
 不要因为本地已包含双人基础功能就声称 C9/C10 或期末全部达标。

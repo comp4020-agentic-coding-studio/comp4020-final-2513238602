@@ -1,71 +1,59 @@
-# Delivery status — 13 October 2026
+# Delivery status — 18 October 2026
 
 [Live app](https://comp4020-final-2513238602.fly.dev/) ·
 [Public repository](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602)
 
-Technical preparation is implemented and verified. The portfolio is **not yet a
-completed personal submission**: human evaluation, personal reflection and the
-student's critical reading judgement cannot be supplied by automated checks.
+The C10 implementation and assisted pre-crit reflection are complete. The release
+record and technical checks are in [C10 verification](c10-verification.md).
+The classroom exercise remains an in-person requirement; this is not a claim
+that the student has already narrated a pair's actions or finished the final
+portfolio's human evaluation.
 
-## Requirement and evidence
+## C10 requirements
 
-| Requirement | Current evidence | Remaining limit |
+| Requirement | Evidence | Boundary |
 | --- | --- | --- |
-| C9: real-time shared state | Separate browser contexts observe publication, chronology and resolution without reload; [hosted results](final-hosted-collaboration.json) | Tested connection, not every network |
-| C9: one argued multiplayer choice | [ADR 002](decisions/002-shared-desk-conflicts.md) compares three alternatives and acknowledges false conflicts | Student needs to understand and defend the choice |
-| C9: process and reflection | Rewritten PROCESS, incremental commits, `reflections/crit-9.md` evidence draft | Student's personal reflection still incomplete |
-| C10: distinct people and server authority | Role-bound browser sessions, private clue filtering, tests for outsiders and concurrent joins; [ADR 003](decisions/003-identities-permissions-and-logs.md) | No account recovery; invitation's second seat can be claimed by its recipient |
-| C10: server logs | Real-process tests match committed events to SQLite; live Fly logs observed with field and archive roles | Logs-only exercise with classmates has not happened |
-| Final: persists | Two restart cycles recover both players' evidence, timeline, failed attempt and solved state; [original hosted record](persistence-oct13-results.json) from 5 October restored on 13 October | Original cookies required; this does not test recovery after losing identity |
-| Final: both viewports | Full playthroughs at 1920×1080 and 390×844; 14 combined axe scans; keyboard and overflow checks | Automated accessibility is not a human usability study |
-| Final: slow or interrupted connection | [Hosted recovery results](resilience-hosted-results.json): delay, lost acknowledgement, timeout and failed conflict refresh | Uncertain writes are reconciled, never automatically repeated |
-| Final: definition, rules, tests agree | README 586 words, CLAUDE rules, HTTP/process/browser checks mapped in spec/README | “Enjoyable” and “both contribute” need observed use |
-| Final: process and research | PROCESS 1,017 words; research discussion draft 706 words; [source audit](research-source-audit.md) | Word counts include headings/status text; authorship and judgement remain the student's |
+| Distinct people changing shared state | Separate cookie jars, same-name actors identified by member and role; HTTP and two-browser tests | A nickname is a label, not an account |
+| Server-enforced permissions with reasons | [ADR 003](decisions/003-identities-permissions-and-logs.md), private-clue filtering, membership on snapshots, mutations and streams; forged-cookie and cross-room tests | No account recovery; invitation can claim an empty second seat |
+| Logs identify who did what | Committed events follow COMMIT; rejections are separate; terminal reader supports actual Fly multiline JSON | SQLite is durable history; stdout is not an exactly-once ledger |
+| Process and weekly reflection | Rewritten PROCESS, substantive [crit-10 reflection](../reflections/crit-10.md), meaningful staged commits | Assistance is disclosed; classroom observations are not invented |
+| URL-only class exercise | [Terminal commands and narration guide](crit-10-rehearsal.md) | Two classmates must actually participate at the session |
 
-## Meaningful release steps
+For Liuru, submit before **21 October 2026, 13:30 Sydney**, two hours before the
+15:30–17:00 session. The reflection belongs in that pre-cutoff submission. A later
+classroom account may record observations without moving the frozen cutoff tag.
+C8 and C9 tags remain unchanged; later improvements do not backdate their state.
 
-1. [`cff71d1`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/cff71d1)
-   makes partner actions visible, preserves reading and tests actual conflicts.
-   [CI and deployment passed](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/actions/runs/38333942653).
-2. [`dee5c79`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/dee5c79)
-   makes logs explain committed changes and rejected requests, with a permissions
-   argument. [CI and deployment passed](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/actions/runs/38334262358).
-3. [`47e2c37`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/47e2c37)
-   handles uncertain saves, broadens restart evidence and runs browser acceptance
-   before deploy. [CI and deployment passed](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/actions/runs/38334854444).
+## What carries forward to final
 
-The following documentation release consolidates the current argument and evidence;
-it does not rewrite these commits or any earlier cutoff state. Commit messages
-explain why each step exists, rather than merely announcing progress.
+| Requirement | Current evidence | Remaining judgement |
+| --- | --- | --- |
+| Multi-user and real-time | Separate-browser publication, chronology and resolution; stale competing moves are rejected explicitly | Test timings describe the measured run, not every network |
+| Persists | Two real process restarts recover both identities and a solved case; original 5 October hosted record still restores | Original cookies are required; losing identity is not recovered |
+| Both marking viewports | Full 1920×1080 and 390×844 playthroughs, keyboard and overflow checks, 14 combined axe scans | Automated accessibility is not a human usability study |
+| Slow or interrupted connection | Delayed writes, lost acknowledgements, 12-second timeout and failed conflict refresh | Uncertain saves retrieve state rather than automatically repeating |
+| Definition, rules and checks agree | README, CLAUDE, three ADRs and [test map](../spec/README.md) | Both players contributing and an earned conclusion require observed use |
+| Process portfolio | Rewritten C10 PROCESS and disclosed assisted reflection | Review the earlier C8/C9 reflection drafts; their past cutoff states stay frozen |
+| COMP8020 research | 706-word discussion draft and [source audit](research-source-audit.md) | Student must weigh the sources and defend the argument |
 
-## Work requiring the student
+The core required functionality is implemented. There is no mandatory additional
+feature simply for final credit. Remaining work is evaluation and a defensible
+portfolio, plus corrections justified by what that evaluation reveals:
 
-Use the [blind playtest protocol](playtest-protocol.md) with one first-time pair
-and record genuine confusion and reasoning. A preparation allowance is 30–45
-minutes for observation and notes; any resulting correction depends on what occurs.
-Timing correction, 18 October: C10 reflection must be submitted **before its
-cutoff**, based on actual development or pre-class rehearsal. The classroom
-[logs-only exercise](crit-10-rehearsal.md) happens later and can supply subsequent
-observations; it is not a reason to delay submission. The C10 reflection is now
-written with disclosed agent assistance from project instructions and recorded
-changes. C8/C9 personal work remains separate. C8's existing tag remains unchanged;
-a later revised reflection cannot backdate its release or repair a past cutoff.
+1. Run the [blind playtest](playtest-protocol.md) with a first-time pair; preserve
+   confusion and contrary observations. Allow 30–45 minutes for play and notes.
+2. Complete the actual C10 logs-only classroom exercise. Record a subsequent
+   account of what could and could not be inferred; do not rewrite the past.
+3. Review the personal portfolio and research argument against the original
+   sources. Allow roughly 2–4 hours for reading/revision and 1–2 hours for final
+   evidence review. These are planning allowances, not measured durations.
+4. Implement any resulting correction as a justified step, rerun affected checks,
+   and verify the final public commit and deployed site before the deadline.
 
-Review the README position and research sources, then revise the note in the
-student's own argument. Allow roughly 2–4 hours for reading/revision and 1–2 hours
-for reflections and final evidence review, plus any changes motivated by play.
-These are planning allowances, not measured completion times. There is no known
-remaining mandatory feature to add simply for final credit.
+Final is due **9 November 2026 at noon**. The same final repository serves C8–C10
+and A3. Passing `check:evidence` establishes file presence and resolving commit
+links; it does not certify authentic human experience or the quality of an argument.
 
-## Course boundaries
-
-C9 Liuru cutoff: 14 October 2026, 13:30 Sydney, two hours before the session.
-Final: 9 November 2026 at noon. The same final repository serves C8–C10 and A3.
-Do not create another prototype or deploy to C7. Preserve fixed course resources
-and existing tags. A passing `check:evidence` checks presence and commit links;
-it does not certify authentic reflection, reading or completion of a class exercise.
-
-Sources: [C9](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/crits/09-all-at-once/),
-[C10](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/crits/10-fly-by-instruments/),
+Sources: [C10](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/crits/10-fly-by-instruments/),
 [final brief](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/assessments/final-project/),
 [assessment mechanics](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/).

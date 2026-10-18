@@ -1,0 +1,30 @@
+{
+  "base": "https://comp4020-final-2513238602.fly.dev",
+  "exercisedAt": "2026-10-18T06:08:52.332Z",
+  "verifiedAt": "2026-10-18T06:09:19.408Z",
+  "committedActions": [
+    "opened",
+    "joined",
+    "published",
+    "published",
+    "arranged",
+    "hypothesis",
+    "solved"
+  ],
+  "committedCount": 7,
+  "rejectedStatuses": [
+    409,
+    403
+  ],
+  "checks": [
+    "Two separate same-name identities preserve member and role attribution",
+    "Repeat publication leaves version and saved time unchanged",
+    "Private partner clue rejected with 403",
+    "Stale timeline write rejected with 409",
+    "Real Fly multiline JSON formatted into seven committed actions and two rejections",
+    "Every committed action matched the persisted member, role, action and detail",
+    "Both original identities restore solved state and identical history",
+    "Formatted output omits nicknames, cookies and unknown detail"
+  ],
+  "limitations": "Automated HTTPS and real Fly log verification in an isolated test room; not a human classroom exercise. Local session cookies and raw logs are excluded from this report."
+}
