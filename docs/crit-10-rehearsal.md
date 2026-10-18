@@ -20,12 +20,26 @@ shares its invitation using the on-page control. The second chooses a nickname
 and joins. The student watches the terminal, not either player's screen:
 
 ```powershell
-mise exec -- flyctl logs -a comp4020-final-2513238602
+mise exec -- flyctl logs --json -a comp4020-final-2513238602 | mise exec -- node scripts/format-room-logs.mjs
 ```
 
 The terminal must run inside this checkout, where mise loads the ignored local
 token. Never paste that token, session cookies or the configuration file into a
 recording or reflection.
+
+The reader displays timestamp, room, role, member and a committed action or
+rejected HTTP request. It consumes Fly's consecutive multiline JSON envelopes;
+splitting on newlines and parsing each line loses these records. Start the tail
+before the pair arrives. Identify the new `opened` event and its room from the
+terminal, then the matching `joined` event. If unrelated rooms are noisy, restart
+the pipeline with `--room` followed by that 12-character room code after the
+reader filename. Do not use your own app UI to discover their actions.
+
+For a recent snapshot, add `--no-tail` to the Fly command. For the unfiltered
+diagnostic stream, use `mise exec -- flyctl logs -a comp4020-final-2513238602`.
+The reader intentionally omits startup, unknown records and unexpected detail;
+an empty display does not establish that nobody acted. Keep the raw command
+available if the format changes. Nothing here writes a second copy of raw logs.
 
 Interpret each event in order:
 
@@ -38,6 +52,13 @@ Interpret each event in order:
 - `outcome: rejected`, `status: 409`: a request lost a version race or the case
   was already closed. Do not describe it as a saved move. Its request ID allows
   correlation with an error response; it is not a member credential.
+
+`COMMITTED` means the database transaction finished; it does not claim the
+browser received its response. `REJECTED` is not a saved action. The formatter
+does not invent a reason for a rejection or print private clue text. A private
+read and a repeat of an already published clue produce no new shared event.
+If a saved detail is shown as omitted, consult the raw record and update the
+reader's allowlist alongside any deliberately changed case content.
 
 Use room + role + member to distinguish participants, even if their nicknames
 match. Ignore test rooms and health checks. The room code is present in the

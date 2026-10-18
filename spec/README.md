@@ -39,11 +39,16 @@ spec.
   solved case; both identities retain evidence, order, feedback and history.
 - `observability.test.ts`: captured real-process logs match committed activity,
   distinguish actors and rejected requests, and omit credentials and nicknames.
+- `identity-boundaries.test.ts`: same-name members, idempotent concurrent
+  publication, fabricated sessions and different roles across rooms.
+- `log-reader.test.ts`: real server actions, Fly's multiline JSON envelopes,
+  streaming chunk boundaries, bounded input, room filtering and safe output.
 - `scripts/check-browser.mjs`: full flows at 1920×1080 and 390×844, 12 axe scans,
   keyboard dialogs, failed publication and offline recovery.
 - `scripts/check-collaboration.mjs`: two independent browser contexts, eight
   publications, held simultaneous writes, chronology and resolution rendering,
-  selected-document preservation and two additional axe scans.
+  same-name actor attribution, selected-document preservation and two additional
+  axe scans.
 - `scripts/check-resilience.mjs`: delayed writes, missing acknowledgement after
   commit, unanswered request timeout and failed conflict recovery.
 
