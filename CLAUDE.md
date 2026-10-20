@@ -35,6 +35,13 @@
   repeat or an ordinary form resubmission disguised as recovery.
 - Validate request shape, length, origin and clue ownership server-side.
 - Keep clues readable as text and actions usable by keyboard and touch.
+- An incomplete explanation must say which citation folder is missing and how
+  to supply it; do not leave an unexplained disabled submit button. Only offer
+  to read clues the browser may access. Preserve the unsubmitted draft while
+  closing the dialog to review evidence or invite a partner; do not call it saved.
+- Test the incomplete citation path, not just a form prefilled with both folders:
+  incomplete submission sends no write, returning retains the draft, and a
+  partner's publication appears in the open form without resetting its choices.
 - Render the full README in server HTML at /readme/.
 - Log pseudonymous actions, not tokens or private clue contents.
 - Emit saved-action logs only after COMMIT, with room, member, role and saved

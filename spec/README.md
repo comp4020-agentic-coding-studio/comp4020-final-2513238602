@@ -60,6 +60,10 @@ spec.
 - `scripts/check-entry.mjs`: confirm identity before a write, recover lost creation
   and join responses without automatic duplicate writes, and require an explicit
   choice before opening another investigation.
+- `scripts/check-theory-guidance.mjs`: incomplete citations explain the next
+  action without posting an attempt; reviewing evidence or inviting a partner
+  retains the unsubmitted draft, and newly shared evidence appears in the open
+  form. Desktop and phone checks include two additional axe scans.
 
 CI runs all of these before deploying. Browser timings measure request-to-visible
 state on the tested connection. They do not establish worldwide latency, puzzle

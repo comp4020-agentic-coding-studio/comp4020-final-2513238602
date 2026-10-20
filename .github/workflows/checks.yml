@@ -53,6 +53,7 @@ jobs:
           pnpm check:resilience
           pnpm check:returning
           pnpm check:entry
+          pnpm check:theory
         env:
           APP_URL: http://localhost:8080
           BROWSER_CHANNEL: chromium

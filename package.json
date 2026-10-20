@@ -12,6 +12,7 @@
     "check:resilience": "node scripts/check-resilience.mjs",
     "check:returning": "node scripts/check-returning.mjs",
     "check:entry": "node scripts/check-entry.mjs",
+    "check:theory": "node scripts/check-theory-guidance.mjs",
     "typecheck": "tsc --noEmit",
     "check": "pnpm typecheck && pnpm test",
     "check:evidence": "node scripts/check-evidence.ts",
