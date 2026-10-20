@@ -124,6 +124,14 @@ The primary agent integrated these parallel fixes and ran the combined checks:
 replay. The original October 5 identity and earlier solved duo survived redeployment;
 [verification](docs/final-verification.md) separates these checks from human use.
 
+On October 20, the student's screenshot exposed a disabled explanation button
+with only Field evidence selected.
+[`352167b`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/352167b)
+replaces that dead end with missing-evidence guidance and retains drafts during
+review. Earlier tests populated both folders before submitting, missing this path.
+The new browser regression covers incomplete citations and live partner publication;
+this reported usability problem does not establish broader playtest findings.
+
 ## Release and remaining judgement
 
 Each coherent correction is uploaded with its reason and validation. Public main

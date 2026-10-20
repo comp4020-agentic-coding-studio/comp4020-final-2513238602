@@ -51,6 +51,7 @@ mise exec -- pnpm check:collaboration
 mise exec -- pnpm check:resilience
 mise exec -- pnpm check:returning
 mise exec -- pnpm check:entry
+mise exec -- pnpm check:theory
 mise exec -- pnpm check:evidence
 mise exec -- pnpm check:portfolio
 ```
@@ -58,9 +59,9 @@ mise exec -- pnpm check:portfolio
 浏览器脚本默认使用 Microsoft Edge。Linux CI 会安装 Chromium，并设置
 `BROWSER_CHANNEL=chromium`。输出在被忽略的 `evidence/`；原始会话不提交。
 需要公开的脱敏结果和截图，经检查后单独放入 `docs/`。
-五组浏览器检查分别覆盖完整试玩与两种视口、双人实时协作、调查中的网络恢复、
-返回首页找回旧调查，以及创建或加入时丢失保存回执。`check` 另含真实 HTTP、
-进程重启和日志检查。CI 配置在部署前运行这五组浏览器检查及两个材料检查；
+六组浏览器检查分别覆盖完整试玩与两种视口、双人实时协作、调查中的网络恢复、
+返回首页找回旧调查、创建或加入时丢失保存回执，以及缺证据时的提交引导和草稿保留。`check` 另含真实 HTTP、
+进程重启和日志检查。CI 配置在部署前运行这六组浏览器检查及两个材料检查；
 当前运行结果以 CI 和 [验收记录](docs/final-readiness.md) 为准。
 
 上面的 `APP_URL` 让 `check:returning` 复用已启动的测试服务，不主动重启它。

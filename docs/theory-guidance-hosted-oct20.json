@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-10-20T10:30:47.821Z",
+  "base": "https://comp4020-final-2513238602.fly.dev",
+  "checks": [
+    "The one-field-clue explanation at 1920px exposes its missing archive evidence, has no horizontal overflow and passes axe A/AA",
+    "Solo at 1920px exits the shared-only filter, focuses an archive document and returns with all four answers and F1 retained; only the supported attempt is saved",
+    "The one-field-clue explanation at 390px exposes its missing archive evidence, has no horizontal overflow and passes axe A/AA",
+    "Solo at 390px exits the shared-only filter, focuses an archive document and returns with all four answers and F1 retained; only the supported attempt is saved",
+    "An unfilled cooperative folder offers the real invitation; after a partner joins, the open draft explains that the partner must share and keeps private evidence unavailable",
+    "A partner publication appears through the live connection in the same open explanation dialog without navigation or lost draft; selecting it permits one saved attempt with server feedback",
+    "If the partner resolves the case during evidence review, the live solved state removes the obsolete return-to-explanation action"
+  ],
+  "errors": [],
+  "axeReports": [
+    {
+      "label": "Incomplete explanation 1920",
+      "violations": []
+    },
+    {
+      "label": "Incomplete explanation 390",
+      "violations": []
+    }
+  ]
+}
