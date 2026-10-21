@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-10-21T01:22:44.372Z",
+  "base": "http://localhost:8084",
+  "scope": "full",
+  "passed": true,
+  "checks": [
+    "Overlapping confirmed sorts at 25% and 0% preserve both rows' visible positions within 5px; zero-distance reversal leaves no active animation",
+    "Desktop motion: confirmed publication/order, stable reading/focus/draft DOM, duplicate updates, one-time solution, quiet reopening and static closable receipt",
+    "Reduced motion desktop + touch phone: confirmed publication/order, stable reading/focus/draft DOM, duplicate updates, one-time solution, quiet reopening and static closable receipt",
+    "Touch phone keeps the home paper static even without reduced motion, with no horizontal overflow"
+  ],
+  "screenshots": [
+    "screenshots/motion-desk-1920.png",
+    "screenshots/motion-solved-390.png",
+    "screenshots/motion-home-390.png",
+    "screenshots/motion-record-390.png"
+  ],
+  "errors": []
+}

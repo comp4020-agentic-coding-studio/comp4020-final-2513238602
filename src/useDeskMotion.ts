@@ -54,12 +54,15 @@ export function useDeskMotion(root: RefObject<HTMLElement | null>, room: RoomSta
     if (before.status === 'open' && room.status === 'solved') setCelebrate(true);
     if (document.hidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const play = (element: HTMLElement, frames: Keyframe[], duration: number) => {
-      if (typeof element.animate !== 'function') return;
-      // Replace our own feedback on this element if a second real action arrives.
+    const cancelElement = (element: HTMLElement) => {
       animations.current.forEach(animation => {
         if ((animation.effect as KeyframeEffect | null)?.target === element) animation.cancel();
       });
+    };
+    const play = (element: HTMLElement, frames: Keyframe[], duration: number) => {
+      if (typeof element.animate !== 'function') return;
+      // Replace our own feedback on this element if a second real action arrives.
+      cancelElement(element);
       const animation = element.animate(frames, {duration, easing: 'cubic-bezier(.2,.7,.3,1)'});
       animations.current.add(animation);
       void animation.finished.then(() => animations.current.delete(animation), () => animations.current.delete(animation));
@@ -88,7 +91,7 @@ export function useDeskMotion(root: RefObject<HTMLElement | null>, room: RoomSta
         const distance = oldTop === undefined ? 0 : oldTop + inFlight - newTop;
         if (Math.abs(distance) > .5) {
           play(row, [{transform: `translateY(${distance}px)`}, {transform: 'none'}], 220);
-        }
+        } else cancelElement(row); // A reversal may already be at its new target.
       }
     }
   });

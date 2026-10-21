@@ -38,5 +38,8 @@ Newly confirmed shared clues receive one brief paper-colour emphasis; the latest
 shared action fades in without taking focus. Chronology rows move only when the
 accepted server order changes. Repeated snapshots, old cases and private reading
 must not replay shared feedback. Preserve row identity and up/down controls.
+An original SVG engraved seal lands once when an open case becomes solved. Old
+case records display the static seal. The conclusion is immediately available;
+no answer, action or focus change waits for the 350 ms decorative stamp.
 Decorative layers never capture input. Keep the existing fonts and case image;
 do not add remote demo assets, animation runtimes or a WebGL canvas to read clues.

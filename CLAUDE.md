@@ -35,6 +35,11 @@
   repeat or an ordinary form resubmission disguised as recovery.
 - Validate request shape, length, origin and clue ownership server-side.
 - Keep clues readable as text and actions usable by keyboard and touch.
+- Motion follows accepted server state: animate new publications/activity and
+  changed chronology once, never a pending write or repeated snapshot. Keep the
+  selected article, explanation form and keyed timeline rows mounted. Carry an
+  in-flight row offset into a second sort. An open-to-solved transition may stamp
+  once; old-case loading stays quiet. Reduced motion and hidden pages stop effects.
 - An incomplete explanation must say which citation folder is missing and how
   to supply it; do not leave an unexplained disabled submit button. Only offer
   to read clues the browser may access. Preserve the unsubmitted draft while

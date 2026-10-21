@@ -134,6 +134,8 @@ this reported usability problem does not establish broader playtest findings.
 
 ## Release and remaining judgement
 
+The [motion pass](docs/motion-design.md) also makes confirmed collaboration visible.
+
 Each coherent correction is uploaded with its reason and validation. Public main
 uses course CI and Fly deployment; secrets remain ignored.
 [`f741735`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/f741735)

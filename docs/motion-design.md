@@ -45,3 +45,33 @@ The dedicated motion browser check exercises held write requests, two real
 identities, repeated live events, unchanged article/form DOM, retained answers,
 reduced motion and touch layouts. The existing collaboration check also passed:
 all 11 local publication/order/solution observations were below one second.
+
+## Engraved closure and regression gate
+
+The original SVG seal uses fine rosette lines and the existing archival red. It
+lands once after an open-to-solved server transition; a previously solved room
+loads a static seal. The case record repeats the static mark above its readable
+conclusion. Closing/reopening the record, duplicate updates, reduced motion and
+hidden pages never delay the explanation or manufacture a fresh success.
+
+`pnpm check:motion` now runs in the deployment check job. The regression pauses
+two actual writes before the server receives them, verifies both real identities,
+and holds the first received sort animation at 25% and 0% to test an overlapping
+second confirmation deterministically. Both row positions stay continuous within
+5px; a zero-distance reversal cancels the old animation instead of drifting away.
+It also verifies same-node article/form/rows, all draft selections, repeated SSE,
+idempotent publication, one-time closure, quiet reloads and static touch/reduced
+motion. [Local results](motion-local-oct21.json) contain no identities or secrets.
+Desktop/mobile complete playthrough and incomplete-citation checks also passed,
+including their accessibility scans. No new dependencies were added.
+
+The first two coherent changes were pushed independently:
+[paper interaction](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/3e00a1b)
+and [confirmed collaboration](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/b3d6b7f).
+The seal, completed regression gate and this evidence form the final step.
+
+Screenshots show layout, not motion timing:
+[desktop desk](screenshots/motion-desk-1920.png),
+[mobile case closed](screenshots/motion-solved-390.png), and
+[mobile entrance](screenshots/motion-home-390.png), and the
+[mobile conclusion record](screenshots/motion-record-390.png).

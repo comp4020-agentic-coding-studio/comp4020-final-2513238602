@@ -54,6 +54,7 @@ jobs:
           pnpm check:returning
           pnpm check:entry
           pnpm check:theory
+          pnpm check:motion
         env:
           APP_URL: http://localhost:8080
           BROWSER_CHANNEL: chromium

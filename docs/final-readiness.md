@@ -1,4 +1,4 @@
-# Final readiness — 20 October 2026
+# Final readiness — 21 October 2026
 
 [Live app](https://comp4020-final-2513238602.fly.dev/) ·
 [Public repository](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602)
@@ -15,6 +15,11 @@ The [follow-up correction](theory-guidance-oct20.md) makes missing citations
 actionable and retains the draft while gathering evidence. This is reported
 usability feedback, not a completed blind playtest or classroom exercise.
 
+The [October 21 motion pass](motion-design.md) adds paper interactions, feedback
+for confirmed shared actions and a one-time engraved seal. Its dedicated browser
+regression checks pending writes, duplicate live events, continuous sorting,
+retained drafts and reduced-motion/touch behaviour before deployment.
+
 ## Requirement-to-evidence map
 
 | Requirement | Current evidence | Limit or remaining judgement |
@@ -23,7 +28,7 @@ usability feedback, not a completed blind playtest or classroom exercise.
 | Multi-user | Separate browser identities, private folders, shared reasoning and attributed actions; same-name and permissions regressions | A browser cookie owns a seat; nicknames are labels, and clearing cookies loses access |
 | Real-time | Two-browser publication, chronology and resolution checks, with competing writes explicitly rejected | Hosted timings describe the measured run and connection |
 | Persistence | Real server restarts, the original 5 October hosted record, and both original identities of the earlier solved duo | Saved records survive redeployment; this is not account recovery |
-| Both marking viewports | 1920×1080 and 390×844 complete playthroughs, keyboard/overflow checks and 18 axe scans across six CI browser suites | Automated accessibility cannot establish human ease of use |
+| Both marking viewports | 1920×1080 and 390×844 complete playthroughs, keyboard/overflow checks and 18 axe scans; seven CI browser suites including motion checks | Automated accessibility cannot establish human ease of use |
 | Concurrent and interrupted use | Stale-write, slow-save, missing-response, reconnect, entry and history recovery checks | A write without acknowledgement stays uncertain until saved state can be checked |
 | Returning to saved work | Thirteen investigations remain reachable; immutable pagination avoids omissions when a partner updates an unseen room | Files are ordered by creation, not latest activity; new files appear on a fresh first-page read |
 | Argument, rules and checks agree | 585-word README served in full at /readme/, CLAUDE rules, three ADRs and [test map](../spec/README.md) | Both people contributing an inference and an earned conclusion still need human judgement |
