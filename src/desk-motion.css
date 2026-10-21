@@ -1,0 +1,14 @@
+/* Stable list geometry lets confirmed order changes move the same paper rows. */
+.timeline-list { position: relative; }
+.timeline-list > li { position: relative; }
+
+/* Lift the selected index, not the click target or the text being read. */
+.clue-button.active .clue-tag {
+  background: var(--white);
+  box-shadow: 0 2px 0 #d9d1c3;
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clue-button.active .clue-tag { transform: none; }
+}

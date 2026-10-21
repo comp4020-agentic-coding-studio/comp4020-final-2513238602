@@ -34,5 +34,9 @@ The photograph leans only under a fine hover pointer; touch keeps the paper stil
 Selecting another clue briefly reveals its sheet without remounting the document
 or hiding readable text. Shared updates must not replay that selection animation.
 All motion is optional: reduced-motion preferences and hidden tabs stop it.
+Newly confirmed shared clues receive one brief paper-colour emphasis; the latest
+shared action fades in without taking focus. Chronology rows move only when the
+accepted server order changes. Repeated snapshots, old cases and private reading
+must not replay shared feedback. Preserve row identity and up/down controls.
 Decorative layers never capture input. Keep the existing fonts and case image;
 do not add remote demo assets, animation runtimes or a WebGL canvas to read clues.

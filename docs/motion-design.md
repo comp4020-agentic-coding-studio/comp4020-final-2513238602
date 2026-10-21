@@ -26,3 +26,22 @@ Local production build, TypeScript and all 32 HTTP/unit checks passed against an
 isolated service. The existing incomplete-citation browser check passed at 1920px
 and 390px, including live partner publication, draft retention and two axe scans.
 These are automated checks, not human playtesting or evidence of improved enjoyment.
+
+## Confirmed collaboration
+
+Newly published clue IDs briefly highlight on the desk and in the current
+document's shared label. A new activity ID draws attention to the existing actor
+message. Chronology changes use the same keyed rows and animate only after an
+accepted server snapshot changes their order; no speculative success is shown.
+Repeated snapshots and idempotent publications produce no new feedback. Focus,
+the selected document and the explanation draft stay in place.
+
+Review found that a second sort within 220 ms could jump to the previous motion's
+endpoint. The replacement motion now includes the row's current visual offset
+before cancelling the previous animation. Resize, hidden-page and reduced-motion
+handling keep decoration separate from the confirmed state.
+
+The dedicated motion browser check exercises held write requests, two real
+identities, repeated live events, unchanged article/form DOM, retained answers,
+reduced motion and touch layouts. The existing collaboration check also passed:
+all 11 local publication/order/solution observations were below one second.
