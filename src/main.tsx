@@ -7,6 +7,7 @@ import '@fontsource/dm-sans/latin-600.css';
 import '@fontsource/libre-caslon-display/latin-400.css';
 import '@fontsource/ibm-plex-mono/latin-400.css';
 import './style.css';
+import { PaperSurface, useDocumentReveal } from './PaperSurface.tsx';
 import type { Clue, Investigation, InvestigationPage, Mode, RoomState, Theory } from '../shared/types.ts';
 
 class ApiError extends Error { status: number; constructor(status: number, message: string) { super(message); this.status=status; } }
@@ -116,7 +117,7 @@ function Home(){
   const [start,setStart]=useState(false);
   return <><a className="skip" href="#main">Skip to content</a><Header/><main id="main">
     <section className="hero shell"><div className="hero-copy"><p className="eyebrow"><span className="tiny-rule"/> A SHORT COOPERATIVE MYSTERY</p><h1>Something’s<br/>missing.</h1><p className="hero-description">An empty plinth. Eight pieces of evidence.<br className="desktop-break"/> One story to put back together.</p><div className="hero-actions"><button className="button primary" onClick={()=>setStart(true)}>Open the case <ArrowUpRight size={21}/></button><a className="text-link" href="#how">How it works <ArrowRight size={17}/></a></div></div>
-    <div className="hero-art"><div className="photo-sheet"><img src="/images/gallery.webp" alt="An empty plinth in a quiet gallery, with blue light falling on the wall." width="1536" height="1024" fetchPriority="high"/><div className="photo-caption"><span>GALLERY 2</span><span>17:40 / BEFORE OPENING</span></div></div><div className="case-tab"><span>CASE FILE</span><strong>001</strong></div><div className="art-note"><span className="note-arrow">↳</span> Everything is here.<br/>Except the obvious.</div></div></section>
+    <div className="hero-art"><PaperSurface><div className="photo-sheet"><img src="/images/gallery.webp" alt="An empty plinth in a quiet gallery, with blue light falling on the wall." width="1536" height="1024" fetchPriority="high"/><div className="photo-caption"><span>GALLERY 2</span><span>17:40 / BEFORE OPENING</span></div></div></PaperSurface><div className="case-tab"><span>CASE FILE</span><strong>001</strong></div><div className="art-note"><span className="note-arrow">↳</span> Everything is here.<br/>Except the obvious.</div></div></section>
     <section className="case-intro shell" id="case"><div className="case-number" aria-hidden="true">01</div><div className="case-heading"><p className="label">THE OPEN FILE</p><h2>The Blue Hour</h2><p>An exhibition is about to open. Its centrepiece has vanished. <br/>A camera, a clock and a signed note tell different stories. Or do they?</p></div><dl className="case-facts"><div><dt>PLAYERS</dt><dd>1 or 2</dd></div><div><dt>PLAY TIME</dt><dd>About 5 min</dd></div><div><dt>YOUR TASK</dt><dd>Follow the evidence</dd></div></dl></section>
     <SavedInvestigations/>
     <section className="how-section shell" id="how"><div><span className="label">A LITTLE CURIOSITY GOES A LONG WAY</span><h2>Two perspectives.<br/>One discovery.</h2><p>Play at the same table, or talk over a call.<br/>Your partner might have the detail you’re missing.</p></div><ol className="how-list"><li><BookOpen size={25}/><div><h3>Open your folder</h3><p>Read the records. In a pair, each person starts with a different half of the evidence.</p></div></li><li><PaperPlaneTilt size={25}/><div><h3>Put your clues together</h3><p>Share what matters and rebuild the sequence of events on your investigation desk.</p></div></li><li><MagnifyingGlass size={25}/><div><h3>Make your case</h3><p>Explain what happened, cite your evidence, and see whether the story holds up.</p></div></li></ol></section>
@@ -126,7 +127,8 @@ function Home(){
 function RoutePlan(){return <div className="route-plan" role="img" aria-label="Gallery 2 connects north to the North Store, south to the conservation studio, and west to the loading bay."><div className="map-north">N ↑</div><div className="map-store"><span>NORTH STORE</span><small>Controlled light / rack C</small></div><div className="map-connector"/><div className="map-gallery">GALLERY 2</div><div className="map-route-note">North corridor</div><div className="map-other"><span>← Loading bay</span><span>↓ Conservation studio</span></div></div>}
 
 function EvidenceDocument({clue,onPublish,busy,solved}:{clue:Clue;onPublish:()=>void;busy:boolean;solved:boolean}){
-  return <article className="evidence-document" key={clue.id} aria-labelledby="document-title"><div className="document-meta"><span>{clue.kind}</span><span className="evidence-id">{clue.id}</span></div><p className="document-label">{clue.label}</p><h2 id="document-title">{clue.title}</h2>
+  const documentRef=useRef<HTMLElement>(null);useDocumentReveal(documentRef,clue.id);
+  return <article ref={documentRef} className="evidence-document" aria-labelledby="document-title"><div className="document-meta"><span>{clue.kind}</span><span className="evidence-id">{clue.id}</span></div><p className="document-label">{clue.label}</p><h2 id="document-title">{clue.title}</h2>
     {clue.image&&<img className="document-photo" src={clue.image} alt="The empty gallery plinth. No broken glass or disturbed fittings are visible." width="1536" height="1024"/>}
     {clue.id==='F4'&&<RoutePlan/>}
     <div className="document-body">{clue.body.map((p,i)=><p key={i}>{p}</p>)}</div>

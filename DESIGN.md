@@ -23,4 +23,16 @@ Sorting always has labeled up/down buttons. Status uses text, not color alone.
 - Taste Skill: https://github.com/Leonxlnx/taste-skill (entrance only).
 - Impeccable: https://github.com/pbakaus/impeccable (critique/audit/polish workflow).
 - Vercel: https://github.com/vercel-labs/web-interface-guidelines (interaction audit).
+- ThreeUI Community: https://github.com/MengTo/threeui (Sketchbook paper depth,
+  Koi Studies layered sheets, and Engraved Certificate linework). These are visual
+  references for original React/CSS/SVG work, not embedded demos or copied assets.
 These are design inputs, not substitutes for inspecting the rendered application.
+
+## Motion contract
+
+The photograph leans only under a fine hover pointer; touch keeps the paper still.
+Selecting another clue briefly reveals its sheet without remounting the document
+or hiding readable text. Shared updates must not replay that selection animation.
+All motion is optional: reduced-motion preferences and hidden tabs stop it.
+Decorative layers never capture input. Keep the existing fonts and case image;
+do not add remote demo assets, animation runtimes or a WebGL canvas to read clues.

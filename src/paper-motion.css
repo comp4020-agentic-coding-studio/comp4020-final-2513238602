@@ -1,0 +1,45 @@
+.paper-surface {
+  min-width: 0;
+  max-width: 100%;
+  perspective: 1100px;
+}
+
+.paper-surface__sheet {
+  position: relative;
+  isolation: isolate;
+  max-width: 100%;
+  transform-origin: 50% 50%;
+}
+
+.paper-surface__sheet::before {
+  content: '';
+  position: absolute;
+  inset: -6px 9px 8px -10px;
+  z-index: -1;
+  background: #e6e2d7;
+  transform: rotate(-3deg);
+  pointer-events: none;
+}
+
+.paper-surface .photo-sheet::before {
+  content: none;
+}
+
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .paper-surface__sheet {
+    transform: rotateX(var(--paper-tilt-x, 0deg)) rotateY(var(--paper-tilt-y, 0deg));
+    transition: transform 180ms ease-out;
+  }
+
+  .paper-surface[data-tilting] > .paper-surface__sheet {
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse), (max-width: 767px) {
+  .paper-surface__sheet {
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+}
