@@ -33,7 +33,8 @@ export function createAfterHours(db:DatabaseSync, {fail,id,now,log}:Helpers) {
       clues:objects.filter(o=>p.discoveries[o.id]&&(p.shared[o.id]||p.assignments[o.duty]===me.id)).map(o=>({id:o.id,duty:o.duty,...evidence[o.id],discoveredBy:p.discoveries[o.id],sharedBy:p.shared[o.id]})),
       questions:rules.filter(q=>q.act<=stage).map(q=>({id:q.id,act:q.act,title:q.title,prompt:q.prompt,options:q.options,accepted:p.accepted[q.id]??null,hintLevel:p.hints[q.id]??0,hint:p.hints[q.id]?q.hints[p.hints[q.id]-1]:null})),
       notes:p.notes,order:JSON.parse(String(r.ordering)),events:chronology,attempts:Number(one('SELECT COUNT(*) AS n FROM attempts WHERE room=?',code)!.n),feedback:r.feedback as string|null,
-      activity:all('SELECT a.id,a.member AS memberId,m.name,a.action,a.detail,a.at FROM activity a JOIN members m ON m.id=a.member WHERE a.room=? ORDER BY a.id DESC LIMIT 80',code) as unknown as GameState['activity'],
+      activity:all('SELECT a.id,a.member AS memberId,m.name,m.role AS seat,a.action,a.detail,a.at FROM activity a JOIN members m ON m.id=a.member WHERE a.room=? ORDER BY a.id DESC LIMIT 80',code) as unknown as GameState['activity'],
+      contributions:members(code).map(m=>({memberId:m.id,discoveries:Object.values(p.discoveries).filter(id=>id===m.id).length,shared:Object.values(p.shared).filter(id=>id===m.id).length,deductions:Object.values(p.accepted).filter(a=>a.by===m.id).length})),
       solution:r.status==='solved'?ending:null,
     };
   }

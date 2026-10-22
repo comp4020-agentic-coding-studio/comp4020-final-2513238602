@@ -31,11 +31,12 @@ export const objects: SceneObject[] = [
 export type Evidence = { id: string; title: string; duty: Duty; body: string[]; discoveredBy: string; sharedBy?: string };
 export type Question = { id: string; act: number; title: string; prompt: string; options: { id: string; label: string }[]; accepted: null | { answer: string; evidence: string[]; by: string }; hintLevel: number; hint: string | null };
 export type GameMember = { id: string; name: string; seat: Duty };
-export type GameActivity = { id: number; memberId: string; name: string; action: string; detail: string; at: string };
+export type GameActivity = { id: number; memberId: string; name: string; seat: Duty; action: string; detail: string; at: string };
 export type GameState = {
   code: string; caseId: 'after-hours-v1'; seed: number; version: number; status: 'open' | 'solved'; act: number; createdAt: string; updatedAt: string;
   me: GameMember; members: GameMember[]; assignments: Partial<Record<Duty, string>>;
   clues: Evidence[]; questions: Question[]; notes: { id: number; memberId: string; name: string; clue: string; text: string }[];
   activity: GameActivity[]; attempts: number; feedback: string | null;
+  contributions: { memberId: string; discoveries: number; shared: number; deductions: number }[];
   order: string[]; events: { id: string; title: string }[]; solution: string[] | null;
 };

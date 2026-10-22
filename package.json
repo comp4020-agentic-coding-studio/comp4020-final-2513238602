@@ -19,7 +19,8 @@
     "check:evidence": "node scripts/check-evidence.ts",
     "check:portfolio": "node scripts/check-portfolio.mjs",
     "test": "vitest run",
-    "check:after-hours": "node scripts/check-after-hours.mjs"
+    "check:after-hours": "node scripts/check-after-hours.mjs",
+    "check:after-hours-party": "node scripts/check-after-hours-party.mjs"
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.2.8",
