@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-22T10:04:54.969Z",
+  "passed": true,
+  "failure": null,
+  "base": "https://comp4020-final-2513238602.fly.dev",
+  "checks": [
+    "A committed creation with a lost response creates one room and returns through the saved case file",
+    "A lost join reply recovers the saved seat with a read, without a second join",
+    "A touch phone can scroll over the 3D scene; labelled buttons provide rotation",
+    "An unforwarded inspection shows no discovery; reduced-motion 3D stops drawing after confirmed state settles",
+    "A lost publication acknowledgement reconciles the committed record without an automatic repeat",
+    "Real WebGL context loss leaves a keyboard-playable object view that can still save and share evidence"
+  ],
+  "errors": []
+}

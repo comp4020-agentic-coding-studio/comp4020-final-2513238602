@@ -1,0 +1,26 @@
+{
+  "description": "These raw traces contain session data and are not committed or public. The student can inspect the originals locally in the ignored directory.",
+  "localDirectory": "data/player-simulation-2026-10-22-fixed-hosted",
+  "files": [
+    {
+      "name": "private-trace-seat-1.zip",
+      "sha256": "3a8980b59c8822a386a8c57b09f7e9a2055c88cb25ba43ec6d8d9938188f5358",
+      "bytes": 6434603
+    },
+    {
+      "name": "private-trace-seat-2.zip",
+      "sha256": "a625c1ed22ce446aefabf9a54ea9f120ff6592942f5ef1ccbebce4059208dce4",
+      "bytes": 5930461
+    },
+    {
+      "name": "private-trace-seat-3.zip",
+      "sha256": "2dc9353f2c9fb2391e87ac7604676a480bbe79bda65dbde678700c10c98fb698",
+      "bytes": 9180096
+    },
+    {
+      "name": "private-trace-seat-4.zip",
+      "sha256": "38c3e6402dbc8b5b100ac7e70f02fc0c51ed945dd065ce328307435d2783631c",
+      "bytes": 5137835
+    }
+  ]
+}

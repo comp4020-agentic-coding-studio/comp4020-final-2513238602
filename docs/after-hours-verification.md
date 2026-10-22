@@ -102,3 +102,12 @@ Scenery is seeded; truth is authored. The mystery is not endlessly replayable.
 
 The [readiness map](final-readiness.md) and [personal guide](final-personal-review.md)
 identify what still requires the student's own experience and judgement.
+
+## Subsequent simulated-player audit
+
+At the student's request, the [22 October multi-player simulation report](simulations/2026-10-22/README.md)
+records a full four-identity case, timestamped steps, discussion, offline handover,
+UI-driven conflicting chronology writes, screenshots and sanitized server actions.
+Visual review found a stale warning surviving a teammate's successful closure;
+the report retains the failed regression and the correction. These scripted actors
+know the answers and do not constitute human playtesting.

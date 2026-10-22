@@ -1,0 +1,81 @@
+{
+  "createdAt": "2026-10-22T10:16:31.365Z",
+  "files": [
+    {
+      "name": "duo-after.json",
+      "sha256": "0cc0f64b0491ae906a17d338bd1068516ec44b89ae9992b1679ceb16071ca72b"
+    },
+    {
+      "name": "duo-before.json",
+      "sha256": "9b658042088b3bdfb77a3529ba34b94d272b89b7a704538a539d7e961dc75306"
+    },
+    {
+      "name": "four-player-after.json",
+      "sha256": "ca0fd33da3024abdf938d18ae72777b8178b9747b8ddf0b47bb79507a34a432d"
+    },
+    {
+      "name": "four-player-before.json",
+      "sha256": "d2f8350bfddddba0bbb5ffa16f2c4bd5b10fe0b29ec2991d0b8c2643010515bf"
+    },
+    {
+      "name": "harness-attempt-1.json",
+      "sha256": "f6b975c215cb3f433cc23f258b575b7c4f761e1345f17e229f26590de48748ef"
+    },
+    {
+      "name": "harness-attempt-2.json",
+      "sha256": "77f975f531dcf4f4d7b441187b7758ef964d892bf74f0812378d3e9c87eb8150"
+    },
+    {
+      "name": "journal.jsonl",
+      "sha256": "77a23ce8753349af821b6713c4a6bc70f657a3d57d2c414f14afc429d794c690"
+    },
+    {
+      "name": "party-boundaries.json",
+      "sha256": "5c7f37948acc03b99b753a52d415e53cbea7adcdd8c4063283dd20513d0e3d24"
+    },
+    {
+      "name": "private-trace-manifest.json",
+      "sha256": "622699eb3d26d9ba028ea35b1aee4b278f909b933f7a3ee10b928e69cc5f922b"
+    },
+    {
+      "name": "recovery.json",
+      "sha256": "cb366a7d20417333be14b429fe03a10e52758fb85e6db4b932e9d1802745f968"
+    },
+    {
+      "name": "server-actions.json",
+      "sha256": "797345aad8f22d244fb75c383b44e18fc32766aaeadad7b4c95ad86c9302b676"
+    },
+    {
+      "name": "warning-regression-before.json",
+      "sha256": "8c5fee1f43356ddab837175c4f3b58c46ad248384480e157770e90e9332c3aed"
+    },
+    {
+      "name": "screenshots/after-clean-conclusion.png",
+      "sha256": "36e8dd9933b996824bd3d57cd785bfa6c5d06b18b6763d3311d43914b3a9a792"
+    },
+    {
+      "name": "screenshots/before-stale-warning.png",
+      "sha256": "5234d82655dbf2096b2fe3f52999a50600d0ebb899229b248eaa312fbb012ed2"
+    },
+    {
+      "name": "screenshots/conclusion-phone.png",
+      "sha256": "bf125a1e7a6484bbbe9d839273fe41195dc466661c31072d4fdbb71ff7977d43"
+    },
+    {
+      "name": "screenshots/concurrent-move-feedback.png",
+      "sha256": "dc3430e0e573cf8eef3759601b1b9e28e3af549e3975f022dc4d5e4277a94b70"
+    },
+    {
+      "name": "screenshots/four-player-desktop.png",
+      "sha256": "033eeaf8f81f1d9ed7bc92b3c2ebd6ebe03b226a2ddcba3690c28fa4a770785a"
+    },
+    {
+      "name": "screenshots/missing-citation-guidance.png",
+      "sha256": "5e0a9c6cb0fae576f845663c8a12ed34f2262da2c150696f8290820c754f885c"
+    },
+    {
+      "name": "screenshots/store-desktop.png",
+      "sha256": "2b955fab9d4bd7b2ef880a4ee4c9e7bf6f85f2ec25d39e37a18c310821b6dd08"
+    }
+  ]
+}

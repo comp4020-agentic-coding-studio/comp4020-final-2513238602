@@ -90,6 +90,23 @@ mise exec -- pnpm check:returning
 全部三份反思、必需文档、本地链接和提交引用。字数提示是指导，检查通过不表示
 个人论点、真人体验或研究判断已经获得确认。
 
+## 四人自动模拟留痕
+
+按需运行四人留痕模拟（不是额外的 CI 套件，也不是真人试玩）：
+
+```powershell
+$env:APP_URL = 'https://comp4020-final-2513238602.fly.dev'
+mise exec -- pnpm check:simulation
+```
+
+每次创建独立测试案，执行 63 个步骤并将时间戳日志、截图、服务端操作投影和
+四份浏览器 trace 保存到新的 `data/player-simulation-*`。答案在脚本中预先给定；
+执行耗时不能作为人类通关时长。`SIM_OUTPUT` 可指定新的 data/ 子目录，已有结果
+不会被覆盖。原始 trace 含浏览器会话信息，只保留在被忽略的本地 data/，不要公开。
+可用 `mise exec -- pnpm exec playwright show-trace <本地 trace.zip 路径>` 查看。
+[2026-10-22 模拟报告](docs/simulations/2026-10-22/README.md) 区分模拟结果、截图发现、
+脚本错误、修复前失败与修复后验证。
+
 ## C10 课堂操作
 
 课前在本仓库打开 PowerShell，先运行：

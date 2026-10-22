@@ -1,0 +1,338 @@
+[
+  {
+    "at": "2026-10-22T10:15:19.078Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "solved",
+    "detail": "Resolved After Hours with seven supported deductions and a corrected chronology."
+  },
+  {
+    "at": "2026-10-22T10:15:19.008Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "arranged",
+    "detail": "Updated the shared chronology."
+  },
+  {
+    "at": "2026-10-22T10:15:18.963Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "arranged",
+    "detail": "Updated the shared chronology."
+  },
+  {
+    "at": "2026-10-22T10:15:18.915Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "arranged",
+    "detail": "Updated the shared chronology."
+  },
+  {
+    "at": "2026-10-22T10:15:18.876Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "arranged",
+    "detail": "Updated the shared chronology."
+  },
+  {
+    "at": "2026-10-22T10:15:18.830Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "arranged",
+    "detail": "Updated the shared chronology."
+  },
+  {
+    "at": "2026-10-22T10:15:18.783Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "arranged",
+    "detail": "Updated the shared chronology."
+  },
+  {
+    "at": "2026-10-22T10:15:18.739Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "arranged",
+    "detail": "Updated the shared chronology."
+  },
+  {
+    "at": "2026-10-22T10:15:18.700Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "arranged",
+    "detail": "Updated the shared chronology."
+  },
+  {
+    "at": "2026-10-22T10:15:18.659Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "arranged",
+    "detail": "Updated the shared chronology."
+  },
+  {
+    "at": "2026-10-22T10:15:18.615Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "arranged",
+    "detail": "Updated the shared chronology."
+  },
+  {
+    "at": "2026-10-22T10:15:18.469Z",
+    "actor": "Sim Morgan",
+    "seat": "archive",
+    "action": "arranged",
+    "detail": "Updated the shared chronology."
+  },
+  {
+    "at": "2026-10-22T10:15:18.225Z",
+    "actor": "Sim Morgan",
+    "seat": "archive",
+    "action": "deduced",
+    "detail": "Why was it moved? The move protected the paper shade from humidity; it was not a theft or a repair."
+  },
+  {
+    "at": "2026-10-22T10:15:18.079Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "deduced",
+    "detail": "Where did it finish? The intact lantern was received in North Store, rack C, at 18:04."
+  },
+  {
+    "at": "2026-10-22T10:15:17.933Z",
+    "actor": "Sim Casey",
+    "seat": "workshop",
+    "action": "deduced",
+    "detail": "Who moved the lantern? Eli Ward moved the lantern under Mara Singh’s authorisation."
+  },
+  {
+    "at": "2026-10-22T10:15:17.801Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "published",
+    "detail": "S4: From code to place"
+  },
+  {
+    "at": "2026-10-22T10:15:17.522Z",
+    "actor": "Sim Casey",
+    "seat": "workshop",
+    "action": "published",
+    "detail": "S3: A seal with a name"
+  },
+  {
+    "at": "2026-10-22T10:15:17.274Z",
+    "actor": "Sim Morgan",
+    "seat": "archive",
+    "action": "published",
+    "detail": "S2: A precautionary move"
+  },
+  {
+    "at": "2026-10-22T10:15:17.044Z",
+    "actor": "Sim Avery",
+    "seat": "field",
+    "action": "published",
+    "detail": "S1: An intact crescent"
+  },
+  {
+    "at": "2026-10-22T10:15:16.662Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "deduced",
+    "detail": "Which route was possible? Only the north corridor accommodated the wide trolley."
+  },
+  {
+    "at": "2026-10-22T10:15:16.429Z",
+    "actor": "Sim Avery",
+    "seat": "field",
+    "action": "handover",
+    "detail": "Transferred Route analyst to investigator 4. Previously discovered evidence follows the duty."
+  },
+  {
+    "at": "2026-10-22T10:15:16.252Z",
+    "actor": "Sim Morgan",
+    "seat": "archive",
+    "action": "published",
+    "detail": "M4: Only one exit fits"
+  },
+  {
+    "at": "2026-10-22T10:15:16.074Z",
+    "actor": "Sim Avery",
+    "seat": "field",
+    "action": "handover",
+    "detail": "Transferred Route analyst to investigator 2. Previously discovered evidence follows the duty."
+  },
+  {
+    "at": "2026-10-22T10:15:15.809Z",
+    "actor": "Sim Casey",
+    "seat": "workshop",
+    "action": "published",
+    "detail": "M3: An alarm without a break-in"
+  },
+  {
+    "at": "2026-10-22T10:15:15.566Z",
+    "actor": "Sim Avery",
+    "seat": "field",
+    "action": "deduced",
+    "detail": "When did the lantern move? The lantern moved at 18:00; 18:06 was the fast camera clock."
+  },
+  {
+    "at": "2026-10-22T10:15:15.409Z",
+    "actor": "Sim Morgan",
+    "seat": "archive",
+    "action": "noted",
+    "detail": "Added a discussion note to M2."
+  },
+  {
+    "at": "2026-10-22T10:15:15.271Z",
+    "actor": "Sim Avery",
+    "seat": "field",
+    "action": "hypothesis",
+    "detail": "When did the lantern move? This explanation conflicts with the records. Compare the facts behind your selected evidence, or reveal a hint."
+  },
+  {
+    "at": "2026-10-22T10:15:15.117Z",
+    "actor": "Sim Morgan",
+    "seat": "archive",
+    "action": "published",
+    "detail": "M2: Six minutes ahead"
+  },
+  {
+    "at": "2026-10-22T10:15:14.826Z",
+    "actor": "Sim Avery",
+    "seat": "field",
+    "action": "published",
+    "detail": "M1: A second journey"
+  },
+  {
+    "at": "2026-10-22T10:15:14.474Z",
+    "actor": "Sim Morgan",
+    "seat": "archive",
+    "action": "deduced",
+    "detail": "Who made the first trip? Jules Hart collected the empty case at 17:30."
+  },
+  {
+    "at": "2026-10-22T10:15:14.263Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "published",
+    "detail": "W4: A fixed obstruction"
+  },
+  {
+    "at": "2026-10-22T10:15:13.982Z",
+    "actor": "Sim Avery",
+    "seat": "field",
+    "action": "published",
+    "detail": "W3: The first dispatch"
+  },
+  {
+    "at": "2026-10-22T10:15:13.712Z",
+    "actor": "Sim Casey",
+    "seat": "workshop",
+    "action": "deduced",
+    "detail": "What left first? The first collection was sealed empty packaging, not the lantern."
+  },
+  {
+    "at": "2026-10-22T10:15:13.583Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "hint",
+    "detail": "Revealed hint 1 of 3 for “What left first?”."
+  },
+  {
+    "at": "2026-10-22T10:15:13.483Z",
+    "actor": "Sim Morgan",
+    "seat": "archive",
+    "action": "noted",
+    "detail": "Added a discussion note to W2."
+  },
+  {
+    "at": "2026-10-22T10:15:13.355Z",
+    "actor": "Sim Casey",
+    "seat": "workshop",
+    "action": "noted",
+    "detail": "Added a discussion note to G3."
+  },
+  {
+    "at": "2026-10-22T10:15:13.220Z",
+    "actor": "Sim Morgan",
+    "seat": "archive",
+    "action": "published",
+    "detail": "W2: What RX means"
+  },
+  {
+    "at": "2026-10-22T10:15:12.883Z",
+    "actor": "Sim Avery",
+    "seat": "field",
+    "action": "hypothesis",
+    "detail": "What left first? The conclusion needs stronger support. Cite the records that establish both the observation and its interpretation."
+  },
+  {
+    "at": "2026-10-22T10:15:12.737Z",
+    "actor": "Sim Avery",
+    "seat": "field",
+    "action": "hypothesis",
+    "detail": "What left first? This explanation conflicts with the records. Compare the facts behind your selected evidence, or reveal a hint."
+  },
+  {
+    "at": "2026-10-22T10:15:12.428Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "published",
+    "detail": "G4: Two sets of tracks"
+  },
+  {
+    "at": "2026-10-22T10:15:12.179Z",
+    "actor": "Sim Morgan",
+    "seat": "archive",
+    "action": "published",
+    "detail": "G2: A visitor, not a thief"
+  },
+  {
+    "at": "2026-10-22T10:15:11.916Z",
+    "actor": "Sim Avery",
+    "seat": "field",
+    "action": "published",
+    "detail": "G1: A mount too wide"
+  },
+  {
+    "at": "2026-10-22T10:15:11.706Z",
+    "actor": "Sim Casey",
+    "seat": "workshop",
+    "action": "published",
+    "detail": "W1: The wider trolley"
+  },
+  {
+    "at": "2026-10-22T10:15:11.549Z",
+    "actor": "Sim Casey",
+    "seat": "workshop",
+    "action": "published",
+    "detail": "G3: Two cases, one pattern"
+  },
+  {
+    "at": "2026-10-22T10:15:10.090Z",
+    "actor": "Sim Robin",
+    "seat": "routes",
+    "action": "joined",
+    "detail": "Joined as Route analyst. The corresponding duty has been transferred to this seat."
+  },
+  {
+    "at": "2026-10-22T10:15:08.059Z",
+    "actor": "Sim Casey",
+    "seat": "workshop",
+    "action": "joined",
+    "detail": "Joined as Object examiner. The corresponding duty has been transferred to this seat."
+  },
+  {
+    "at": "2026-10-22T10:15:06.067Z",
+    "actor": "Sim Morgan",
+    "seat": "archive",
+    "action": "joined",
+    "detail": "Joined as Archivist. Also covering routes until a fourth investigator joins."
+  },
+  {
+    "at": "2026-10-22T10:15:02.748Z",
+    "actor": "Sim Avery",
+    "seat": "field",
+    "action": "opened",
+    "detail": "Opened After Hours. Scene and object duties are ready; invite a partner for records and routes."
+  }
+]

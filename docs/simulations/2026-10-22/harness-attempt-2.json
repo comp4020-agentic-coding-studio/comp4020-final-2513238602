@@ -1,0 +1,557 @@
+{
+  "method": "Scripted independent browser actors with known answers. No human participants, blind solving or enjoyment measurement.",
+  "base": "https://comp4020-final-2513238602.fly.dev",
+  "revision": "9a7cbbf5aaffb7008c0eafc5846a477a4fd2f4cc",
+  "startedAt": "2026-10-22T10:02:18.628Z",
+  "finishedAt": "2026-10-22T10:02:46.309Z",
+  "elapsedMs": 27404,
+  "passed": false,
+  "failure": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.ah-shared-strip').getByRole('button', { name: /^W4 \\// })\nExpected: 1\nReceived: 0\nTimeout:  15000ms\n\nCall log:\n  - Expect \"toHaveCount\" locator('.ah-shared-strip').getByRole('button', { name: /^W4 \\// }) with timeout 15000ms\n  - waiting for locator('.ah-shared-strip').getByRole('button', { name: /^W4 \\// })\n    33 × locator resolved to 0 elements\n       - unexpected value \"0\"\n\n    at captureRawStack (<repo>\\node_modules\\.pnpm\\playwright-core@1.63.0\\node_modules\\playwright-core\\lib\\coreBundle.js:8588:17)\n    at callMatcherAsStep (<repo>\\node_modules\\.pnpm\\playwright@1.63.0\\node_modules\\playwright\\lib\\matchers\\expect.js:13310:57)\n    at Object.toHaveCount (<repo>\\node_modules\\.pnpm\\playwright@1.63.0\\node_modules\\playwright\\lib\\matchers\\expect.js:13302:23)\n    at <repo>\\scripts\\simulate-after-hours.mjs:169:11\n    at async step (<repo>\\scripts\\simulate-after-hours.mjs:87:20)\n    at async share (<repo>\\scripts\\simulate-after-hours.mjs:154:3)\n    at async find (<repo>\\scripts\\simulate-after-hours.mjs:179:3)\n    at async file:///<repo>/scripts/simulate-after-hours.mjs:478:3",
+  "profiles": [
+    {
+      "name": "Sim Avery",
+      "duty": "Scene investigator",
+      "width": 1920,
+      "height": 1080,
+      "behavior": "Desktop 3D; tests an unsupported early interpretation"
+    },
+    {
+      "name": "Sim Morgan",
+      "duty": "Archivist",
+      "width": 390,
+      "height": 844,
+      "behavior": "Touch phone, reduced motion; checks records and preserves a draft"
+    },
+    {
+      "name": "Sim Casey",
+      "duty": "Object examiner",
+      "width": 1366,
+      "height": 900,
+      "behavior": "Laptop; uses the keyboard and object list after inspecting 3D"
+    },
+    {
+      "name": "Sim Robin",
+      "duty": "Route analyst",
+      "width": 390,
+      "height": 844,
+      "behavior": "Touch phone; leaves during act two and returns after a handover"
+    }
+  ],
+  "steps": [
+    {
+      "number": 1,
+      "at": "2026-10-22T10:02:19.013Z",
+      "actor": "Sim Avery",
+      "label": "Create an independent investigation",
+      "status": "passed",
+      "observed": {
+        "seats": 1,
+        "assignedDuties": [
+          "field",
+          "workshop"
+        ]
+      },
+      "durationMs": 1655
+    },
+    {
+      "number": 2,
+      "at": "2026-10-22T10:02:20.738Z",
+      "actor": "Sim Morgan",
+      "label": "Join as persistent seat 2",
+      "status": "passed",
+      "observed": {
+        "seats": 2,
+        "assignedDuties": [
+          "archive",
+          "routes"
+        ]
+      },
+      "durationMs": 1973
+    },
+    {
+      "number": 3,
+      "at": "2026-10-22T10:02:22.801Z",
+      "actor": "Sim Casey",
+      "label": "Join as persistent seat 3",
+      "status": "passed",
+      "observed": {
+        "seats": 3,
+        "assignedDuties": [
+          "workshop"
+        ]
+      },
+      "durationMs": 1954
+    },
+    {
+      "number": 4,
+      "at": "2026-10-22T10:02:24.830Z",
+      "actor": "Sim Robin",
+      "label": "Join as persistent seat 4",
+      "status": "passed",
+      "observed": {
+        "seats": 4,
+        "assignedDuties": [
+          "routes"
+        ]
+      },
+      "durationMs": 1961
+    },
+    {
+      "number": 5,
+      "at": "2026-10-22T10:02:26.791Z",
+      "actor": "Team",
+      "label": "Four independent identities see their own duties and act-one room gates",
+      "status": "passed",
+      "durationMs": 166
+    },
+    {
+      "number": 6,
+      "at": "2026-10-22T10:02:26.959Z",
+      "actor": "Sim Casey",
+      "label": "Select the blue case through its actual 3D mesh",
+      "status": "passed",
+      "durationMs": 35
+    },
+    {
+      "number": 7,
+      "at": "2026-10-22T10:02:26.994Z",
+      "actor": "Sim Casey",
+      "label": "Inspect G3 privately",
+      "status": "passed",
+      "durationMs": 126
+    },
+    {
+      "number": 8,
+      "at": "2026-10-22T10:02:27.121Z",
+      "actor": "Sim Avery",
+      "label": "Unpublished G3 remains private to the object examiner",
+      "status": "passed",
+      "observed": {
+        "otherIdentitiesWithoutPrivateClue": 3
+      },
+      "durationMs": 122
+    },
+    {
+      "number": 9,
+      "at": "2026-10-22T10:02:27.243Z",
+      "actor": "Sim Casey",
+      "label": "Publish G3; confirm Sim Morgan sees it",
+      "status": "passed",
+      "observed": {
+        "publicationToObservedMs": 65,
+        "includesBrowserActions": true
+      },
+      "durationMs": 125
+    },
+    {
+      "number": 10,
+      "at": "2026-10-22T10:02:27.369Z",
+      "actor": "Sim Casey",
+      "label": "Use the keyboard to inspect and share W1 without the 3D canvas",
+      "status": "passed",
+      "durationMs": 149
+    },
+    {
+      "number": 11,
+      "at": "2026-10-22T10:02:27.518Z",
+      "actor": "Sim Avery",
+      "label": "Inspect G1 privately",
+      "status": "passed",
+      "durationMs": 115
+    },
+    {
+      "number": 12,
+      "at": "2026-10-22T10:02:27.633Z",
+      "actor": "Sim Avery",
+      "label": "Publish G1; confirm Sim Robin sees it",
+      "status": "passed",
+      "observed": {
+        "publicationToObservedMs": 214,
+        "includesBrowserActions": true
+      },
+      "durationMs": 258
+    },
+    {
+      "number": 13,
+      "at": "2026-10-22T10:02:27.891Z",
+      "actor": "Sim Morgan",
+      "label": "Inspect G2 privately",
+      "status": "passed",
+      "durationMs": 191
+    },
+    {
+      "number": 14,
+      "at": "2026-10-22T10:02:28.082Z",
+      "actor": "Sim Morgan",
+      "label": "Publish G2; confirm Sim Avery sees it",
+      "status": "passed",
+      "observed": {
+        "publicationToObservedMs": 79,
+        "includesBrowserActions": true
+      },
+      "durationMs": 128
+    },
+    {
+      "number": 15,
+      "at": "2026-10-22T10:02:28.210Z",
+      "actor": "Sim Robin",
+      "label": "Inspect G4 privately",
+      "status": "passed",
+      "durationMs": 116
+    },
+    {
+      "number": 16,
+      "at": "2026-10-22T10:02:28.326Z",
+      "actor": "Sim Robin",
+      "label": "Publish G4; confirm Sim Casey sees it",
+      "status": "passed",
+      "observed": {
+        "publicationToObservedMs": 56,
+        "includesBrowserActions": true
+      },
+      "durationMs": 105
+    },
+    {
+      "number": 17,
+      "at": "2026-10-22T10:02:28.432Z",
+      "actor": "Sim Morgan",
+      "label": "A one-citation submission gives guidance and creates no saved attempt",
+      "status": "passed",
+      "durationMs": 168
+    },
+    {
+      "number": 18,
+      "at": "2026-10-22T10:02:28.600Z",
+      "actor": "Sim Avery",
+      "label": "Challenge cargo: lantern using G1 + G3",
+      "status": "passed",
+      "observed": {
+        "act": 1,
+        "accepted": false,
+        "feedback": "This explanation conflicts with the records. Compare the facts behind your selected evidence, or reveal a hint.",
+        "attempts": 1
+      },
+      "durationMs": 143
+    },
+    {
+      "number": 19,
+      "at": "2026-10-22T10:02:28.743Z",
+      "actor": "Sim Avery",
+      "label": "Challenge cargo: empty using G2 + G4",
+      "status": "passed",
+      "observed": {
+        "act": 1,
+        "accepted": false,
+        "feedback": "The conclusion needs stronger support. Cite the records that establish both the observation and its interpretation.",
+        "attempts": 2
+      },
+      "durationMs": 154
+    },
+    {
+      "number": 20,
+      "at": "2026-10-22T10:02:28.898Z",
+      "actor": "Sim Avery",
+      "label": "Keep the unfinished explanation while a teammate supplies the missing record",
+      "status": "passed",
+      "durationMs": 344
+    },
+    {
+      "number": 21,
+      "at": "2026-10-22T10:02:28.979Z",
+      "actor": "Sim Morgan",
+      "label": "Inspect W2 privately",
+      "status": "passed",
+      "durationMs": 107
+    },
+    {
+      "number": 22,
+      "at": "2026-10-22T10:02:29.088Z",
+      "actor": "Sim Morgan",
+      "label": "Publish W2",
+      "status": "passed",
+      "observed": {
+        "publicationToObservedMs": 42,
+        "includesBrowserActions": true
+      },
+      "durationMs": 114
+    },
+    {
+      "number": 23,
+      "at": "2026-10-22T10:02:29.242Z",
+      "actor": "Sim Casey",
+      "label": "Discuss G3 with Sim Morgan",
+      "status": "passed",
+      "observed": {
+        "scriptedNote": "[Scripted simulation] The spare is 26 cm. Does the register identify what the collected case held?"
+      },
+      "durationMs": 119
+    },
+    {
+      "number": 24,
+      "at": "2026-10-22T10:02:29.362Z",
+      "actor": "Sim Morgan",
+      "label": "Discuss W2 with Sim Avery",
+      "status": "passed",
+      "observed": {
+        "scriptedNote": "[Scripted simulation] RX-17 is recorded as empty packaging; the base measurement supports this."
+      },
+      "durationMs": 123
+    },
+    {
+      "number": 25,
+      "at": "2026-10-22T10:02:29.485Z",
+      "actor": "Sim Robin",
+      "label": "Reveal the first optional hint for the shared cargo question",
+      "status": "passed",
+      "durationMs": 129
+    },
+    {
+      "number": 26,
+      "at": "2026-10-22T10:02:29.614Z",
+      "actor": "Sim Casey",
+      "label": "Support cargo: empty using G3 + W2",
+      "status": "passed",
+      "observed": {
+        "act": 1,
+        "accepted": true,
+        "feedback": "The first collection was sealed empty packaging, not the lantern.",
+        "attempts": 3
+      },
+      "durationMs": 135
+    },
+    {
+      "number": 27,
+      "at": "2026-10-22T10:02:29.749Z",
+      "actor": "Sim Avery",
+      "label": "Inspect W3 privately",
+      "status": "passed",
+      "durationMs": 153
+    },
+    {
+      "number": 28,
+      "at": "2026-10-22T10:02:29.902Z",
+      "actor": "Sim Avery",
+      "label": "Publish W3; confirm Sim Morgan sees it",
+      "status": "passed",
+      "observed": {
+        "publicationToObservedMs": 70,
+        "includesBrowserActions": true
+      },
+      "durationMs": 118
+    },
+    {
+      "number": 29,
+      "at": "2026-10-22T10:02:30.020Z",
+      "actor": "Sim Robin",
+      "label": "Inspect W4 privately",
+      "status": "passed",
+      "durationMs": 150
+    },
+    {
+      "number": 30,
+      "at": "2026-10-22T10:02:30.170Z",
+      "actor": "Sim Robin",
+      "label": "Publish W4; confirm Sim Casey sees it",
+      "status": "failed",
+      "error": "expect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.ah-shared-strip').getByRole('button', { name: /^W4 \\// })\nExpected: 1\nReceived: 0\nTimeout:  15000ms\n\nCall log:\n  - Expect \"toHaveCount\" locator('.ah-shared-strip').getByRole('button', { name: /^W4 \\// }) with timeout 15000ms\n  - waiting for locator('.ah-shared-strip').getByRole('button', { name: /^W4 \\// })\n    33 × locator resolved to 0 elements\n       - unexpected value \"0\"\n",
+      "durationMs": 15107
+    }
+  ],
+  "network": [
+    {
+      "at": "2026-10-22T10:02:19.752Z",
+      "actor": "Sim Avery",
+      "operation": "/api/games",
+      "status": 201
+    },
+    {
+      "at": "2026-10-22T10:02:21.821Z",
+      "actor": "Sim Morgan",
+      "operation": "/api/games/{room}/join",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:23.863Z",
+      "actor": "Sim Casey",
+      "operation": "/api/games/{room}/join",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:25.917Z",
+      "actor": "Sim Robin",
+      "operation": "/api/games/{room}/join",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:27.079Z",
+      "actor": "Sim Casey",
+      "operation": "/api/games/{room}/inspect",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:27.336Z",
+      "actor": "Sim Casey",
+      "operation": "/api/games/{room}/publish",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:27.460Z",
+      "actor": "Sim Casey",
+      "operation": "/api/games/{room}/inspect",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:27.501Z",
+      "actor": "Sim Casey",
+      "operation": "/api/games/{room}/publish",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:27.591Z",
+      "actor": "Sim Avery",
+      "operation": "/api/games/{room}/inspect",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:27.792Z",
+      "actor": "Sim Avery",
+      "operation": "/api/games/{room}/publish",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:27.970Z",
+      "actor": "Sim Morgan",
+      "operation": "/api/games/{room}/inspect",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:28.161Z",
+      "actor": "Sim Morgan",
+      "operation": "/api/games/{room}/publish",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:28.285Z",
+      "actor": "Sim Robin",
+      "operation": "/api/games/{room}/inspect",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:28.407Z",
+      "actor": "Sim Robin",
+      "operation": "/api/games/{room}/publish",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:28.707Z",
+      "actor": "Sim Avery",
+      "operation": "/api/games/{room}/claim",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:28.853Z",
+      "actor": "Sim Avery",
+      "operation": "/api/games/{room}/claim",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:29.051Z",
+      "actor": "Sim Morgan",
+      "operation": "/api/games/{room}/inspect",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:29.189Z",
+      "actor": "Sim Morgan",
+      "operation": "/api/games/{room}/publish",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:29.324Z",
+      "actor": "Sim Casey",
+      "operation": "/api/games/{room}/note",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:29.457Z",
+      "actor": "Sim Morgan",
+      "operation": "/api/games/{room}/note",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:29.556Z",
+      "actor": "Sim Robin",
+      "operation": "/api/games/{room}/hint",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:29.707Z",
+      "actor": "Sim Casey",
+      "operation": "/api/games/{room}/claim",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:29.823Z",
+      "actor": "Sim Avery",
+      "operation": "/api/games/{room}/inspect",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:29.981Z",
+      "actor": "Sim Avery",
+      "operation": "/api/games/{room}/publish",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:30.094Z",
+      "actor": "Sim Robin",
+      "operation": "/api/games/{room}/inspect",
+      "status": 200
+    },
+    {
+      "at": "2026-10-22T10:02:30.248Z",
+      "actor": "Sim Robin",
+      "operation": "/api/games/{room}/publish",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "actor": "Sim Avery",
+      "filename": "01-act-one-desktop.png",
+      "at": "2026-10-22T10:02:26.931Z"
+    },
+    {
+      "actor": "Sim Morgan",
+      "filename": "02-act-one-phone.png",
+      "at": "2026-10-22T10:02:26.958Z"
+    },
+    {
+      "actor": "Sim Morgan",
+      "filename": "03-missing-citation-guidance.png",
+      "at": "2026-10-22T10:02:28.600Z"
+    },
+    {
+      "actor": "Sim Avery",
+      "filename": "04-failure-seat-1.png",
+      "at": "2026-10-22T10:02:45.364Z"
+    },
+    {
+      "actor": "Sim Morgan",
+      "filename": "05-failure-seat-2.png",
+      "at": "2026-10-22T10:02:45.397Z"
+    },
+    {
+      "actor": "Sim Casey",
+      "filename": "06-failure-seat-3.png",
+      "at": "2026-10-22T10:02:45.427Z"
+    },
+    {
+      "actor": "Sim Robin",
+      "filename": "07-failure-seat-4.png",
+      "at": "2026-10-22T10:02:45.454Z"
+    }
+  ],
+  "tracePrivacy": "Raw browser traces contain session data and stay under ignored data/. Publish only the sanitized report, journal, server action projection and selected screenshots."
+}

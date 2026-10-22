@@ -98,3 +98,11 @@ The terminal-reader regression also captures real party actions and checks that
 names and discussion text do not reach its output. CI runs all ten browser suites
 and all HTTP/process checks before deploying. These prove implemented behavior,
 not the quality of a family conversation or a measured human completion time.
+
+`pnpm check:simulation` is an additional on-demand four-person audit, not an
+eleventh CI suite. It records 63 scripted steps, known-answer mistakes, UI-driven
+concurrent chronology moves, complete resolution and original-identity reopening.
+Raw per-context traces stay under ignored data/; sanitized journals, screenshots
+and server-action projections support the [dated report](../docs/simulations/2026-10-22/README.md).
+The shared-ending warning regression discovered by screenshot review is included
+in the existing `check:after-hours` CI suite.

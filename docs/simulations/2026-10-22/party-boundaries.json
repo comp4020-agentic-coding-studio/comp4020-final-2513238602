@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-10-22T10:04:48.317Z",
+  "passed": true,
+  "failure": null,
+  "base": "https://comp4020-final-2513238602.fly.dev",
+  "checks": [
+    "Four independent browsers with the same nickname receive distinct seats; the fourth seat inherits a private route discovery without leaking it to the previous owner",
+    "Evidence and hints appear in a teammate's open reasoning form without clearing its draft (76ms publication-to-visible, including UI actions)",
+    "An offline investigator can be covered through an explicit saved duty transfer; their reconnect sees the missed evidence and current assignment",
+    "A fifth seat is refused with guidance; persistent contributions and shared actions distinguish the four same-name investigators"
+  ],
+  "errors": [],
+  "scans": [
+    {
+      "label": "Shared evidence discussion",
+      "violations": []
+    },
+    {
+      "label": "Team handover dialog",
+      "violations": []
+    }
+  ]
+}
