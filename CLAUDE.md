@@ -17,6 +17,10 @@
 - Remove context-loss listeners with their canvas. Deliberate deferred disposal
   of a paused/unmounted renderer must not disable a later scene. Test the pause
   long enough for disposal, then restore 3D; fast local requests can hide this race.
+- A confirmed shared conclusion must clear obsolete move/reconstruction warnings
+  in every browser, including the teammate whose earlier action was rejected.
+  Keep the warning while the case is still open; a partner's successful closure
+  must not leave the ending looking unsaved.
 - Compress assets during the build, not on the small Fly machine. Respect clients
   that reject gzip, retain original content types and vary responses by encoding.
 - Preserve shipped invariants and course Fly machine/volume limits.

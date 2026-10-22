@@ -21,7 +21,8 @@
     "test": "vitest run",
     "check:after-hours": "node scripts/check-after-hours.mjs",
     "check:after-hours-party": "node scripts/check-after-hours-party.mjs",
-    "check:after-hours-recovery": "node scripts/check-after-hours-recovery.mjs"
+    "check:after-hours-recovery": "node scripts/check-after-hours-recovery.mjs",
+    "check:simulation": "node scripts/simulate-after-hours.mjs"
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.2.8",

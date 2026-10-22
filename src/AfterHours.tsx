@@ -212,6 +212,11 @@ function useGame(code: string) {
     return next;
   }
   useEffect(() => {
+    // A teammate can finish the investigation after our move was rejected.
+    // Confirmed closure supersedes warnings about an earlier editable state.
+    if (room?.status === 'solved') setError('');
+  }, [room?.status]);
+  useEffect(() => {
     alive.current = true;
     void refresh().catch((e) => {
       if (alive.current) {

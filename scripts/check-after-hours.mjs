@@ -232,6 +232,13 @@ try {
   await claim(pb, "destination", "north", ["S1", "S4"]);
   await claim(pa, "reason", "protection", ["M3", "S2"]);
   await axe(pa, "Desktop supported reasoning");
+  await workspace(pb, "02 / Reason together");
+  await pb
+    .getByRole("button", { name: /Check reconstruction & close/ })
+    .click();
+  await expect(pb.locator(".ah-error")).toContainText(
+    "chronology still conflicts",
+  );
   const target = [
     "calibrate",
     "collect",
@@ -267,6 +274,10 @@ try {
   );
   await expect(pb.locator(".ah-closed h1")).toContainText(
     "Two journeys. One misunderstanding.",
+  );
+  await expect(pb.locator(".ah-error")).toHaveCount(0);
+  checks.push(
+    "A confirmed shared conclusion clears an earlier rejected reconstruction warning in the other browser",
   );
   await workspace(pb, "03 / Case record");
   await expect(pb.locator(".ah-ending")).toContainText("18:00");
