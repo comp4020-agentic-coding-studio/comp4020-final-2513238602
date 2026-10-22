@@ -101,7 +101,18 @@ function roomState(code: string, sid: string) {
     lastFeedback: room.feedback, solution: room.status === 'solved' ? solution : null };
 }
 const MIME: Record<string,string> = { '.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.svg':'image/svg+xml', '.webp':'image/webp', '.png':'image/png', '.woff2':'font/woff2', '.ico':'image/x-icon' };
-function staticFile(res: ServerResponse, path: string) { const ext=extname(path); res.writeHead(200, { 'Content-Type': MIME[ext] ?? 'application/octet-stream', 'Cache-Control': path.includes(`${sep}assets${sep}`) ? 'public, max-age=31536000, immutable' : 'no-cache' }); res.end(readFileSync(path)); }
+function staticFile(req: IncomingMessage, res: ServerResponse, path: string) {
+  const ext=extname(path),compressible=ext==='.js'||ext==='.css';
+  const acceptsGzip=(req.headers['accept-encoding']??'').toLowerCase().split(',').some(part=>{
+    const [encoding,...parameters]=part.trim().split(';');
+    const quality=parameters.find(p=>p.trim().startsWith('q='));
+    return encoding==='gzip'&&(!quality||Number(quality.trim().slice(2))>0);
+  });
+  const compressed=compressible&&acceptsGzip&&existsSync(`${path}.gz`);
+  const bytes=readFileSync(compressed?`${path}.gz`:path);
+  res.writeHead(200, { 'Content-Type': MIME[ext] ?? 'application/octet-stream', 'Cache-Control': path.includes(`${sep}assets${sep}`) ? 'public, max-age=31536000, immutable' : 'no-cache', 'Content-Length':bytes.length, ...(compressible?{'Vary':'Accept-Encoding'}:{}), ...(compressed?{'Content-Encoding':'gzip'}:{}) });
+  res.end(bytes);
+}
 const escape = (s: string) => s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const server = createServer(async (req,res) => {
   const trace:{requestId:string;operation:string;room?:string;member?:string;role?:string}={requestId:id(),operation:'request'};
@@ -213,10 +224,10 @@ const server = createServer(async (req,res) => {
     const root=resolve('dist'); let relative: string; try { relative=decodeURIComponent(path); } catch { fail(400,'Invalid URL.'); }
     const file=resolve(root,`.${relative!}`);
     if (file !== root && !file.startsWith(root+sep)) fail(404,'Not found.');
-    if (existsSync(file) && statSync(file).isFile()) return staticFile(res,file);
+    if (existsSync(file) && statSync(file).isFile()) return staticFile(req,res,file);
     if (path === '/' || path === '/after-hours' || /^\/(?:case|play)\/[a-f0-9]{12}\/?$/.test(path)) {
       if (!existsSync(resolve(root,'index.html'))) fail(503,'Run pnpm build before starting the app.');
-      return staticFile(res,resolve(root,'index.html'));
+      return staticFile(req,res,resolve(root,'index.html'));
     }
     res.writeHead(404,{'Content-Type':'text/html; charset=utf-8'}); res.end('<!doctype html><html lang="en"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Not found | Lost &amp; Found</title><link rel="stylesheet" href="/readme.css"><main><h1>This file is missing.</h1><p>The page could not be found.</p><a href="/">Return to the case files</a></main></html>');
   } catch(e) {

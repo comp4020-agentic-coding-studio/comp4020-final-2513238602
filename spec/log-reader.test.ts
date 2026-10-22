@@ -25,6 +25,21 @@ const rejected = {
   role: 'archive', outcome: 'rejected', status: 409, action: 'request_rejected',
 };
 
+it('reads party actions from real committed events without echoing discussion text or nicknames',async()=>{
+  const server=await serverFixture();
+  try {
+    await server.start();const a=await server.client(),b=await server.client(),c=await server.client();
+    const opened=await a.call('/api/games',{name:'Private party name'});const path=`/api/games/${opened.value.code}`;
+    await b.call(`${path}/join`,{name:'Private second name'});await c.call(`${path}/join`,{name:'Private examiner name'});
+    await c.call(`${path}/inspect`,{id:'G3'});await c.call(`${path}/publish`,{id:'G3'});await b.call(`${path}/hint`,{id:'cargo'});await a.call(`${path}/note`,{id:'G3',text:'private discussion must not reach terminal output'});
+    for(let i=0;i<50&&!server.events().some(e=>e.action==='noted');i++)await wait(20);
+    const output=server.events().filter(e=>e.outcome==='committed').map(e=>formatLogLine(JSON.stringify(e)));
+    expect(output.every(line=>line!==null&&!line.includes('omitted'))).toBe(true);
+    expect(output.join('\n')).toContain('role=workshop');expect(output.join('\n')).toContain('action=hint');expect(output.join('\n')).toContain('action=noted');
+    expect(output.join('\n')).not.toMatch(/Private|private discussion|lf_session/);
+  } finally {await server.close()}
+});
+
 it('narrates captured server commits from both roles and a rejected stale move', async () => {
   const server = await serverFixture();
   try {

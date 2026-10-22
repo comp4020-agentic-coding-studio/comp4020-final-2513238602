@@ -2,48 +2,301 @@ import { objects } from '../shared/after-hours.ts';
 import type { Duty, Question } from '../shared/after-hours.ts';
 
 export const evidence: Record<string, { title: string; body: string[] }> = {
-  G1: { title: 'A mount too wide', body: ['The Moon Lantern stood on a single, rigid 48 cm base. Its mounting outline is still visible. The base cannot fold or detach.', 'The paper shade is delicate. There is no torn paper, damaged fitting or sign of a forced removal.'] },
-  G2: { title: 'A visitor, not a thief', body: ['Reception, 17:28: Jules Hart, collection courier, signed in as JH. The booked job was packaging collection. No exhibition object was released at reception.', 'The receptionist later told a volunteer, “The courier has already taken the case.” They meant a transport case, not the exhibition case file.'] },
-  G3: { title: 'Two cases, one pattern', body: ['Turning over the spare blue case reveals RX-18 stencilled underneath. Its rigid opening measures 26 cm across. It is a packaging case, left behind after the collection.', 'A dispatch photograph clipped to it shows its matching partner RX-17 being collected, with the same rigid dimensions and a return seal. The photo establishes which case left; the spare lets you inspect the construction. Colour alone does not identify contents.'] },
-  G4: { title: 'Two sets of tracks', body: ['Narrow scuffs lead toward the west loading door. A second pair, 74 cm apart, turns into the north corridor.', 'The sets overlap near the plinth. Their overlap does not establish a time: the floor was polished between rounds.'] },
-  W1: { title: 'The wider trolley', body: ['The padded exhibition trolley has a rigid 74 cm-wide frame. It cannot fold, and carrying it sideways does not reduce its frame width.', 'A crescent-shaped padded support fits the lantern base. The small RX case travels on a separate narrow hand truck.'] },
-  W2: { title: 'What RX means', body: ['Packing register: RX denotes empty return packaging. RX-17 was checked empty and sealed for collection today; opening clearance is 26 cm.', 'Exhibition objects use MO inventory labels and travel on padded supports. The Moon Lantern is MO-08. The register never authorises objects to leave the building.'] },
-  W3: { title: 'The first dispatch', body: ['17:30, reception clock: JH collected RX-17, sealed, via the west loading bay. The dispatcher countersigned the initials.', '17:52: a second job was issued to badge T4. This line concerns an internal move on the padded trolley, not the courier collection.'] },
-  W4: { title: 'A fixed obstruction', body: ['The west loading exit has 60 cm clear width because a fixed barrier is in place. The north corridor has a 100 cm opening.', 'The workshop-to-studio passage is closed for ceiling repairs throughout this evening. These are the only three exits from the exhibition area.'] },
-  M1: { title: 'A second journey', body: ['The later corridor recording displays 18:06. A technician wearing badge T4 moves the lantern-shaped covered load on the wide padded trolley.', 'This is a separate journey from the RX-17 collection. The recording timestamp is the camera clock; the badge number is legible, but the person’s face is not.'] },
-  M2: { title: 'Six minutes ahead', body: ['At 17:00 reception time, the corridor camera displayed 17:06. The service card records a constant six-minute advance.', 'The camera was not adjusted that evening. Reception, the environment recorder and the store clock were synchronised.'] },
-  M3: { title: 'An alarm without a break-in', body: ['17:50: gallery humidity rose to 78% following a leaking ceiling pipe. The recorder’s clock is synchronised with reception.', 'The Moon Lantern’s paper shade must remain below 60% humidity. The north store stayed at 45%. The intrusion alarm did not trigger.'] },
-  M4: { title: 'Only one exit fits', body: ['The evening survey confirms west: 60 cm clear; north: 100 cm clear; studio passage: closed.', 'There is no fourth exit or lift from the exhibition area. Compare the openings with the equipment actually used.'] },
-  S1: { title: 'An intact crescent', body: ['Under the breathable cover is the Moon Lantern: MO-08, rigid 48 cm base, intact paper shade. Its receipt reads N3/C, 18:04, seal T4.', 'There is no repair docket attached. The receiving clock is synchronised with reception.'] },
-  S2: { title: 'A precautionary move', body: ['17:52: registrar Mara Singh authorises badge T4 to relocate MO-08 to controlled storage until the humidity alarm clears.', 'The order calls for preventive protection. It does not report damage, authorise an outside collection or request a repair.'] },
-  S3: { title: 'A seal with a name', body: ['The staff seal register assigns T4 to Eli Ward, exhibition technician. Mara Singh uses R1; Jules Hart has a visitor pass and no staff seal.', 'The T4 impression on the receiving tag matches the technician seal kit. A badge in the video alone would not prove the item was received.'] },
-  S4: { title: 'From code to place', body: ['Store allocation: N3 = North Store; C = third rack, controlled humidity. N2 denotes the old north workshop, not a store.', 'The other receipt prefixes are W1 for the loading bay and S2 for the conservation studio. Read the complete location reference.'] },
+  G1: {
+    title: 'A mount too wide',
+    body: [
+      'The Moon Lantern stood on a single, rigid 48 cm base. Its mounting outline is still visible. The base cannot fold or detach.',
+      'The paper shade is delicate. There is no torn paper, damaged fitting or sign of a forced removal.',
+    ],
+  },
+  G2: {
+    title: 'A visitor, not a thief',
+    body: [
+      'Reception, 17:28: Jules Hart, collection courier, signed in as JH. The booked job was packaging collection. No exhibition object was released at reception.',
+      'The receptionist later told a volunteer, “The courier has already taken the case.” They meant a transport case, not the exhibition case file.',
+    ],
+  },
+  G3: {
+    title: 'Two cases, one pattern',
+    body: [
+      'Turning over the spare blue case reveals RX-18 stencilled underneath. Its rigid opening measures 26 cm across. It is a packaging case, left behind after the collection.',
+      'A dispatch photograph clipped to it shows its matching partner RX-17 being collected, with the same rigid dimensions and a return seal. The photo establishes which case left; the spare lets you inspect the construction. Colour alone does not identify contents.',
+    ],
+  },
+  G4: {
+    title: 'Two sets of tracks',
+    body: [
+      'Narrow scuffs lead toward the west loading door. A second pair, 74 cm apart, turns into the north corridor.',
+      'The sets overlap near the plinth. Their overlap does not establish a time: the floor was polished between rounds.',
+    ],
+  },
+  W1: {
+    title: 'The wider trolley',
+    body: [
+      'The padded exhibition trolley has a rigid 74 cm-wide frame. It cannot fold, and carrying it sideways does not reduce its frame width.',
+      'A crescent-shaped padded support fits the lantern base. The small RX case travels on a separate narrow hand truck.',
+    ],
+  },
+  W2: {
+    title: 'What RX means',
+    body: [
+      'Packing register: RX denotes empty return packaging. RX-17 was checked empty and sealed for collection today; opening clearance is 26 cm.',
+      'Exhibition objects use MO inventory labels and travel on padded supports. The Moon Lantern is MO-08. The register never authorises objects to leave the building.',
+    ],
+  },
+  W3: {
+    title: 'The first dispatch',
+    body: [
+      '17:30, reception clock: JH collected RX-17, sealed, via the west loading bay. The dispatcher countersigned the initials.',
+      '17:52: a second job was issued to badge T4. This line concerns an internal move on the padded trolley, not the courier collection.',
+    ],
+  },
+  W4: {
+    title: 'A fixed obstruction',
+    body: [
+      'The west loading exit has 60 cm clear width because a fixed barrier is in place. The north corridor has a 100 cm opening.',
+      'The workshop-to-studio passage is closed for ceiling repairs throughout this evening. These are the only three exits from the exhibition area.',
+    ],
+  },
+  M1: {
+    title: 'A second journey',
+    body: [
+      'The later corridor recording displays 18:06. A technician wearing badge T4 moves the lantern-shaped covered load on the wide padded trolley.',
+      'This is a separate journey from the RX-17 collection. The recording timestamp is the camera clock; the badge number is legible, but the person’s face is not.',
+    ],
+  },
+  M2: {
+    title: 'Six minutes ahead',
+    body: [
+      'At 17:00 reception time, the corridor camera displayed 17:06. The service card records a constant six-minute advance.',
+      'The camera was not adjusted that evening. Reception, the environment recorder and the store clock were synchronised.',
+    ],
+  },
+  M3: {
+    title: 'An alarm without a break-in',
+    body: [
+      '17:50: gallery humidity rose to 78% following a leaking ceiling pipe. The recorder’s clock is synchronised with reception.',
+      'The Moon Lantern’s paper shade must remain below 60% humidity. The north store stayed at 45%. The intrusion alarm did not trigger.',
+    ],
+  },
+  M4: {
+    title: 'Only one exit fits',
+    body: [
+      'The evening survey confirms west: 60 cm clear; north: 100 cm clear; studio passage: closed.',
+      'There is no fourth exit or lift from the exhibition area. Compare the openings with the equipment actually used.',
+    ],
+  },
+  S1: {
+    title: 'An intact crescent',
+    body: [
+      'Under the breathable cover is the Moon Lantern: MO-08, rigid 48 cm base, intact paper shade. Its receipt reads N3/C, 18:04, seal T4.',
+      'There is no repair docket attached. The receiving clock is synchronised with reception.',
+    ],
+  },
+  S2: {
+    title: 'A precautionary move',
+    body: [
+      '17:52: registrar Mara Singh authorises badge T4 to relocate MO-08 to controlled storage until the humidity alarm clears.',
+      'The order calls for preventive protection. It does not report damage, authorise an outside collection or request a repair.',
+    ],
+  },
+  S3: {
+    title: 'A seal with a name',
+    body: [
+      'The staff seal register assigns T4 to Eli Ward, exhibition technician. Mara Singh uses R1; Jules Hart has a visitor pass and no staff seal.',
+      'The T4 impression on the receiving tag matches the technician seal kit. A badge in the video alone would not prove the item was received.',
+    ],
+  },
+  S4: {
+    title: 'From code to place',
+    body: [
+      'Store allocation: N3 = North Store; C = third rack, controlled humidity. N2 denotes the old north workshop, not a store.',
+      'The other receipt prefixes are W1 for the loading bay and S2 for the conservation studio. Read the complete location reference.',
+    ],
+  },
 };
-type Rule = Omit<Question, 'accepted' | 'hint' | 'hintLevel'> & { answer: string; supports: string[][]; hints: [string, string, string]; explanation: string };
+type Rule = Omit<Question, 'accepted' | 'hint' | 'hintLevel'> & {
+  answer: string;
+  supports: string[][];
+  hints: [string, string, string];
+  explanation: string;
+};
 export const rules: Rule[] = [
-  { id: 'cargo', act: 1, title: 'What left first?', prompt: 'Identify the cargo in the small blue case. Support the identification, not just its colour.', options: [{ id: 'lantern', label: 'The Moon Lantern' }, { id: 'empty', label: 'Empty return packaging' }, { id: 'tools', label: 'A technician’s tools' }], answer: 'empty', supports: [['G3','W2'],['G1','W2']], hints: ['An appearance is not an inventory record. Look underneath.', 'Compare G3 with W2, or compare the mount in G1 with the packing dimensions in W2.', 'RX-17 is registered as sealed empty packaging. Its 26 cm opening cannot take the rigid 48 cm lantern base.'], explanation: 'The first collection was sealed empty packaging, not the lantern.' },
-  { id: 'courier', act: 1, title: 'Who made the first trip?', prompt: 'Match the dispatch signature to a named visitor.', options: [{ id: 'eli', label: 'Eli Ward' }, { id: 'jules', label: 'Jules Hart' }, { id: 'mara', label: 'Mara Singh' }], answer: 'jules', supports: [['G2','W3']], hints: ['Initials are not yet a name. Reception can help.', 'Put the signed docket W3 beside the visitor entry G2.', 'W3 records JH collecting RX-17 at 17:30. G2 identifies JH as Jules Hart.'], explanation: 'Jules Hart collected the empty case at 17:30.' },
-  { id: 'time', act: 2, title: 'When did the lantern move?', prompt: 'Express the later recording in reception time.', options: [{ id: '1752', label: '17:52' }, { id: '1800', label: '18:00' }, { id: '1806', label: '18:06' }], answer: '1800', supports: [['M1','M2']], hints: ['The displayed time belongs to one particular clock.', 'Compare the recording M1 with the service card M2.', 'The camera is six minutes ahead: 18:06 on camera is 18:00 reception time.'], explanation: 'The lantern moved at 18:00; 18:06 was the fast camera clock.' },
-  { id: 'route', act: 2, title: 'Which route was possible?', prompt: 'Use the transport dimensions and available exits to eliminate routes.', options: [{ id: 'west', label: 'West loading exit' }, { id: 'north', label: 'North corridor' }, { id: 'studio', label: 'Studio passage' }], answer: 'north', supports: [['W1','M4'],['W1','W4']], hints: ['Which exits could accommodate the actual trolley?', 'Compare W1’s fixed frame with the opening widths in M4 or W4.', 'A 74 cm frame cannot pass the 60 cm west opening. The studio is closed, leaving the 100 cm north route.'], explanation: 'Only the north corridor accommodated the wide trolley.' },
-  { id: 'technician', act: 3, title: 'Who moved the lantern?', prompt: 'Connect the authorisation to an identified staff member.', options: [{ id: 'jules', label: 'Jules Hart' }, { id: 'mara', label: 'Mara Singh' }, { id: 'eli', label: 'Eli Ward' }], answer: 'eli', supports: [['S2','S3'],['M1','S3','S2']], hints: ['The authoriser and the person doing the move need not be the same.', 'Read badge T4 in the order S2 against the seal register S3.', 'Mara authorised the move; T4 is Eli Ward, the technician assigned to perform it.'], explanation: 'Eli Ward moved the lantern under Mara Singh’s authorisation.' },
-  { id: 'destination', act: 3, title: 'Where did it finish?', prompt: 'Locate the received object using its complete reference.', options: [{ id: 'loading', label: 'Loading bay, rack C' }, { id: 'north', label: 'North Store, rack C' }, { id: 'workshop', label: 'Old north workshop' }], answer: 'north', supports: [['S1','S4']], hints: ['The receipt uses a code rather than a room name.', 'Match N3/C in S1 to the allocation board S4.', 'N3/C resolves to North Store, rack C; the intact MO-08 was received there at 18:04.'], explanation: 'The intact lantern was received in North Store, rack C, at 18:04.' },
-  { id: 'reason', act: 3, title: 'Why was it moved?', prompt: 'Connect a recorded hazard with the stated purpose of the instruction.', options: [{ id: 'repair', label: 'Repair existing damage' }, { id: 'protection', label: 'Protect the paper shade from humidity' }, { id: 'sale', label: 'Prepare an outside collection' }], answer: 'protection', supports: [['M3','S2']], hints: ['An alarm does not necessarily mean theft or existing damage.', 'Read the environmental strip M3 alongside the instruction S2.', 'Humidity reached 78%, above the paper shade’s 60% limit. The order explicitly requests preventive protection.'], explanation: 'The move protected the paper shade from humidity; it was not a theft or a repair.' },
+  {
+    id: 'cargo',
+    act: 1,
+    title: 'What left first?',
+    prompt:
+      'Identify the cargo in the small blue case. Support the identification, not just its colour.',
+    options: [
+      { id: 'lantern', label: 'The Moon Lantern' },
+      { id: 'empty', label: 'Empty return packaging' },
+      { id: 'tools', label: 'A technician’s tools' },
+    ],
+    answer: 'empty',
+    supports: [
+      ['G3', 'W2'],
+      ['G1', 'W2'],
+    ],
+    hints: [
+      'An appearance is not an inventory record. Look underneath.',
+      'Compare G3 with W2, or compare the mount in G1 with the packing dimensions in W2.',
+      'RX-17 is registered as sealed empty packaging. Its 26 cm opening cannot take the rigid 48 cm lantern base.',
+    ],
+    explanation: 'The first collection was sealed empty packaging, not the lantern.',
+  },
+  {
+    id: 'courier',
+    act: 1,
+    title: 'Who made the first trip?',
+    prompt: 'Match the dispatch signature to a named visitor.',
+    options: [
+      { id: 'eli', label: 'Eli Ward' },
+      { id: 'jules', label: 'Jules Hart' },
+      { id: 'mara', label: 'Mara Singh' },
+    ],
+    answer: 'jules',
+    supports: [['G2', 'W3']],
+    hints: [
+      'Initials are not yet a name. Reception can help.',
+      'Put the signed docket W3 beside the visitor entry G2.',
+      'W3 records JH collecting RX-17 at 17:30. G2 identifies JH as Jules Hart.',
+    ],
+    explanation: 'Jules Hart collected the empty case at 17:30.',
+  },
+  {
+    id: 'time',
+    act: 2,
+    title: 'When did the lantern move?',
+    prompt: 'Express the later recording in reception time.',
+    options: [
+      { id: '1752', label: '17:52' },
+      { id: '1800', label: '18:00' },
+      { id: '1806', label: '18:06' },
+    ],
+    answer: '1800',
+    supports: [['M1', 'M2']],
+    hints: [
+      'The displayed time belongs to one particular clock.',
+      'Compare the recording M1 with the service card M2.',
+      'The camera is six minutes ahead: 18:06 on camera is 18:00 reception time.',
+    ],
+    explanation: 'The lantern moved at 18:00; 18:06 was the fast camera clock.',
+  },
+  {
+    id: 'route',
+    act: 2,
+    title: 'Which route was possible?',
+    prompt: 'Use the transport dimensions and available exits to eliminate routes.',
+    options: [
+      { id: 'west', label: 'West loading exit' },
+      { id: 'north', label: 'North corridor' },
+      { id: 'studio', label: 'Studio passage' },
+    ],
+    answer: 'north',
+    supports: [
+      ['W1', 'M4'],
+      ['W1', 'W4'],
+    ],
+    hints: [
+      'Which exits could accommodate the actual trolley?',
+      'Compare W1’s fixed frame with the opening widths in M4 or W4.',
+      'A 74 cm frame cannot pass the 60 cm west opening. The studio is closed, leaving the 100 cm north route.',
+    ],
+    explanation: 'Only the north corridor accommodated the wide trolley.',
+  },
+  {
+    id: 'technician',
+    act: 3,
+    title: 'Who moved the lantern?',
+    prompt: 'Connect the authorisation to an identified staff member.',
+    options: [
+      { id: 'jules', label: 'Jules Hart' },
+      { id: 'mara', label: 'Mara Singh' },
+      { id: 'eli', label: 'Eli Ward' },
+    ],
+    answer: 'eli',
+    supports: [
+      ['S2', 'S3'],
+      ['M1', 'S3', 'S2'],
+    ],
+    hints: [
+      'The authoriser and the person doing the move need not be the same.',
+      'Read badge T4 in the order S2 against the seal register S3.',
+      'Mara authorised the move; T4 is Eli Ward, the technician assigned to perform it.',
+    ],
+    explanation: 'Eli Ward moved the lantern under Mara Singh’s authorisation.',
+  },
+  {
+    id: 'destination',
+    act: 3,
+    title: 'Where did it finish?',
+    prompt: 'Locate the received object using its complete reference.',
+    options: [
+      { id: 'loading', label: 'Loading bay, rack C' },
+      { id: 'north', label: 'North Store, rack C' },
+      { id: 'workshop', label: 'Old north workshop' },
+    ],
+    answer: 'north',
+    supports: [['S1', 'S4']],
+    hints: [
+      'The receipt uses a code rather than a room name.',
+      'Match N3/C in S1 to the allocation board S4.',
+      'N3/C resolves to North Store, rack C; the intact MO-08 was received there at 18:04.',
+    ],
+    explanation: 'The intact lantern was received in North Store, rack C, at 18:04.',
+  },
+  {
+    id: 'reason',
+    act: 3,
+    title: 'Why was it moved?',
+    prompt: 'Connect a recorded hazard with the stated purpose of the instruction.',
+    options: [
+      { id: 'repair', label: 'Repair existing damage' },
+      { id: 'protection', label: 'Protect the paper shade from humidity' },
+      { id: 'sale', label: 'Prepare an outside collection' },
+    ],
+    answer: 'protection',
+    supports: [['M3', 'S2']],
+    hints: [
+      'An alarm does not necessarily mean theft or existing damage.',
+      'Read the environmental strip M3 alongside the instruction S2.',
+      'Humidity reached 78%, above the paper shade’s 60% limit. The order explicitly requests preventive protection.',
+    ],
+    explanation:
+      'The move protected the paper shade from humidity; it was not a theft or a repair.',
+  },
 ];
 export const chronology = [
-  { id: 'calibrate', title: 'Clock discrepancy recorded' }, { id: 'collect', title: 'Empty RX-17 collected' },
-  { id: 'alarm', title: 'Humidity alarm triggers' }, { id: 'authorise', title: 'Protective move authorised' },
-  { id: 'move', title: 'Lantern leaves the exhibition' }, { id: 'receive', title: 'Lantern received in storage' },
+  { id: 'calibrate', title: 'Clock discrepancy recorded' },
+  { id: 'collect', title: 'Empty RX-17 collected' },
+  { id: 'alarm', title: 'Humidity alarm triggers' },
+  { id: 'authorise', title: 'Protective move authorised' },
+  { id: 'move', title: 'Lantern leaves the exhibition' },
+  { id: 'receive', title: 'Lantern received in storage' },
 ];
-export const initialOrder = ['move','collect','receive','calibrate','authorise','alarm'];
+export const initialOrder = ['move', 'collect', 'receive', 'calibrate', 'authorise', 'alarm'];
 export const ending = [
   'One missing exhibition, two journeys. At 17:30 Jules Hart collected RX-17: sealed empty packaging. Its blue colour and an ambiguous comment made an ordinary collection look like the loss of the lantern.',
   'At 17:50 a leaking pipe triggered a humidity alarm. Mara Singh authorised a precautionary internal move at 17:52. Eli Ward, badge T4, used the wide padded trolley at 18:00. The camera, six minutes fast, displayed 18:06.',
   'The trolley could only pass through the north corridor. At 18:04 the intact Moon Lantern was received at N3/C: North Store, rack C. Its paper shade was protected, not stolen or repaired.',
   'The team separated a rumour from an observation, corrected a clock, ruled out impossible routes and followed a receipt back to an actual object. The case closes with the lantern ready for the family opening once the gallery is safe.',
 ];
-export function evidenceDuty(id: string): Duty { return objects.find(o=>o.id===id)!.duty; }
+export function evidenceDuty(id: string): Duty {
+  return objects.find((o) => o.id === id)!.duty;
+}
 export function assessClaim(rule: Rule, answer: string, citations: string[]) {
-  if (answer !== rule.answer) return { correct: false, feedback: 'This explanation conflicts with the records. Compare the facts behind your selected evidence, or reveal a hint.' };
-  if (!rule.supports.some(group=>group.every(id=>citations.includes(id)))) return { correct: false, feedback: 'The conclusion needs stronger support. Cite the records that establish both the observation and its interpretation.' };
+  if (answer !== rule.answer)
+    return {
+      correct: false,
+      feedback:
+        'This explanation conflicts with the records. Compare the facts behind your selected evidence, or reveal a hint.',
+    };
+  if (!rule.supports.some((group) => group.every((id) => citations.includes(id))))
+    return {
+      correct: false,
+      feedback:
+        'The conclusion needs stronger support. Cite the records that establish both the observation and its interpretation.',
+    };
   return { correct: true, feedback: rule.explanation };
 }

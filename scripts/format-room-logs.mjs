@@ -1,11 +1,13 @@
 import { once } from 'node:events';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { evidence as partyEvidence, rules as partyRules } from '../server/after-hours-case.ts';
+import { duties, dutyNames } from '../shared/after-hours.ts';
 
 const roomPattern = /^[a-f0-9]{12}$/;
 const memberPattern = /^[a-f0-9]{24}$/;
-const roles = new Set(['field', 'archive', 'solo']);
-const operations = new Set(['request', 'snapshot', 'join', 'events', 'read', 'publish', 'board', 'theory']);
+const roles = new Set(['field', 'archive', 'solo', 'workshop', 'routes']);
+const operations = new Set(['request', 'snapshot', 'join', 'events', 'read', 'publish', 'board', 'theory', 'inspect', 'claim', 'hint', 'assign', 'note', 'close']);
 
 // These are server-authored public activity descriptions, never request text.
 // Fail closed when the server adds a description: do not print arbitrary detail.
@@ -28,6 +30,16 @@ const details = {
 const chronology = new Set([
   'Sunlight reaches the work', 'The move is authorised', 'The work leaves Gallery 2', 'The work reaches storage',
 ]);
+details.opened.add('Opened After Hours. Scene and object duties are ready; invite a partner for records and routes.');
+for (const duty of duties.slice(1)) details.joined.add(`Joined as ${dutyNames[duty]}. ${duty==='archive'?'Also covering routes until a fourth investigator joins.':'The corresponding duty has been transferred to this seat.'}`);
+for (const [id,clue] of Object.entries(partyEvidence)) details.published.add(`${id}: ${clue.title}`);
+details.solved.add('Resolved After Hours with seven supported deductions and a corrected chronology.');
+details.arranged=new Set(['Updated the shared chronology.']);
+details.deduced=new Set(partyRules.map(q=>`${q.title} ${q.explanation}`));
+details.hint=new Set(partyRules.flatMap(q=>[1,2,3].map(level=>`Revealed hint ${level} of 3 for “${q.title}”.`)));
+details.noted=new Set(Object.keys(partyEvidence).map(id=>`Added a discussion note to ${id}.`));
+details.handover=new Set(duties.flatMap(d=>[1,2,3,4].map(seat=>`Transferred ${dutyNames[d]} to investigator ${seat}. Previously discovered evidence follows the duty.`)));
+for(const q of partyRules)for(const feedback of ['This explanation conflicts with the records. Compare the facts behind your selected evidence, or reveal a hint.','The conclusion needs stronger support. Cite the records that establish both the observation and its interpretation.']) details.hypothesis.add(`${q.title} ${feedback}`);
 const savedActions = new Set([...Object.keys(details), 'arranged']);
 const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 export const MAX_RECORD_CHARS = 65536;

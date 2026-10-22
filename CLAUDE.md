@@ -7,6 +7,15 @@
   and unrevealed facts server-side. A duty handover moves private discoveries.
 - Seed scenery, not truth. Every required clue remains reachable in the object
   list with the same role and stage conditions as the 3D interaction.
+- Reject unknown/prototype evidence IDs. Repeated identical discussion notes
+  from the same member must be idempotent. Never print their text in logs.
+- Keep the party log reader in step with new server-authored events and seat
+  roles; its allowlist must still omit arbitrary strings and credentials.
+- New gameplay checks must exercise a complete two-person case, four independent
+  seats, lost acknowledgements and real WebGL context loss. Touch scrolling must
+  work over the canvas; reduced motion and a settled scene must stop drawing.
+- Compress assets during the build, not on the small Fly machine. Respect clients
+  that reject gzip, retain original content types and vary responses by encoding.
 - Preserve shipped invariants and course Fly machine/volume limits.
 - Use SQLite on DATA_DIR (production /data). No browser-only persistence.
 - Say saved only after the transaction commits.

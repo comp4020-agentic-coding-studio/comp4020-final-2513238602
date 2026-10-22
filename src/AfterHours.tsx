@@ -5,92 +5,1091 @@ import { duties, dutyNames, objects, places } from '../shared/after-hours.ts';
 import type { Duty, GameState, Place, Question } from '../shared/after-hours.ts';
 import { CaseSeal } from './CaseSeal.tsx';
 import './after-hours.css';
-const Scene=lazy(()=>import('./InvestigationScene.tsx'));
-type Mutation=(action:string,data:unknown)=>Promise<GameState|null>;
-type Draft={answer:string;evidence:string[]};
-const actTitles=['A convincing first impression','The clocks disagree','Follow the object'];
-function Brand(){return <a className="brand" href="/"><span className="brand-mark" aria-hidden="true">&amp;</span><span>lost<span className="brand-join"> &amp; </span>found<span className="brand-caption">THE SMALL MYSTERY CLUB</span></span></a>}
-function Dialog({title,children,onClose}:{title:string;children:ReactNode;onClose:()=>void}){
-  const ref=useRef<HTMLDialogElement>(null);useEffect(()=>{ref.current?.showModal();return()=>ref.current?.close()},[]);
-  return <dialog className="modal ah-modal" ref={ref} aria-labelledby="ah-dialog-title" onCancel={onClose}><div className="modal-inner"><button className="icon-button modal-close" aria-label="Close dialog" onClick={onClose}>×</button><h2 id="ah-dialog-title">{title}</h2>{children}</div></dialog>;
+const Scene = lazy(() => import('./InvestigationScene.tsx'));
+type Mutation = (action: string, data: unknown) => Promise<GameState | null>;
+type Draft = { answer: string; evidence: string[] };
+const actTitles = ['A convincing first impression', 'The clocks disagree', 'Follow the object'];
+function Brand() {
+  return (
+    <a className="brand" href="/">
+      <span className="brand-mark" aria-hidden="true">
+        &amp;
+      </span>
+      <span>
+        lost<span className="brand-join"> &amp; </span>found
+        <span className="brand-caption">THE SMALL MYSTERY CLUB</span>
+      </span>
+    </a>
+  );
 }
-function Entry({code}:{code?:string}){
-  const [name,setName]=useState(''),[busy,setBusy]=useState(false),[error,setError]=useState(''),[uncertain,setUncertain]=useState(false);
-  async function submit(another=false){
-    if(busy||(uncertain&&!code&&!another))return;setBusy(true);setError('');
+function Dialog({
+  title,
+  children,
+  onClose,
+}: {
+  title: string;
+  children: ReactNode;
+  onClose: () => void;
+}) {
+  const ref = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    ref.current?.showModal();
+    return () => ref.current?.close();
+  }, []);
+  return (
+    <dialog
+      className="modal ah-modal"
+      ref={ref}
+      aria-labelledby="ah-dialog-title"
+      onCancel={onClose}
+    >
+      <div className="modal-inner">
+        <button className="icon-button modal-close" aria-label="Close dialog" onClick={onClose}>
+          ×
+        </button>
+        <h2 id="ah-dialog-title">{title}</h2>
+        {children}
+      </div>
+    </dialog>
+  );
+}
+function Entry({ code }: { code?: string }) {
+  const [name, setName] = useState(''),
+    [busy, setBusy] = useState(false),
+    [error, setError] = useState(''),
+    [uncertain, setUncertain] = useState(false);
+  async function submit(another = false) {
+    if (busy || (uncertain && !code && !another)) return;
+    setBusy(true);
+    setError('');
     try {
-      try{await api('/api/me')}catch{setError('Could not prepare this browser. No new investigation or join was requested. Check your connection and retry.');return;}
-      if(code&&uncertain){
-        try{const saved=await api<GameState>(`/api/games/${code}`);location.assign(`/play/${saved.code}`)}
-        catch(e){if(e instanceof ApiError&&e.status===403){setUncertain(false);setError('No saved seat was found. You can try joining again.')}else setError('Could not confirm your seat. Check the connection and try checking again.');}return;
+      try {
+        await api('/api/me');
+      } catch {
+        setError(
+          'Could not prepare this browser. No new investigation or join was requested. Check your connection and retry.',
+        );
+        return;
       }
-      try{const room=await api<GameState>(code?`/api/games/${code}/join`:'/api/games',{name});location.assign(`/play/${room.code}`)}
-      catch(e){if(e instanceof ApiError&&e.status<500){setError(e.message);return}setUncertain(true);setError('No confirmation arrived. Your seat may already be saved. Check your case files before creating another investigation.');}
-    } finally{setBusy(false)}
+      if (code && uncertain) {
+        try {
+          const saved = await api<GameState>(`/api/games/${code}`);
+          location.assign(`/play/${saved.code}`);
+        } catch (e) {
+          if (e instanceof ApiError && e.status === 403) {
+            setUncertain(false);
+            setError('No saved seat was found. You can try joining again.');
+          } else
+            setError('Could not confirm your seat. Check the connection and try checking again.');
+        }
+        return;
+      }
+      try {
+        const room = await api<GameState>(code ? `/api/games/${code}/join` : '/api/games', {
+          name,
+        });
+        location.assign(`/play/${room.code}`);
+      } catch (e) {
+        if (e instanceof ApiError && e.status < 500) {
+          setError(e.message);
+          return;
+        }
+        setUncertain(true);
+        setError(
+          'No confirmation arrived. Your seat may already be saved. Check your case files before creating another investigation.',
+        );
+      }
+    } finally {
+      setBusy(false);
+    }
   }
-  return <div className="ah-page"><header className="site-header"><Brand/><a href="/readme/">Project notes ↗</a></header><main className="ah-entry shell"><div><p className="eyebrow">CASE 002 / AFTER HOURS</p><h1>{code?'Pull up a chair.':'Bring your curious people.'}</h1><p className="ah-lead">A lantern is missing. Two journeys have become one rumour. Your friends have the details you don’t.</p><div className="ah-entry-facts"><span>2–4 investigators</span><span>4 rooms</span><span>No timer</span></div><p>Play at the same table or talk over a call. Each player uses a separate browser or device. Your first partner takes the archive and route records; later arrivals divide the work further.</p><p>First, inspect an object. Share the evidence you find, then support a deduction together. A 20–30 minute main case is the design target; actual play time is still being evaluated.</p><a className="text-link" href="/">← Back to the case files</a></div><form className="ah-entry-form" onSubmit={e=>{e.preventDefault();void submit()}}><span className="label">{code?'YOUR INVITATION':'OPEN AN INVESTIGATION'}</span><h2>{code?'The table is waiting.':'Every perspective counts.'}</h2><label htmlFor="ah-name">Your investigator name</label><input id="ah-name" value={name} onChange={e=>setName(e.target.value)} required maxLength={24} autoComplete="nickname" placeholder="A name or nickname"/><p className="privacy-note">No account. This browser keeps your seat for 30 days. Clearing cookies loses access. Share your invitation only with your team.</p>{error&&<p className="error" role="alert">{error}</p>}{uncertain&&<a className="button secondary wide" href="/">View existing investigations</a>}<button className="button primary wide" type={uncertain&&!code?'button':'submit'} onClick={uncertain&&!code?()=>void submit(true):undefined} disabled={busy||!name.trim()}>{busy?'Opening…':code?uncertain?'Check my saved seat':'Join After Hours':uncertain?'Create another investigation':'Start After Hours'} →</button></form></main></div>;
+  return (
+    <div className="ah-page">
+      <header className="site-header">
+        <Brand />
+        <a href="/readme/">Project notes ↗</a>
+      </header>
+      <main className="ah-entry shell">
+        <div>
+          <p className="eyebrow">CASE 002 / AFTER HOURS</p>
+          <h1>{code ? 'Pull up a chair.' : 'Bring your curious people.'}</h1>
+          <p className="ah-lead">
+            A lantern is missing. Two journeys have become one rumour. Your friends have the details
+            you don’t.
+          </p>
+          <div className="ah-entry-facts">
+            <span>2–4 investigators</span>
+            <span>4 rooms</span>
+            <span>No timer</span>
+          </div>
+          <p>
+            Play at the same table or talk over a call. Each player uses a separate browser or
+            device. Your first partner takes the archive and route records; later arrivals divide
+            the work further.
+          </p>
+          <p>
+            First, inspect an object. Share the evidence you find, then support a deduction
+            together. A 20–30 minute main case is the design target; actual play time is still being
+            evaluated.
+          </p>
+          <a className="text-link" href="/">
+            ← Back to the case files
+          </a>
+        </div>
+        <form
+          className="ah-entry-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void submit();
+          }}
+        >
+          <span className="label">{code ? 'YOUR INVITATION' : 'OPEN AN INVESTIGATION'}</span>
+          <h2>{code ? 'The table is waiting.' : 'Every perspective counts.'}</h2>
+          <label htmlFor="ah-name">Your investigator name</label>
+          <input
+            id="ah-name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            maxLength={24}
+            autoComplete="nickname"
+            placeholder="A name or nickname"
+          />
+          <p className="privacy-note">
+            No account. This browser keeps your seat for 30 days. Clearing cookies loses access.
+            Share your invitation only with your team.
+          </p>
+          {error && (
+            <p className="error" role="alert">
+              {error}
+            </p>
+          )}
+          {uncertain && (
+            <a className="button secondary wide" href="/">
+              View existing investigations
+            </a>
+          )}
+          <button
+            className="button primary wide"
+            type={uncertain && !code ? 'button' : 'submit'}
+            onClick={uncertain && !code ? () => void submit(true) : undefined}
+            disabled={busy || !name.trim()}
+          >
+            {busy
+              ? 'Opening…'
+              : code
+                ? uncertain
+                  ? 'Check my saved seat'
+                  : 'Join After Hours'
+                : uncertain
+                  ? 'Create another investigation'
+                  : 'Start After Hours'}{' '}
+            →
+          </button>
+        </form>
+      </main>
+    </div>
+  );
 }
-function useGame(code:string){
-  const [room,setRoom]=useState<GameState|null>(null),[error,setError]=useState(''),[join,setJoin]=useState(false),[busy,setBusy]=useState(false),[connected,setConnected]=useState(false);
-  const version=useRef(-1),alive=useRef(true),inflight=useRef(false);
-  function accept(next:GameState){if(alive.current&&next.version>=version.current){version.current=next.version;setRoom(next)}}
-  async function refresh(){const next=await api<GameState>(`/api/games/${code}`);accept(next);return next;}
-  useEffect(()=>{alive.current=true;void refresh().catch(e=>{if(alive.current){if(e instanceof ApiError&&e.status===403)setJoin(true);else setError(e.message??'Could not open this investigation.')}});return()=>{alive.current=false}},[code]);
-  const mid=room?.me.id;
-  useEffect(()=>{
-    if(!mid)return;let active=true,stream:EventSource|undefined;
-    const sync=()=>{void refresh().then(()=>{if(active)setConnected(true)}).catch(()=>{if(active)setConnected(false)})};
-    const connect=()=>{stream?.close();stream=new EventSource(`/api/games/${code}/events`);stream.onopen=sync;stream.onerror=()=>{if(active)setConnected(false)};stream.addEventListener('update',sync)};
-    const offline=()=>{stream?.close();setConnected(false)},online=()=>{connect();sync()},visible=()=>{if(document.visibilityState==='visible'&&navigator.onLine)sync()};
-    connect();window.addEventListener('offline',offline);window.addEventListener('online',online);document.addEventListener('visibilitychange',visible);
-    return()=>{active=false;stream?.close();window.removeEventListener('offline',offline);window.removeEventListener('online',online);document.removeEventListener('visibilitychange',visible)};
-  },[code,mid]);
-  const mutate:Mutation=async(action,data)=>{
-    if(inflight.current)return null;inflight.current=true;setBusy(true);setError('');
-    try{const next=await api<GameState>(`/api/games/${code}/${action}`,data);accept(next);return next;}
-    catch(e){const uncertain=!(e instanceof ApiError)||e.status>=500;const message=e instanceof ApiError?e.message:'No save confirmation arrived. The action may already be saved.';
-      if(uncertain||(e instanceof ApiError&&e.status===409)){try{await refresh();setError(`${message} Latest saved state loaded; review it before retrying.`)}catch{setError(`${message} Could not refresh. Check the connection and reload before retrying.`)}}else setError(message);return null;
-    }finally{inflight.current=false;setBusy(false)}
+function useGame(code: string) {
+  const [room, setRoom] = useState<GameState | null>(null),
+    [error, setError] = useState(''),
+    [join, setJoin] = useState(false),
+    [busy, setBusy] = useState(false),
+    [connected, setConnected] = useState(false);
+  const version = useRef(-1),
+    alive = useRef(true),
+    inflight = useRef(false);
+  function accept(next: GameState) {
+    if (alive.current && next.version >= version.current) {
+      version.current = next.version;
+      setRoom(next);
+    }
+  }
+  async function refresh() {
+    const next = await api<GameState>(`/api/games/${code}`);
+    accept(next);
+    return next;
+  }
+  useEffect(() => {
+    alive.current = true;
+    void refresh().catch((e) => {
+      if (alive.current) {
+        if (e instanceof ApiError && e.status === 403) setJoin(true);
+        else setError(e.message ?? 'Could not open this investigation.');
+      }
+    });
+    return () => {
+      alive.current = false;
+    };
+  }, [code]);
+  const mid = room?.me.id;
+  useEffect(() => {
+    if (!mid) return;
+    let active = true,
+      stream: EventSource | undefined;
+    const sync = () => {
+      void refresh()
+        .then(() => {
+          if (active) setConnected(true);
+        })
+        .catch(() => {
+          if (active) setConnected(false);
+        });
+    };
+    const connect = () => {
+      stream?.close();
+      stream = new EventSource(`/api/games/${code}/events`);
+      stream.onopen = sync;
+      stream.onerror = () => {
+        if (active) setConnected(false);
+      };
+      stream.addEventListener('update', sync);
+    };
+    const offline = () => {
+        stream?.close();
+        setConnected(false);
+      },
+      online = () => {
+        connect();
+        sync();
+      },
+      visible = () => {
+        if (document.visibilityState === 'visible' && navigator.onLine) sync();
+      };
+    connect();
+    window.addEventListener('offline', offline);
+    window.addEventListener('online', online);
+    document.addEventListener('visibilitychange', visible);
+    return () => {
+      active = false;
+      stream?.close();
+      window.removeEventListener('offline', offline);
+      window.removeEventListener('online', online);
+      document.removeEventListener('visibilitychange', visible);
+    };
+  }, [code, mid]);
+  const mutate: Mutation = async (action, data) => {
+    if (inflight.current) return null;
+    inflight.current = true;
+    setBusy(true);
+    setError('');
+    try {
+      const next = await api<GameState>(`/api/games/${code}/${action}`, data);
+      accept(next);
+      return next;
+    } catch (e) {
+      const uncertain = !(e instanceof ApiError) || e.status >= 500;
+      const message =
+        e instanceof ApiError
+          ? e.message
+          : 'No save confirmation arrived. The action may already be saved.';
+      if (uncertain || (e instanceof ApiError && e.status === 409)) {
+        try {
+          await refresh();
+          setError(`${message} Latest saved state loaded; review it before retrying.`);
+        } catch {
+          setError(
+            `${message} Could not refresh. Check the connection and reload before retrying.`,
+          );
+        }
+      } else setError(message);
+      return null;
+    } finally {
+      inflight.current = false;
+      setBusy(false);
+    }
   };
-  return {room,error,join,busy,connected,mutate,refresh};
+  return { room, error, join, busy, connected, mutate, refresh };
 }
-function QuestionForm({question,room,draft,onDraft,mutate,busy}:{question:Question;room:GameState;draft:Draft;onDraft:(d:Draft)=>void;mutate:Mutation;busy:boolean}){
-  const [error,setError]=useState('');const accepted=question.accepted;
-  async function submit(e:FormEvent){e.preventDefault();setError('');if(!draft.answer||draft.evidence.length<2||draft.evidence.length>6){setError('Choose an explanation and cite two to six shared clues that support it.');return;}const next=await mutate('claim',{id:question.id,...draft});if(next&&!next.questions.find(q=>q.id===question.id)?.accepted)setError(next.feedback??'Check the supporting evidence.');}
-  return <article className={`ah-question ${accepted?'is-supported':''}`} data-question={question.id}><div className="ah-question-top"><span className="label">ACT {question.act} / {accepted?'SUPPORTED':'OPEN QUESTION'}</span>{accepted&&<span aria-hidden="true">✓</span>}</div><h3>{question.title}</h3><p>{question.prompt}</p>{accepted?<><p className="ah-supported-answer">{question.options.find(o=>o.id===accepted.answer)?.label}</p><p className="ah-citations">Supported by {accepted.evidence.map(id=>`${id} ${room.clues.find(c=>c.id===id)?.title??''}`).join(' · ')}</p><p className="privacy-note">Established by {room.members.find(m=>m.id===accepted.by)?.name}.</p></>:<form onSubmit={e=>void submit(e)}><label htmlFor={`answer-${question.id}`}>Your explanation</label><select id={`answer-${question.id}`} value={draft.answer} onChange={e=>onDraft({...draft,answer:e.target.value})} required><option value="">Choose an explanation</option>{question.options.map(o=><option key={o.id} value={o.id}>{o.label}</option>)}</select><fieldset className="ah-cite"><legend>Supporting evidence · select 2–6</legend>{room.clues.filter(c=>c.sharedBy).length===0?<p>Inspect objects and share their evidence first. Clues from your teammates appear here as they share them.</p>:room.clues.filter(c=>c.sharedBy).map(c=><label key={c.id}><input type="checkbox" checked={draft.evidence.includes(c.id)} onChange={e=>onDraft({...draft,evidence:e.target.checked?[...draft.evidence,c.id]:draft.evidence.filter(id=>id!==c.id)})}/><span><b>{c.id}</b> {c.title}</span></label>)}</fieldset>{error&&<p role="alert" className="error">{error}</p>}<div className="ah-form-actions"><button className="button primary" disabled={busy}>Test deduction →</button><button className="text-button" type="button" disabled={busy||question.hintLevel>=3} onClick={()=>void mutate('hint',{id:question.id})}>{question.hintLevel>=3?'All hints revealed':`Reveal hint ${question.hintLevel+1}/3`}</button></div></form>}{question.hint&&<p className="ah-hint"><strong>Hint {question.hintLevel}/3.</strong> {question.hint}</p>}</article>;
+function QuestionForm({
+  question,
+  room,
+  draft,
+  onDraft,
+  mutate,
+  busy,
+}: {
+  question: Question;
+  room: GameState;
+  draft: Draft;
+  onDraft: (d: Draft) => void;
+  mutate: Mutation;
+  busy: boolean;
+}) {
+  const [error, setError] = useState('');
+  const accepted = question.accepted;
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    setError('');
+    if (!draft.answer || draft.evidence.length < 2 || draft.evidence.length > 6) {
+      setError('Choose an explanation and cite two to six shared clues that support it.');
+      return;
+    }
+    const next = await mutate('claim', { id: question.id, ...draft });
+    if (next && !next.questions.find((q) => q.id === question.id)?.accepted)
+      setError(next.feedback ?? 'Check the supporting evidence.');
+  }
+  return (
+    <article
+      className={`ah-question ${accepted ? 'is-supported' : ''}`}
+      data-question={question.id}
+    >
+      <div className="ah-question-top">
+        <span className="label">
+          ACT {question.act} / {accepted ? 'SUPPORTED' : 'OPEN QUESTION'}
+        </span>
+        {accepted && <span aria-hidden="true">✓</span>}
+      </div>
+      <h3>{question.title}</h3>
+      <p>{question.prompt}</p>
+      {accepted ? (
+        <>
+          <p className="ah-supported-answer">
+            {question.options.find((o) => o.id === accepted.answer)?.label}
+          </p>
+          <p className="ah-citations">
+            Supported by{' '}
+            {accepted.evidence
+              .map((id) => `${id} ${room.clues.find((c) => c.id === id)?.title ?? ''}`)
+              .join(' · ')}
+          </p>
+          <p className="privacy-note">
+            Established by {room.members.find((m) => m.id === accepted.by)?.name}.
+          </p>
+        </>
+      ) : (
+        <form onSubmit={(e) => void submit(e)}>
+          <label htmlFor={`answer-${question.id}`}>Your explanation</label>
+          <select
+            id={`answer-${question.id}`}
+            value={draft.answer}
+            onChange={(e) => onDraft({ ...draft, answer: e.target.value })}
+            required
+          >
+            <option value="">Choose an explanation</option>
+            {question.options.map((o) => (
+              <option key={o.id} value={o.id}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+          <fieldset className="ah-cite">
+            <legend>Supporting evidence · select 2–6</legend>
+            {room.clues.filter((c) => c.sharedBy).length === 0 ? (
+              <p>
+                Inspect objects and share their evidence first. Clues from your teammates appear
+                here as they share them.
+              </p>
+            ) : (
+              room.clues
+                .filter((c) => c.sharedBy)
+                .map((c) => (
+                  <label key={c.id}>
+                    <input
+                      type="checkbox"
+                      checked={draft.evidence.includes(c.id)}
+                      onChange={(e) =>
+                        onDraft({
+                          ...draft,
+                          evidence: e.target.checked
+                            ? [...draft.evidence, c.id]
+                            : draft.evidence.filter((id) => id !== c.id),
+                        })
+                      }
+                    />
+                    <span>
+                      <b>{c.id}</b> {c.title}
+                    </span>
+                  </label>
+                ))
+            )}
+          </fieldset>
+          {error && (
+            <p role="alert" className="error">
+              {error}
+            </p>
+          )}
+          <div className="ah-form-actions">
+            <button className="button primary" disabled={busy}>
+              Test deduction →
+            </button>
+            <button
+              className="text-button"
+              type="button"
+              disabled={busy || question.hintLevel >= 3}
+              onClick={() => void mutate('hint', { id: question.id })}
+            >
+              {question.hintLevel >= 3
+                ? 'All hints revealed'
+                : `Reveal hint ${question.hintLevel + 1}/3`}
+            </button>
+          </div>
+        </form>
+      )}
+      {question.hint && (
+        <p className="ah-hint">
+          <strong>Hint {question.hintLevel}/3.</strong> {question.hint}
+        </p>
+      )}
+    </article>
+  );
 }
-function TeamDuties({room,mutate,busy}:{room:GameState;mutate:Mutation;busy:boolean}){
-  const [targets,setTargets]=useState<Partial<Record<Duty,string>>>({});
-  return <section className="ah-duty-manager" aria-label="Team duties"><h3>Keep every perspective available.</h3><p>If someone steps away, agree on a handover. Previously discovered private evidence follows the duty; shared evidence stays with the team.</p>{duties.map(d=>{const current=room.assignments[d],target=targets[d]??current??room.me.id;return <form data-duty={d} key={d} onSubmit={e=>{e.preventDefault();void mutate('assign',{duty:d,member:target,version:room.version})}}><label htmlFor={`duty-${d}`}>{dutyNames[d]}<small>Currently: {room.members.find(m=>m.id===current)?.name??'Unassigned'}</small></label><select id={`duty-${d}`} value={target} onChange={e=>setTargets(old=>({...old,[d]:e.target.value}))}>{room.members.map((m,i)=><option key={m.id} value={m.id}>{m.name} · seat {i+1}</option>)}</select><button className="button secondary small" disabled={busy||room.status==='solved'||target===current}>Transfer duty</button></form>})}<p className="privacy-note">Transfers are recorded for everyone. A room has four persistent seats; a departed player can return in their original browser.</p></section>;
+function TeamDuties({ room, mutate, busy }: { room: GameState; mutate: Mutation; busy: boolean }) {
+  const [targets, setTargets] = useState<Partial<Record<Duty, string>>>({});
+  return (
+    <section className="ah-duty-manager" aria-label="Team duties">
+      <h3>Keep every perspective available.</h3>
+      <p>
+        If someone steps away, agree on a handover. Previously discovered private evidence follows
+        the duty; shared evidence stays with the team.
+      </p>
+      {duties.map((d) => {
+        const current = room.assignments[d],
+          target = targets[d] ?? current ?? room.me.id;
+        return (
+          <form
+            data-duty={d}
+            key={d}
+            onSubmit={(e) => {
+              e.preventDefault();
+              void mutate('assign', { duty: d, member: target, version: room.version });
+            }}
+          >
+            <label htmlFor={`duty-${d}`}>
+              {dutyNames[d]}
+              <small>
+                Currently: {room.members.find((m) => m.id === current)?.name ?? 'Unassigned'}
+              </small>
+            </label>
+            <select
+              id={`duty-${d}`}
+              value={target}
+              onChange={(e) => setTargets((old) => ({ ...old, [d]: e.target.value }))}
+            >
+              {room.members.map((m, i) => (
+                <option key={m.id} value={m.id}>
+                  {m.name} · seat {i + 1}
+                </option>
+              ))}
+            </select>
+            <button
+              className="button secondary small"
+              disabled={busy || room.status === 'solved' || target === current}
+            >
+              Transfer duty
+            </button>
+          </form>
+        );
+      })}
+      <p className="privacy-note">
+        Transfers are recorded for everyone. A room has four persistent seats; a departed player can
+        return in their original browser.
+      </p>
+    </section>
+  );
 }
-function Investigation({code}:{code:string}){
-  const {room,error,join,busy,connected,mutate,refresh}=useGame(code);
-  const [place,setPlace]=useState<Place>('gallery'),[selected,setSelected]=useState('G1'),[tab,setTab]=useState<'explore'|'board'|'record'>('explore'),[team,setTeam]=useState(false),[copied,setCopied]=useState('');
-  const [drafts,setDrafts]=useState<Record<string,Draft>>({}),[questionId,setQuestionId]=useState('cargo');
-  const [noteDrafts,setNoteDrafts]=useState<Record<string,string>>({}),[showHistory,setShowHistory]=useState(false);
-  const initialSelection=useRef(false);
-  useEffect(()=>{if(room&&!initialSelection.current){initialSelection.current=true;const own=objects.find(o=>o.place==='gallery'&&room.assignments[o.duty]===room.me.id);if(own)setSelected(own.id);}},[room]);
-  if(join)return <Entry code={code}/>;
-  if(!room)return <div className="ah-page"><header className="site-header"><Brand/></header><main className="shell loading-page"><h1>Opening the investigation…</h1>{error?<><p role="alert">{error}</p><button className="button secondary" onClick={()=>void refresh().catch(()=>{})}>Retry opening</button><a href="/">Return to case files</a></>:<p role="status">Finding your saved seat.</p>}</main></div>;
-  const object=objects.find(o=>o.id===selected)!,clue=room.clues.find(c=>c.id===selected),owner=room.members.find(m=>m.id===room.assignments[object.duty]);
-  const owned=owner?.id===room.me.id,solved=room.status==='solved',supported=room.questions.filter(q=>q.accepted).length,question=room.questions.find(q=>q.id===questionId)??room.questions[0];
-  const location=places.find(p=>p.id===place)!;
-  const choose=(id:string)=>{setSelected(id);setPlace(objects.find(o=>o.id===id)!.place);if(window.innerWidth<=720)requestAnimationFrame(()=>{document.getElementById('ah-inspector')?.focus({preventScroll:true});document.getElementById('ah-inspector')?.scrollIntoView({block:'start'});});};
-  async function move(index:number,direction:number){if(!room)return;const order=[...room.order];[order[index],order[index+direction]]=[order[index+direction],order[index]];await mutate('board',{order,version:room.version});}
-  return <div className="ah-page"><a className="skip" href="#ah-main">Skip to investigation</a><header className="ah-header"><Brand/><div className="ah-title"><span className="label">CASE 002</span><strong>After Hours</strong></div><div className="ah-header-right"><a href="/readme/">Project notes</a><button className="button secondary small" onClick={()=>setTeam(true)}>Team & invite · {room.members.length}/4</button></div></header>
-    <main id="ah-main" className="ah-main"><div className="ah-status"><span><b>{room.me.name}</b> · {duties.filter(d=>room.assignments[d]===room.me.id).map(d=>dutyNames[d]).join(' + ')||'Shared desk contributor'}</span><span className="ah-connection" role="status"><i className={`status-dot ${connected?'':'offline'}`}/>{connected?'Connected':'Reconnecting…'} · {busy?'Saving…':`Saved ${new Date(room.updatedAt).toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'})}`}</span></div>
-    {error&&<div className="ah-error" role="alert">{error}</div>}
-    {solved?<section className="ah-closed"><CaseSeal celebrate={false}/><div><span className="label">CASE CLOSED</span><h1>Two journeys. One misunderstanding.</h1><p>The lantern is safe. Your team followed the evidence all the way home.</p></div><button className="button secondary" onClick={()=>setTab('record')}>Read the whole story →</button></section>:<div className="ah-chapter"><div><p className="label">ACT {room.act} OF 3 / {supported} OF 7 DEDUCTIONS</p><h1>{actTitles[room.act-1]}</h1></div><p>{room.members.length===1?'Invite a partner to examine the records and routes. Your scene and object duties are ready.':room.act===1?'The courier took a blue case. Does that mean they took the lantern?':room.act===2?'Separate the two journeys. Check the time and rule out impossible exits.':'An object, an instruction and a receipt. Bring all three into agreement.'}</p></div>}
-    <nav className="ah-tabs" aria-label="Investigation workspace"><button aria-pressed={tab==='explore'} onClick={()=>setTab('explore')}>01 / Explore rooms</button><button aria-pressed={tab==='board'} onClick={()=>setTab('board')}>02 / Reason together <span>{supported}/7</span></button><button aria-pressed={tab==='record'} onClick={()=>setTab('record')}>03 / Case record</button></nav>
-    <section hidden={tab!=='explore'} aria-label="Explore rooms"><nav className="ah-places" aria-label="Investigation rooms">{places.map((p,i)=><button key={p.id} disabled={p.act>room.act} aria-pressed={place===p.id} onClick={()=>{setPlace(p.id);setSelected(objects.find(o=>o.place===p.id)!.id)}}><span className="mono">0{i+1}</span><span>{p.title}<small>{p.act>room.act?`Opens after act ${p.act-1}`:p.id===place?'You are here':'Open room'}</small></span></button>)}</nav>
-    <div className="ah-explore-grid"><section className="ah-world" aria-labelledby="ah-room-title"><div className="ah-room-heading"><div><span className="label">THE SCENE</span><h2 id="ah-room-title">{location.title}</h2></div><p>{location.subtitle}</p></div>{tab==='explore'&&<Suspense fallback={<div className="ah-scene-fallback"><p role="status">Preparing the room. The object list is ready below.</p></div>}><Scene place={place} seed={room.seed} selected={selected} discovered={room.clues.map(c=>c.id)} onSelect={choose}/></Suspense>}<div className="ah-object-heading"><span className="label">SELECT AN OBJECT</span><small>The same actions are available in 3D and here.</small></div><div className="ah-objects">{objects.filter(o=>o.place===place).map(o=><button key={o.id} data-object={o.id} aria-pressed={selected===o.id} onClick={()=>choose(o.id)}><span className="mono">{o.id}</span><span><strong>{o.label}</strong><small>{dutyNames[o.duty]}{room.clues.some(c=>c.id===o.id&&c.sharedBy)?' · Shared':''}</small></span><span aria-hidden="true">↗</span></button>)}</div></section>
-    <aside id="ah-inspector" tabIndex={-1} className="ah-inspector" aria-label="Selected object" data-selected={selected}><div className="ah-inspector-meta"><span className="label">{clue?'EVIDENCE FILE':'TAKE A CLOSER LOOK'}</span><span className="mono">{selected}</span></div><h2>{clue?.title??object.label}</h2><p className="ah-owner">{dutyNames[object.duty]} · {owner?.name??'Waiting for a teammate'}</p>{clue?<><div className="ah-evidence-body">{clue.body.map((p,i)=><p key={i}>{p}</p>)}</div>{clue.sharedBy?<p className="ah-shared" role="status">✓ On the shared desk · available to cite</p>:<><p className="privacy-note">Only the person covering this duty can read this finding until it is shared.</p><button className="button primary wide" disabled={busy||solved||!owned} onClick={()=>void mutate('publish',{id:selected})}>Share this evidence →</button></>}<button className="text-button" onClick={()=>setTab('board')}>Compare on the reasoning board →</button>{clue.sharedBy&&<section className="ah-discussion" aria-label="Discussion about this evidence"><h3>Ask the table.</h3>{room.notes.filter(n=>n.clue===selected).map(n=><div className="ah-note" key={n.id}><b>{n.name} · seat {room.members.findIndex(m=>m.id===n.memberId)+1}</b><p>{n.text}</p></div>)}{!solved&&<form onSubmit={async e=>{e.preventDefault();const submitted=selected;const saved=await mutate('note',{id:submitted,text:noteDrafts[submitted]??''});if(saved)setNoteDrafts(old=>({...old,[submitted]:''}));}}><label htmlFor="ah-note">A question or observation for your team</label><textarea id="ah-note" maxLength={160} rows={3} value={noteDrafts[selected]??''} onChange={e=>setNoteDrafts(old=>({...old,[selected]:e.target.value}))} placeholder="What could we compare this with?" required/><button className="button secondary small" disabled={busy||!(noteDrafts[selected]??'').trim()}>Share discussion note</button><p className="privacy-note">Up to 160 characters. Shared with this investigation only.</p></form>}</section>}</>:<><p className="ah-inspect-intro">{owned?'Examine this object to add its observations to your private findings. Then decide what to share.':`Ask ${owner?.name??'a teammate'} to examine this object. Their evidence appears here when they share it.`}</p>{owned?<button className="button primary wide" disabled={busy||solved} onClick={()=>void mutate('inspect',{id:selected})}>{object.verb} →</button>:<button className="button secondary wide" onClick={()=>setTeam(true)}>{owner?'See team duties':'Invite a teammate'} →</button>}<div className="ah-investigator-tip"><span className="label">A GOOD QUESTION</span><p>What did you observe? What are you assuming? Your partner may have the record that separates the two.</p></div></>}</aside></div>
-    <div className="ah-shared-strip"><span className="label">SHARED FINDINGS · {room.clues.filter(c=>c.sharedBy).length}/16</span><div>{room.clues.filter(c=>c.sharedBy).map(c=><button className="text-button" key={c.id} onClick={()=>choose(c.id)}>{c.id} / {c.title}</button>)}</div></div></section>
-    <section hidden={tab!=='board'} aria-label="Reasoning board" className="ah-board"><div className="ah-board-intro"><span className="label">PUT THE FACTS IN CONVERSATION</span><h2>What does your evidence actually prove?</h2><p>Choose an explanation and cite the records that support it. A correct guess with unrelated evidence will not establish a deduction. Draft choices stay in this tab while you investigate; reloading clears unsubmitted drafts.</p></div><div className="ah-reasoning"><nav aria-label="Open deductions" className="ah-question-nav">{room.questions.map(q=><button aria-pressed={question.id===q.id} key={q.id} onClick={()=>setQuestionId(q.id)}><span>{q.accepted?'✓':`0${room.questions.indexOf(q)+1}`}</span><span>{q.title}<small>{q.accepted?'Supported':`Act ${q.act} · needs evidence`}</small></span></button>)}{room.act<3&&<p>Resolve this act’s questions to open the next room.</p>}<button className="text-button" onClick={()=>setTab('explore')}>← Return to the rooms</button></nav><QuestionForm key={question.id} question={question} room={room} draft={drafts[question.id]??{answer:'',evidence:[]}} onDraft={draft=>setDrafts(old=>({...old,[question.id]:draft}))} mutate={mutate} busy={busy}/></div>
-    {room.act===3&&<section className="ah-chronology" aria-labelledby="ah-timeline-title"><div><span className="label">THE FINAL RECONSTRUCTION</span><h2 id="ah-timeline-title">Put the evening in order.</h2><p>Use reception time. Your team shares this sequence; concurrent moves are checked before saving.</p><p>{supported<7?`${7-supported} deductions still need support before the case can close.`:solved?'Your final reconstruction is preserved.':'All seven deductions are supported. Compare the sequence with the records, then close the case.'}</p>{!solved&&<button className="button primary" disabled={busy} onClick={()=>void mutate('close',{version:room.version})}>Check reconstruction & close →</button>}</div><ol>{room.order.map((id,index)=><li key={id} data-event={id}><span className="mono">0{index+1}</span><strong>{room.events.find(e=>e.id===id)!.title}</strong><div><button className="icon-button" aria-label={`Move ${room.events.find(e=>e.id===id)!.title} earlier`} disabled={busy||solved||index===0} onClick={()=>void move(index,-1)}>↑</button><button className="icon-button" aria-label={`Move ${room.events.find(e=>e.id===id)!.title} later`} disabled={busy||solved||index===room.order.length-1} onClick={()=>void move(index,1)}>↓</button></div></li>)}</ol></section>}</section>
-    <section hidden={tab!=='record'} className="ah-record" aria-label="Case record"><span className="label">YOUR INVESTIGATION, PRESERVED</span><h2>{solved?'The whole story':'A record of the evening'}</h2>{room.solution&&<div className="ah-ending">{room.solution.map((p,i)=><p key={i}>{p}</p>)}</div>}<p>{room.attempts} deduction attempts. {room.clues.filter(c=>c.sharedBy).length} shared findings. Saved discoveries, deductions and duty assignments survive a return visit.</p>{solved&&<section className="ah-contributions" aria-label="Team contributions"><h3>Different discoveries. A shared explanation.</h3><p>Who found a fact that changed your mind? These counts record actions, not how much someone contributed to the conversation.</p><div>{(room.contributions??[]).map(c=><article key={c.memberId}><strong>{room.members.find(m=>m.id===c.memberId)?.name} · seat {room.members.findIndex(m=>m.id===c.memberId)+1}</strong><p>{c.discoveries} findings · {c.shared} shared · {c.deductions} supported deductions</p></article>)}</div></section>}<ol className="activity-list">{(showHistory?room.activity:room.activity.slice(0,12)).map(a=><li key={a.id}><time dateTime={a.at}>{new Date(a.at).toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'})}</time><div><strong>{a.name} · seat {duties.indexOf(a.seat)+1}</strong><p>{a.detail}</p></div></li>)}</ol>{room.activity.length>12&&<button className="button secondary" onClick={()=>setShowHistory(v=>!v)}>{showHistory?'Show recent actions':'Show the full recent record'}</button>}<p className="privacy-note">Showing {showHistory?room.activity.length:Math.min(12,room.activity.length)} of the latest {room.activity.length} recorded actions.</p></section>
-    <footer className="ah-live-feed" aria-label="Latest team action" role="status"><span className="label">AT YOUR TABLE</span><p>{room.activity[0]&&<><b>{room.activity[0].name} · seat {duties.indexOf(room.activity[0].seat)+1}</b> · {room.activity[0].detail}</>}</p></footer></main>
-    {team&&<Dialog title="A place for every perspective." onClose={()=>setTeam(false)}><p>Share the link with up to three friends. Use separate browsers or devices, and talk at the same table or over a call.</p><label htmlFor="ah-invite">Invitation link</label><div className="invite-field"><input id="ah-invite" readOnly value={`${window.location.origin}/play/${code}`} onFocus={e=>e.target.select()}/><button className="button secondary" onClick={async()=>{try{await navigator.clipboard.writeText(`${window.location.origin}/play/${code}`);setCopied('Invitation copied.')}catch{setCopied('Select and copy the invitation manually.')}}}>Copy link</button></div><p role="status" className="privacy-note">{copied||'Anyone with the link can take an available seat. Share it with your team only.'}</p>{error&&<p className="error" role="alert">{error}</p>}<div className="ah-roster">{duties.map(d=><div key={d}><span className="label">{dutyNames[d]}</span><strong>{room.members.find(m=>m.id===room.assignments[d])?.name??'Available for the next teammate'}</strong></div>)}</div><p>Two players cover two duties each. Third and fourth arrivals take the object and route duties. Shared findings remain visible to everyone.</p><TeamDuties room={room} mutate={mutate} busy={busy}/></Dialog>}
-  </div>;
+function Investigation({ code }: { code: string }) {
+  const { room, error, join, busy, connected, mutate, refresh } = useGame(code);
+  const [place, setPlace] = useState<Place>('gallery'),
+    [selected, setSelected] = useState('G1'),
+    [tab, setTab] = useState<'explore' | 'board' | 'record'>('explore'),
+    [team, setTeam] = useState(false),
+    [copied, setCopied] = useState('');
+  const [drafts, setDrafts] = useState<Record<string, Draft>>({}),
+    [questionId, setQuestionId] = useState('cargo');
+  const [noteDrafts, setNoteDrafts] = useState<Record<string, string>>({}),
+    [showHistory, setShowHistory] = useState(false);
+  const initialSelection = useRef(false);
+  useEffect(() => {
+    if (room && !initialSelection.current) {
+      initialSelection.current = true;
+      const own = objects.find(
+        (o) => o.place === 'gallery' && room.assignments[o.duty] === room.me.id,
+      );
+      if (own) setSelected(own.id);
+    }
+  }, [room]);
+  if (join) return <Entry code={code} />;
+  if (!room)
+    return (
+      <div className="ah-page">
+        <header className="site-header">
+          <Brand />
+        </header>
+        <main className="shell loading-page">
+          <h1>Opening the investigation…</h1>
+          {error ? (
+            <>
+              <p role="alert">{error}</p>
+              <button className="button secondary" onClick={() => void refresh().catch(() => {})}>
+                Retry opening
+              </button>
+              <a href="/">Return to case files</a>
+            </>
+          ) : (
+            <p role="status">Finding your saved seat.</p>
+          )}
+        </main>
+      </div>
+    );
+  const object = objects.find((o) => o.id === selected)!,
+    clue = room.clues.find((c) => c.id === selected),
+    owner = room.members.find((m) => m.id === room.assignments[object.duty]);
+  const owned = owner?.id === room.me.id,
+    solved = room.status === 'solved',
+    supported = room.questions.filter((q) => q.accepted).length,
+    question = room.questions.find((q) => q.id === questionId) ?? room.questions[0];
+  const location = places.find((p) => p.id === place)!;
+  const choose = (id: string) => {
+    setSelected(id);
+    setPlace(objects.find((o) => o.id === id)!.place);
+    if (window.innerWidth <= 720)
+      requestAnimationFrame(() => {
+        document.getElementById('ah-inspector')?.focus({ preventScroll: true });
+        document.getElementById('ah-inspector')?.scrollIntoView({ block: 'start' });
+      });
+  };
+  async function move(index: number, direction: number) {
+    if (!room) return;
+    const order = [...room.order];
+    [order[index], order[index + direction]] = [order[index + direction], order[index]];
+    await mutate('board', { order, version: room.version });
+  }
+  return (
+    <div className="ah-page">
+      <a className="skip" href="#ah-main">
+        Skip to investigation
+      </a>
+      <header className="ah-header">
+        <Brand />
+        <div className="ah-title">
+          <span className="label">CASE 002</span>
+          <strong>After Hours</strong>
+        </div>
+        <div className="ah-header-right">
+          <a href="/readme/">Project notes</a>
+          <button className="button secondary small" onClick={() => setTeam(true)}>
+            Team & invite · {room.members.length}/4
+          </button>
+        </div>
+      </header>
+      <main id="ah-main" className="ah-main">
+        <div className="ah-status">
+          <span>
+            <b>{room.me.name}</b> ·{' '}
+            {duties
+              .filter((d) => room.assignments[d] === room.me.id)
+              .map((d) => dutyNames[d])
+              .join(' + ') || 'Shared desk contributor'}
+          </span>
+          <span className="ah-connection" role="status">
+            <i className={`status-dot ${connected ? '' : 'offline'}`} />
+            {connected ? 'Connected' : 'Reconnecting…'} ·{' '}
+            {busy
+              ? 'Saving…'
+              : `Saved ${new Date(room.updatedAt).toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' })}`}
+          </span>
+        </div>
+        {error && (
+          <div className="ah-error" role="alert">
+            {error}
+          </div>
+        )}
+        {solved ? (
+          <section className="ah-closed">
+            <CaseSeal celebrate={false} />
+            <div>
+              <span className="label">CASE CLOSED</span>
+              <h1>Two journeys. One misunderstanding.</h1>
+              <p>The lantern is safe. Your team followed the evidence all the way home.</p>
+            </div>
+            <button className="button secondary" onClick={() => setTab('record')}>
+              Read the whole story →
+            </button>
+          </section>
+        ) : (
+          <div className="ah-chapter">
+            <div>
+              <p className="label">
+                ACT {room.act} OF 3 / {supported} OF 7 DEDUCTIONS
+              </p>
+              <h1>{actTitles[room.act - 1]}</h1>
+            </div>
+            <p>
+              {room.members.length === 1
+                ? 'Invite a partner to examine the records and routes. Your scene and object duties are ready.'
+                : room.act === 1
+                  ? 'The courier took a blue case. Does that mean they took the lantern?'
+                  : room.act === 2
+                    ? 'Separate the two journeys. Check the time and rule out impossible exits.'
+                    : 'An object, an instruction and a receipt. Bring all three into agreement.'}
+            </p>
+          </div>
+        )}
+        <nav className="ah-tabs" aria-label="Investigation workspace">
+          <button aria-pressed={tab === 'explore'} onClick={() => setTab('explore')}>
+            01 / Explore rooms
+          </button>
+          <button aria-pressed={tab === 'board'} onClick={() => setTab('board')}>
+            02 / Reason together <span>{supported}/7</span>
+          </button>
+          <button aria-pressed={tab === 'record'} onClick={() => setTab('record')}>
+            03 / Case record
+          </button>
+        </nav>
+        <section hidden={tab !== 'explore'} aria-label="Explore rooms">
+          <nav className="ah-places" aria-label="Investigation rooms">
+            {places.map((p, i) => (
+              <button
+                key={p.id}
+                disabled={p.act > room.act}
+                aria-pressed={place === p.id}
+                onClick={() => {
+                  setPlace(p.id);
+                  setSelected(objects.find((o) => o.place === p.id)!.id);
+                }}
+              >
+                <span className="mono">0{i + 1}</span>
+                <span>
+                  {p.title}
+                  <small>
+                    {p.act > room.act
+                      ? `Opens after act ${p.act - 1}`
+                      : p.id === place
+                        ? 'You are here'
+                        : 'Open room'}
+                  </small>
+                </span>
+              </button>
+            ))}
+          </nav>
+          <div className="ah-explore-grid">
+            <section className="ah-world" aria-labelledby="ah-room-title">
+              <div className="ah-room-heading">
+                <div>
+                  <span className="label">THE SCENE</span>
+                  <h2 id="ah-room-title">{location.title}</h2>
+                </div>
+                <p>{location.subtitle}</p>
+              </div>
+              {tab === 'explore' && (
+                <Suspense
+                  fallback={
+                    <div className="ah-scene-fallback">
+                      <p role="status">Preparing the room. The object list is ready below.</p>
+                    </div>
+                  }
+                >
+                  <Scene
+                    place={place}
+                    seed={room.seed}
+                    selected={selected}
+                    discovered={room.clues.map((c) => c.id)}
+                    onSelect={choose}
+                  />
+                </Suspense>
+              )}
+              <div className="ah-object-heading">
+                <span className="label">SELECT AN OBJECT</span>
+                <small>The same actions are available in 3D and here.</small>
+              </div>
+              <div className="ah-objects">
+                {objects
+                  .filter((o) => o.place === place)
+                  .map((o) => (
+                    <button
+                      key={o.id}
+                      data-object={o.id}
+                      aria-pressed={selected === o.id}
+                      onClick={() => choose(o.id)}
+                    >
+                      <span className="mono">{o.id}</span>
+                      <span>
+                        <strong>{o.label}</strong>
+                        <small>
+                          {dutyNames[o.duty]}
+                          {room.clues.some((c) => c.id === o.id && c.sharedBy) ? ' · Shared' : ''}
+                        </small>
+                      </span>
+                      <span aria-hidden="true">↗</span>
+                    </button>
+                  ))}
+              </div>
+            </section>
+            <aside
+              id="ah-inspector"
+              tabIndex={-1}
+              className="ah-inspector"
+              aria-label="Selected object"
+              data-selected={selected}
+            >
+              <div className="ah-inspector-meta">
+                <span className="label">{clue ? 'EVIDENCE FILE' : 'TAKE A CLOSER LOOK'}</span>
+                <span className="mono">{selected}</span>
+              </div>
+              <h2>{clue?.title ?? object.label}</h2>
+              <p className="ah-owner">
+                {dutyNames[object.duty]} · {owner?.name ?? 'Waiting for a teammate'}
+              </p>
+              {clue ? (
+                <>
+                  <div className="ah-evidence-body">
+                    {clue.body.map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                  </div>
+                  {clue.sharedBy ? (
+                    <p className="ah-shared" role="status">
+                      ✓ On the shared desk · available to cite
+                    </p>
+                  ) : (
+                    <>
+                      <p className="privacy-note">
+                        Only the person covering this duty can read this finding until it is shared.
+                      </p>
+                      <button
+                        className="button primary wide"
+                        disabled={busy || solved || !owned}
+                        onClick={() => void mutate('publish', { id: selected })}
+                      >
+                        Share this evidence →
+                      </button>
+                    </>
+                  )}
+                  <button className="text-button" onClick={() => setTab('board')}>
+                    Compare on the reasoning board →
+                  </button>
+                  {clue.sharedBy && (
+                    <section className="ah-discussion" aria-label="Discussion about this evidence">
+                      <h3>Ask the table.</h3>
+                      {room.notes
+                        .filter((n) => n.clue === selected)
+                        .map((n) => (
+                          <div className="ah-note" key={n.id}>
+                            <b>
+                              {n.name} · seat{' '}
+                              {room.members.findIndex((m) => m.id === n.memberId) + 1}
+                            </b>
+                            <p>{n.text}</p>
+                          </div>
+                        ))}
+                      {!solved && (
+                        <form
+                          onSubmit={async (e) => {
+                            e.preventDefault();
+                            const submitted = selected;
+                            const saved = await mutate('note', {
+                              id: submitted,
+                              text: noteDrafts[submitted] ?? '',
+                            });
+                            if (saved) setNoteDrafts((old) => ({ ...old, [submitted]: '' }));
+                          }}
+                        >
+                          <label htmlFor="ah-note">A question or observation for your team</label>
+                          <textarea
+                            id="ah-note"
+                            maxLength={160}
+                            rows={3}
+                            value={noteDrafts[selected] ?? ''}
+                            onChange={(e) =>
+                              setNoteDrafts((old) => ({ ...old, [selected]: e.target.value }))
+                            }
+                            placeholder="What could we compare this with?"
+                            required
+                          />
+                          <button
+                            className="button secondary small"
+                            disabled={busy || !(noteDrafts[selected] ?? '').trim()}
+                          >
+                            Share discussion note
+                          </button>
+                          <p className="privacy-note">
+                            Up to 160 characters. Shared with this investigation only.
+                          </p>
+                        </form>
+                      )}
+                    </section>
+                  )}
+                </>
+              ) : (
+                <>
+                  <p className="ah-inspect-intro">
+                    {owned
+                      ? 'Examine this object to add its observations to your private findings. Then decide what to share.'
+                      : `Ask ${owner?.name ?? 'a teammate'} to examine this object. Their evidence appears here when they share it.`}
+                  </p>
+                  {owned ? (
+                    <button
+                      className="button primary wide"
+                      disabled={busy || solved}
+                      onClick={() => void mutate('inspect', { id: selected })}
+                    >
+                      {object.verb} →
+                    </button>
+                  ) : (
+                    <button className="button secondary wide" onClick={() => setTeam(true)}>
+                      {owner ? 'See team duties' : 'Invite a teammate'} →
+                    </button>
+                  )}
+                  <div className="ah-investigator-tip">
+                    <span className="label">A GOOD QUESTION</span>
+                    <p>
+                      What did you observe? What are you assuming? Your partner may have the record
+                      that separates the two.
+                    </p>
+                  </div>
+                </>
+              )}
+            </aside>
+          </div>
+          <div className="ah-shared-strip">
+            <span className="label">
+              SHARED FINDINGS · {room.clues.filter((c) => c.sharedBy).length}/16
+            </span>
+            <div>
+              {room.clues
+                .filter((c) => c.sharedBy)
+                .map((c) => (
+                  <button className="text-button" key={c.id} onClick={() => choose(c.id)}>
+                    {c.id} / {c.title}
+                  </button>
+                ))}
+            </div>
+          </div>
+        </section>
+        <section hidden={tab !== 'board'} aria-label="Reasoning board" className="ah-board">
+          <div className="ah-board-intro">
+            <span className="label">PUT THE FACTS IN CONVERSATION</span>
+            <h2>What does your evidence actually prove?</h2>
+            <p>
+              Choose an explanation and cite the records that support it. A correct guess with
+              unrelated evidence will not establish a deduction. Draft choices stay in this tab
+              while you investigate; reloading clears unsubmitted drafts.
+            </p>
+          </div>
+          <div className="ah-reasoning">
+            <nav aria-label="Open deductions" className="ah-question-nav">
+              {room.questions.map((q) => (
+                <button
+                  aria-pressed={question.id === q.id}
+                  key={q.id}
+                  onClick={() => setQuestionId(q.id)}
+                >
+                  <span>{q.accepted ? '✓' : `0${room.questions.indexOf(q) + 1}`}</span>
+                  <span>
+                    {q.title}
+                    <small>{q.accepted ? 'Supported' : `Act ${q.act} · needs evidence`}</small>
+                  </span>
+                </button>
+              ))}
+              {room.act < 3 && <p>Resolve this act’s questions to open the next room.</p>}
+              <button className="text-button" onClick={() => setTab('explore')}>
+                ← Return to the rooms
+              </button>
+            </nav>
+            <QuestionForm
+              key={question.id}
+              question={question}
+              room={room}
+              draft={drafts[question.id] ?? { answer: '', evidence: [] }}
+              onDraft={(draft) => setDrafts((old) => ({ ...old, [question.id]: draft }))}
+              mutate={mutate}
+              busy={busy}
+            />
+          </div>
+          {room.act === 3 && (
+            <section className="ah-chronology" aria-labelledby="ah-timeline-title">
+              <div>
+                <span className="label">THE FINAL RECONSTRUCTION</span>
+                <h2 id="ah-timeline-title">Put the evening in order.</h2>
+                <p>
+                  Use reception time. Your team shares this sequence; concurrent moves are checked
+                  before saving.
+                </p>
+                <p>
+                  {supported < 7
+                    ? `${7 - supported} deductions still need support before the case can close.`
+                    : solved
+                      ? 'Your final reconstruction is preserved.'
+                      : 'All seven deductions are supported. Compare the sequence with the records, then close the case.'}
+                </p>
+                {!solved && (
+                  <button
+                    className="button primary"
+                    disabled={busy}
+                    onClick={() => void mutate('close', { version: room.version })}
+                  >
+                    Check reconstruction & close →
+                  </button>
+                )}
+              </div>
+              <ol>
+                {room.order.map((id, index) => (
+                  <li key={id} data-event={id}>
+                    <span className="mono">0{index + 1}</span>
+                    <strong>{room.events.find((e) => e.id === id)!.title}</strong>
+                    <div>
+                      <button
+                        className="icon-button"
+                        aria-label={`Move ${room.events.find((e) => e.id === id)!.title} earlier`}
+                        disabled={busy || solved || index === 0}
+                        onClick={() => void move(index, -1)}
+                      >
+                        ↑
+                      </button>
+                      <button
+                        className="icon-button"
+                        aria-label={`Move ${room.events.find((e) => e.id === id)!.title} later`}
+                        disabled={busy || solved || index === room.order.length - 1}
+                        onClick={() => void move(index, 1)}
+                      >
+                        ↓
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+        </section>
+        <section hidden={tab !== 'record'} className="ah-record" aria-label="Case record">
+          <span className="label">YOUR INVESTIGATION, PRESERVED</span>
+          <h2>{solved ? 'The whole story' : 'A record of the evening'}</h2>
+          {room.solution && (
+            <div className="ah-ending">
+              {room.solution.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+          )}
+          <p>
+            {room.attempts} deduction attempts. {room.clues.filter((c) => c.sharedBy).length} shared
+            findings. Saved discoveries, deductions and duty assignments survive a return visit.
+          </p>
+          {solved && (
+            <section className="ah-contributions" aria-label="Team contributions">
+              <h3>Different discoveries. A shared explanation.</h3>
+              <p>
+                Who found a fact that changed your mind? These counts record actions, not how much
+                someone contributed to the conversation.
+              </p>
+              <div>
+                {(room.contributions ?? []).map((c) => (
+                  <article key={c.memberId}>
+                    <strong>
+                      {room.members.find((m) => m.id === c.memberId)?.name} · seat{' '}
+                      {room.members.findIndex((m) => m.id === c.memberId) + 1}
+                    </strong>
+                    <p>
+                      {c.discoveries} findings · {c.shared} shared · {c.deductions} supported
+                      deductions
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
+          <ol className="activity-list">
+            {(showHistory ? room.activity : room.activity.slice(0, 12)).map((a) => (
+              <li key={a.id}>
+                <time dateTime={a.at}>
+                  {new Date(a.at).toLocaleTimeString('en-AU', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </time>
+                <div>
+                  <strong>
+                    {a.name} · seat {duties.indexOf(a.seat) + 1}
+                  </strong>
+                  <p>{a.detail}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          {room.activity.length > 12 && (
+            <button className="button secondary" onClick={() => setShowHistory((v) => !v)}>
+              {showHistory ? 'Show recent actions' : 'Show the full recent record'}
+            </button>
+          )}
+          <p className="privacy-note">
+            Showing {showHistory ? room.activity.length : Math.min(12, room.activity.length)} of the
+            latest {room.activity.length} recorded actions.
+          </p>
+        </section>
+        <footer className="ah-live-feed" aria-label="Latest team action" role="status">
+          <span className="label">AT YOUR TABLE</span>
+          <p>
+            {room.activity[0] && (
+              <>
+                <b>
+                  {room.activity[0].name} · seat {duties.indexOf(room.activity[0].seat) + 1}
+                </b>{' '}
+                · {room.activity[0].detail}
+              </>
+            )}
+          </p>
+        </footer>
+      </main>
+      {team && (
+        <Dialog title="A place for every perspective." onClose={() => setTeam(false)}>
+          <p>
+            Share the link with up to three friends. Use separate browsers or devices, and talk at
+            the same table or over a call.
+          </p>
+          <label htmlFor="ah-invite">Invitation link</label>
+          <div className="invite-field">
+            <input
+              id="ah-invite"
+              readOnly
+              value={`${window.location.origin}/play/${code}`}
+              onFocus={(e) => e.target.select()}
+            />
+            <button
+              className="button secondary"
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(`${window.location.origin}/play/${code}`);
+                  setCopied('Invitation copied.');
+                } catch {
+                  setCopied('Select and copy the invitation manually.');
+                }
+              }}
+            >
+              Copy link
+            </button>
+          </div>
+          <p role="status" className="privacy-note">
+            {copied ||
+              'Anyone with the link can take an available seat. Share it with your team only.'}
+          </p>
+          {error && (
+            <p className="error" role="alert">
+              {error}
+            </p>
+          )}
+          <div className="ah-roster">
+            {duties.map((d) => (
+              <div key={d}>
+                <span className="label">{dutyNames[d]}</span>
+                <strong>
+                  {room.members.find((m) => m.id === room.assignments[d])?.name ??
+                    'Available for the next teammate'}
+                </strong>
+              </div>
+            ))}
+          </div>
+          <p>
+            Two players cover two duties each. Third and fourth arrivals take the object and route
+            duties. Shared findings remain visible to everyone.
+          </p>
+          <TeamDuties room={room} mutate={mutate} busy={busy} />
+        </Dialog>
+      )}
+    </div>
+  );
 }
-export default function AfterHours({code}:{code?:string}){return code?<Investigation code={code}/>:<Entry/>;}
+export default function AfterHours({ code }: { code?: string }) {
+  return code ? <Investigation code={code} /> : <Entry />;
+}
