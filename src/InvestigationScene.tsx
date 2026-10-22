@@ -350,6 +350,18 @@ function Room({
     </>
   );
 }
+function ContextHealth({ onLost }: { onLost: () => void }) {
+  const { gl } = useThree();
+  useEffect(() => {
+    const canvas = gl.domElement;
+    const lost = () => { if (canvas.isConnected) onLost(); };
+    canvas.addEventListener('webglcontextlost', lost);
+    // R3F deliberately loses its old context after unmounting. That teardown
+    // must not mark a paused scene or a replacement canvas as a GPU failure.
+    return () => canvas.removeEventListener('webglcontextlost', lost);
+  }, [gl, onLost]);
+  return null;
+}
 class SceneBoundary extends React.Component<
   { children: React.ReactNode; onFailure: () => void },
   { failed: boolean }
@@ -399,11 +411,9 @@ export default function InvestigationScene(props: {
               onCreated={({ gl }) => {
                 setReady(true);
                 gl.domElement.setAttribute('aria-hidden', 'true');
-                gl.domElement.addEventListener('webglcontextlost', () => setFailed(true), {
-                  once: true,
-                });
               }}
             >
+              <ContextHealth onLost={() => setFailed(true)} />
               <Rig angle={angle} />
               <Room {...props} />
             </Canvas>

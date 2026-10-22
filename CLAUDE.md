@@ -14,6 +14,9 @@
 - New gameplay checks must exercise a complete two-person case, four independent
   seats, lost acknowledgements and real WebGL context loss. Touch scrolling must
   work over the canvas; reduced motion and a settled scene must stop drawing.
+- Remove context-loss listeners with their canvas. Deliberate deferred disposal
+  of a paused/unmounted renderer must not disable a later scene. Test the pause
+  long enough for disposal, then restore 3D; fast local requests can hide this race.
 - Compress assets during the build, not on the small Fly machine. Respect clients
   that reject gzip, retain original content types and vary responses by encoding.
 - Preserve shipped invariants and course Fly machine/volume limits.

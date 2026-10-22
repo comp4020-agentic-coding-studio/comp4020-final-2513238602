@@ -142,7 +142,11 @@ try {
   await axe(pb, 'Phone reasoning');
   await pa.reload();
   await expect(pa.locator('.ah-chapter h1')).toContainText('The clocks disagree');
+  const oldCanvas = await pa.locator('.ah-scene canvas').elementHandle();
   await pa.getByRole('button', { name: 'Use object list only' }).click();
+  await oldCanvas.evaluate(canvas => canvas.dispatchEvent(new Event('webglcontextlost')));
+  await pa.waitForTimeout(700); // R3F schedules deliberate context disposal after unmount.
+  await expect(pa.getByRole('button', { name: 'Show 3D room' })).toBeEnabled();
   await expect(pa.locator('.ah-scene-fallback')).toBeVisible();
   await select(pa, 'M1');
   await pa.locator('.ah-inspector .button.primary').click();
@@ -162,6 +166,8 @@ try {
   ])
     await inspectShare(page, id);
   await pa.getByRole('button', { name: 'Show 3D room' }).click();
+  await expect(pa.locator('[data-scene-ready="true"]')).toBeVisible();
+  checks.push('A delayed context-loss event from a deliberately removed canvas cannot disable the replacement 3D view');
   await select(pa, 'M3');
   await pa.screenshot({ path: `${output}/monitor-1920.png`, fullPage: true });
   await claim(pa, 'time', '1800', ['M1', 'M2']);
