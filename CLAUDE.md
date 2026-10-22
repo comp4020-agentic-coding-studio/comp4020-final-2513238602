@@ -1,6 +1,12 @@
 # Lost & Found: working rules
 
-- Follow PRODUCT.md and docs/case-design.md. Keep one case.
+- Follow PRODUCT.md, docs/case-design.md and docs/after-hours-design.md.
+- Preserve Blue Hour rooms. New After Hours rooms pin their case version and seed.
+- After Hours deductions require their actual supporting published evidence;
+  two arbitrary citations cannot establish a correct conclusion. Keep all rules
+  and unrevealed facts server-side. A duty handover moves private discoveries.
+- Seed scenery, not truth. Every required clue remains reachable in the object
+  list with the same role and stage conditions as the 3D interaction.
 - Preserve shipped invariants and course Fly machine/volume limits.
 - Use SQLite on DATA_DIR (production /data). No browser-only persistence.
 - Say saved only after the transaction commits.

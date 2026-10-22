@@ -7,6 +7,7 @@ import { resolve, extname, sep } from 'node:path';
 import { marked } from 'marked';
 import { clues, events, startingOrder, assess, solution } from './case.ts';
 import type { Mode, Role, Theory } from '../shared/types.ts';
+import { createAfterHours } from './after-hours.ts';
 
 const dataDir = resolve(process.env.DATA_DIR ?? 'data');
 mkdirSync(dataDir, { recursive: true });
@@ -74,7 +75,7 @@ function investigationPage(sid: string, cursor: string | null) {
     boundary = decoded as [string, string];
   }
   // Updates by a partner must not move an unread page across the cursor boundary.
-  const rows = all(`SELECT r.code,r.mode,r.status,r.created AS createdAt,r.updated AS updatedAt,m.role FROM rooms r JOIN members m ON m.room=r.code WHERE m.session=?${boundary ? ' AND (r.created < ? OR (r.created = ? AND r.code < ?))' : ''} ORDER BY r.created DESC,r.code DESC LIMIT 5`,sid,...(boundary ? [boundary[0],boundary[0],boundary[1]] : []));
+  const rows = all(`SELECT r.code,r.mode,r.status,r.case_id AS caseId,r.created AS createdAt,r.updated AS updatedAt,m.role FROM rooms r JOIN members m ON m.room=r.code WHERE m.session=?${boundary ? ' AND (r.created < ? OR (r.created = ? AND r.code < ?))' : ''} ORDER BY r.created DESC,r.code DESC LIMIT 5`,sid,...(boundary ? [boundary[0],boundary[0],boundary[1]] : []));
   const investigations = rows.slice(0,4);
   const last = investigations.at(-1);
   const nextCursor = rows.length > investigations.length && last ? Buffer.from(JSON.stringify([last.createdAt,last.code])).toString('base64url') : null;
@@ -85,6 +86,7 @@ function log(code: string, mid: string, action: string, detail: string) {
   pendingActivity?.push(Number(result.lastInsertRowid));
 }
 const streams = new Map<string, Set<ServerResponse>>();
+const game = createAfterHours(db,{fail,id,now,log});
 function broadcast(code: string) { for (const res of streams.get(code) ?? []) res.write(`event: update\ndata: ${JSON.stringify({ version: getRoom(code).version })}\n\n`); }
 function roomState(code: string, sid: string) {
   const room = getRoom(code); const me = member(code, sid);
@@ -121,6 +123,27 @@ const server = createServer(async (req,res) => {
     if (path.startsWith('/api/')) {
       const sid = session(req,res);
       if (path === '/api/me' && method === 'GET') return json(res,200,investigationPage(sid,url.searchParams.get('cursor')));
+      if(path==='/api/games'&&method==='POST'){
+        const data=await body(req),name=nameFrom(data.name);
+        if(Number(one('SELECT COUNT(*) AS count FROM members WHERE session=?',sid)!.count)>=60)fail(429,'You have reached the investigation limit for this browser.');
+        const code=randomBytes(6).toString('hex');transaction(()=>game.create(code,sid,name));return json(res,201,game.state(code,sid));
+      }
+      const gm=path.match(/^\/api\/games\/([a-f0-9]{12})(?:\/(join|events|inspect|publish|claim|hint|assign|note|board|close))?$/);
+      if(gm){
+        const [,code,action]=gm;trace.room=code;trace.operation=action??'snapshot';
+        if(action==='join'&&method==='POST'){const data=await body(req),name=nameFrom(data.name);const changed=transaction(()=>game.join(code,sid,name));if(changed)broadcast(code);return json(res,200,game.state(code,sid));}
+        const me=game.member(code,sid);trace.member=String(me.id);trace.role=String(me.role);
+        if(!action&&method==='GET')return json(res,200,game.state(code,sid));
+        if(action==='events'&&method==='GET'){
+          const clients=streams.get(code)??new Set<ServerResponse>();if(clients.size>=12)fail(429,'Too many open tabs for this investigation.');
+          res.writeHead(200,{'Content-Type':'text/event-stream','Cache-Control':'no-cache, no-transform','Connection':'keep-alive','X-Accel-Buffering':'no'});
+          clients.add(res);streams.set(code,clients);res.write('event: update\ndata: {}\n\n');
+          const heartbeat=setInterval(()=>res.write(': keepalive\n\n'),20000);
+          res.on('close',()=>{clearInterval(heartbeat);clients.delete(res);if(!clients.size)streams.delete(code)});return;
+        }
+        if(method!=='POST')fail(405,'This action needs a POST request.');
+        const data=await body(req);const changed=transaction(()=>game.mutate(code,sid,action??'',data));if(changed)broadcast(code);return json(res,200,game.state(code,sid));
+      }
       if (path === '/api/rooms' && method === 'POST') {
         const data = await body(req); const name = nameFrom(data.name); if (data.mode !== 'solo' && data.mode !== 'duo') fail(400,'Choose solo or duo.');
         if (Number(one('SELECT COUNT(*) AS count FROM members WHERE session=?',sid)!.count) >= 60) fail(429,'You have reached the investigation limit for this browser.');
@@ -131,6 +154,7 @@ const server = createServer(async (req,res) => {
       const match = path.match(/^\/api\/rooms\/([a-f0-9]{12})(?:\/(join|events|read|publish|board|theory))?$/);
       if (!match) fail(404,'This endpoint was not found.');
       const [,code,action] = match!;
+      if(getRoom(code).case_id!=='blue-hour')fail(404,'Open this investigation through its After Hours invitation.');
       trace.room=code;trace.operation=action??'snapshot';
       if (action === 'join' && method === 'POST') {
         const data=await body(req); const name=nameFrom(data.name);
@@ -190,7 +214,7 @@ const server = createServer(async (req,res) => {
     const file=resolve(root,`.${relative!}`);
     if (file !== root && !file.startsWith(root+sep)) fail(404,'Not found.');
     if (existsSync(file) && statSync(file).isFile()) return staticFile(res,file);
-    if (path === '/' || /^\/case\/[a-f0-9]{12}\/?$/.test(path)) {
+    if (path === '/' || path === '/after-hours' || /^\/(?:case|play)\/[a-f0-9]{12}\/?$/.test(path)) {
       if (!existsSync(resolve(root,'index.html'))) fail(503,'Run pnpm build before starting the app.');
       return staticFile(res,resolve(root,'index.html'));
     }
