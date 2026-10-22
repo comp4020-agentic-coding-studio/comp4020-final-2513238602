@@ -75,3 +75,26 @@ requires all three reflections and the final written documents, checks local
 references and cited commits, and reports word-count guidance. CI runs it after
 `check:evidence`. It cannot verify personal authorship, actual classroom
 participation, a student's reading history or the quality of an argument.
+
+## After Hours upgrade
+
+- `after-hours.test.ts`: real-server two/four-seat membership, private discovery,
+  act gates, valid supporting evidence, alternative evidence, duty transfers,
+  duplicate notes, prototype IDs, chronology conflicts and saved resolutions
+  across actual process restarts. Authoring checks require complementary duties.
+- `assets.test.ts`: negotiated build-time gzip, correct content type, Vary and
+  an identity fallback with identical decoded JavaScript.
+- `check:after-hours`: actual 3D raycast selection and a complete two-browser case,
+  all sixteen records, seven deductions, six events, phone/desktop layout,
+  canvas-free progress, saved-case routing and five axe scans.
+- `check:after-hours-party`: four independent same-name identities, a private
+  discovery handover, retained live draft, hints, escaped discussion notes,
+  offline duty transfer/reconnect, a refused fifth seat and two axe scans.
+- `check:after-hours-recovery`: committed creation/join/publication with lost
+  replies, keyboard investigation after real WebGL context loss, touch scrolling,
+  pending inspection feedback and settled reduced-motion rendering.
+
+The terminal-reader regression also captures real party actions and checks that
+names and discussion text do not reach its output. CI runs all ten browser suites
+and all HTTP/process checks before deploying. These prove implemented behavior,
+not the quality of a family conversation or a measured human completion time.

@@ -22,14 +22,17 @@ mise exec -- pnpm start
 
 ## 试玩
 
-- 单人：Open the case → 输入昵称 → Go solo → Begin investigation。
+- 主案：Play After Hours → 输入昵称 → Start After Hours → Team & invite 复制邀请，供另外 1–3 位玩家加入。
+- 主案每人使用独立浏览器或设备。选中物件、执行检查、Share this evidence，再到 Reason together 引用实际支持的证据。四个房间分三幕开放。
+- Team & invite 可明确转交职责；某人离开后，其他人仍能继续。对象列表提供和 3D 一样的调查操作。
+- 经典短案单人：Open the case → 输入昵称 → Go solo → Begin investigation。
 - 双人同机：选择 Bring a partner，在 Invite your partner 中复制链接，
   用另一个 Chrome 用户配置或另一款浏览器打开。普通窗口与无痕窗口也可以；
   同一配置下的两个无痕窗口可能共用会话，不能当成两个身份。
 - localhost 链接只能在这台电脑使用。跨设备试玩请使用线上网站生成邀请。
 - 阅读线索后用 Add to shared desk 发布；调整右侧事件顺序；用
   Make your case 提交解释并引用两种文件夹的证据。
-- 不看 server/case.ts 或 docs/case-design.md，其中有剧透答案。
+- 主案剧透在 server/after-hours-case.ts 和 docs/after-hours-design.md；短案剧透在 server/case.ts 和 docs/case-design.md。首次试玩前不要读。
 
 ## 测试
 
@@ -53,6 +56,9 @@ mise exec -- pnpm check:returning
 mise exec -- pnpm check:entry
 mise exec -- pnpm check:theory
 mise exec -- pnpm check:motion
+mise exec -- pnpm check:after-hours
+mise exec -- pnpm check:after-hours-party
+mise exec -- pnpm check:after-hours-recovery
 mise exec -- pnpm check:evidence
 mise exec -- pnpm check:portfolio
 ```
@@ -60,11 +66,12 @@ mise exec -- pnpm check:portfolio
 浏览器脚本默认使用 Microsoft Edge。Linux CI 会安装 Chromium，并设置
 `BROWSER_CHANNEL=chromium`。输出在被忽略的 `evidence/`；原始会话不提交。
 需要公开的脱敏结果和截图，经检查后单独放入 `docs/`。
-七组浏览器检查分别覆盖完整试玩与两种视口、双人实时协作、调查中的网络恢复、
+七组既有浏览器检查分别覆盖完整试玩与两种视口、双人实时协作、调查中的网络恢复、
 返回首页找回旧调查、创建或加入时丢失保存回执、缺证据时的提交引导和草稿保留，
 以及确认后的共享动效、连续排序、减少动态和结案去重。`check:motion` 的结果与截图
 默认在忽略的 `data/motion/`，可用 `MOTION_OUTPUT_DIR` 改变位置。
-`check` 另含真实 HTTP、进程重启和日志检查。CI 配置在部署前运行这七组浏览器检查及两个材料检查；
+`check` 另含真实 HTTP、进程重启和日志检查。三组新主案检查覆盖完整双人通关、四人分工及断线交接、保存回执丢失及真实 WebGL 故障，结果默认在忽略的 data/after-hours-*。
+CI 配置在部署前运行共十组浏览器检查及两个材料检查；
 当前运行结果以 CI 和 [验收记录](docs/final-readiness.md) 为准。
 
 上面的 `APP_URL` 让 `check:returning` 复用已启动的测试服务，不主动重启它。
@@ -108,12 +115,11 @@ mise exec -- flyctl logs --json -a comp4020-final-2513238602 | mise exec -- node
 [final-readiness](docs/final-readiness.md)，C10 既有记录见
 [C10 验证](docs/c10-verification.md)。
 
-本人需要审阅论点、阅读拟保留的研究来源，并完成 C10 现场日志讲述。
-Liuru 课前截止是 10 月 21 日 13:30，课堂为 15:30–17:00（悉尼）。
-另找一对首次接触的玩家盲测，是验证作品主张的建议，人数与 30–45 分钟安排
-不构成额外课程要求。[本人参与清单](docs/final-personal-review.md) 区分了
+本人需要审阅论点、阅读拟保留的研究来源，并如实核实过去的 C10 课堂经历。
+主案建议找两至三组首次玩家（包括双人和三至四人）试玩，使用真实手机。
+人数与 30–45 分钟安排是验证方法，不构成额外课程要求。[本人参与清单](docs/final-personal-review.md) 区分了
 正式要求和建议方法。后续观察须如实补记，不移动已过截止时间的标签。
 
 同一个 final 仓库用于 C8–C10 和期末；C7 RoomFlow 是另一份旧作业。
 Final 截止为 11 月 9 日中午（悉尼）。材料完整和技术检查通过，不能代替
-尚未发生的课堂参与或真人评价，也不能据此声称期末所有工作已经完成。
+尚未核实的课堂参与或未记录的真人评价，也不能据此声称期末所有工作已经完成。

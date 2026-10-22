@@ -1,0 +1,11 @@
+{
+  "base": "https://comp4020-final-2513238602.fly.dev",
+  "seededAt": "2026-10-05T04:35:56.835Z",
+  "verifiedAt": "2026-10-22T09:38:40.768Z",
+  "elapsedDays": 17,
+  "checks": [
+    "Original hosted browser identity restored",
+    "Original F1 publication retained"
+  ],
+  "limitations": "Uses the original ignored test cookie; does not establish access from a new identity."
+}

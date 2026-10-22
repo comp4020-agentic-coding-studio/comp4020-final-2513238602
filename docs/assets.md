@@ -24,3 +24,17 @@ Taste Skill was installed from Leonxlnx/taste-skill on 2026-10-05 with the
 skill-installer helper into ../design-skills/taste-skill. Its scope is restricted
 to the entrance. Impeccable and Vercel guidance were read from the primary repos;
 no Impeccable hook or executable was installed. Selected principles are in DESIGN.md.
+
+## After Hours procedural rooms — 22 October 2026
+
+All room geometry, furniture, floor patterns, object markers and the lantern are
+original project code in src/InvestigationScene.tsx and src/RoomFurniture.tsx.
+No downloaded 3D models, external textures, audio, iframe demos or ThreeUI assets
+are embedded. The homepage photograph is explicitly labelled a cover illustration;
+it does not supply evidence for After Hours.
+
+Runtime dependencies Three.js 0.186.1 and React Three Fiber 9.8.2 use MIT licenses;
+the package license notices remain with the installed dependencies. The existing
+self-hosted fonts and Phosphor icons are unchanged. Seeded colour variation and
+instanced geometry are scenery, not new generated case solutions. Captured browser
+images in docs/screenshots are verification records, not photographs of real places.

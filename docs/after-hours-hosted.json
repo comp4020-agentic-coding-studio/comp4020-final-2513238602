@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-10-22T09:35:01.564Z",
+  "passed": true,
+  "failure": null,
+  "base": "https://comp4020-final-2513238602.fly.dev",
+  "checks": [
+    "Desktop exploration: no overflow",
+    "Phone exploration: no overflow",
+    "Clicking the actual 3D transport case selects its investigation object",
+    "A 3D scene renders; an object inspection becomes shared evidence in the independent phone browser",
+    "Both players supply complementary evidence; two supported deductions unlock act two in both browsers",
+    "Phone reasoning: no overflow",
+    "Saved act progress survives reload; investigation works with the 3D canvas disabled",
+    "A delayed context-loss event from a deliberately removed canvas cannot disable the replacement 3D view",
+    "Phone conclusion: no overflow",
+    "Two browser identities discover all 16 records, support all seven deductions, reconstruct six events and see the same conclusion; the home page resumes the correct saved game"
+  ],
+  "errors": [],
+  "axeReports": [
+    {
+      "label": "Desktop exploration",
+      "violations": []
+    },
+    {
+      "label": "Phone exploration",
+      "violations": []
+    },
+    {
+      "label": "Phone reasoning",
+      "violations": []
+    },
+    {
+      "label": "Desktop supported reasoning",
+      "violations": []
+    },
+    {
+      "label": "Phone conclusion",
+      "violations": []
+    }
+  ]
+}

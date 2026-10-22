@@ -1,73 +1,76 @@
 # Lost & Found
 
-One missing artwork. Two sides of the story. A short mystery for two people at
-the same table, or one curious visitor playing alone.
+A cooperative detective game for friends and family. Explore a small world,
+compare what you find, and build an explanation that survives the evidence.
+[Play After Hours](https://comp4020-final-2513238602.fly.dev/after-hours) with two
+to four people, each in a separate browser or device. Talk at the same table or
+over a call. There is no timer, ranking or account setup.
 
 ## What good means here
 
-Good means reaching an explanation together that neither person could confidently
-reach from their own folder. The Blue Hour takes place before a fictional gallery
-opening. One investigator receives observations and access records; the other
-receives administrative documents. They publish clues to a shared desk, arrange
-four events, and explain the missing sculpture with supporting evidence.
+Good means someone else's discovery changes what you think happened. After Hours
+starts with a missing lantern and an apparently obvious collection. Four
+miniature rooms hold sixteen records, divided across scene investigation,
+archives, object examination and route analysis. Two people cover two duties
+each; third and fourth arrivals divide the work further.
 
-The important moment is recognition: a partner's detail changes the meaning of
-something already on your screen. More content is not automatically better. One
-coherent case with eight legible clues is the current scope. Around five minutes
-is a design target, not a measured completion time.
+Players inspect objects, publish findings, discuss specific evidence and support
+seven deductions across three acts. A correct answer with unrelated citations
+cannot establish a deduction. The final reconstruction brings six events into
+order. Optional hints move from direction to evidence pairs to an explanation.
+The intended main-case duration is twenty to thirty minutes, pending human
+playtesting. The Blue Hour remains a shorter solo/two-person introduction with
+its original saved investigations.
 
 ## Why this shape
 
 [The Past Within](https://www.rustylake.com/adventure-games/the-past-within.html)
-uses different perspectives to make communication part of solving a mystery.
-Lost & Found adopts that principle with an original, much smaller case. Here,
-location codes and an unreliable camera clock require cross-reading. Neither
-cooperative folder contains the complete named person, destination and corrected
-time. Solo mode deliberately removes that information boundary so a stranger can
-experience the entire interaction without recruiting a partner.
+makes different perspectives part of solving a shared mystery.
+[Keep Talking and Nobody Explodes](https://keeptalkinggame.com/) makes the
+separation between observation and instructions require conversation. This
+project uses complementary records and a forgiving pace, allowing a family or
+group of friends to question a first impression without countdown pressure.
 
-Robin Sloan's [An app can be a home-cooked meal](https://www.robinsloan.com/notes/home-cooked-app/)
-offers a useful scale: software can be worthwhile for a few specific people.
-This app is for classmates who have a few minutes together. There is no feed,
-ranking, account setup, paid content or generated stream of disposable cases.
-The conversation happens in person or on a call; the website holds the evidence.
+Robin Sloan's [home-cooked software](https://www.robinsloan.com/notes/home-cooked-app/)
+supports making something worthwhile for a small, specific group. The website
+holds the investigation; the people bring the conversation. There is no feed,
+competitive leaderboard or generated stream of interchangeable cases.
+
+The 3D rooms give objects a place, orientation and material character. Procedural
+components make that world practical to build. They generate scenery, not truth:
+the case is authored and its supporting evidence is checked. New furniture
+arrangements would not, by themselves, make a new mystery.
 
 ## Promises that can be checked
 
-An investigation is stored on the server. Published evidence, chronology and
-attempts survive a browser refresh and a server restart using the same database.
-The Fly deployment stores that database on its persistent `/data` volume.
-Play the live app at [Lost & Found](https://comp4020-final-2513238602.fly.dev/).
-Local running instructions and verification evidence are kept in the repository.
+Every discovery, publication, deduction, hint, note and duty assignment is stored
+in SQLite on the course Fly volume. Shared changes arrive through server-sent
+events without a reload. A returning browser recovers its investigation after
+restarts and redeployments. Stale chronology changes and handovers are explicitly
+rejected; unconfirmed writes are reconciled rather than automatically repeated.
 
-The server checks membership on every room action and event stream. Unpublished
-partner clues are not sent to the browser. Concurrent timeline changes cannot
-silently overwrite each other: a stale move receives a conflict and the current
-state is reloaded. Save feedback follows database confirmation. These promises
-belong in the HTTP tests, not just this document.
+Membership protects every room action and event stream. Private findings remain
+with their assigned duty until shared. Teams can explicitly transfer a duty if
+someone steps away. Seat labels distinguish identical nicknames. The final
+contribution record counts saved actions, not conversational value.
 
-Every meaningful clue is readable text. The photograph is atmosphere, not a hidden
-pixel puzzle. Sorting uses labeled buttons, and the investigation must remain
-usable by keyboard and on a narrow phone screen. Live publications, chronology
-and resolution use server-sent events. Updates name the latest actor without
-changing the reader's selected clue. Reconnecting clients retrieve current state.
-Unconfirmed writes are not repeated automatically; recovery checks available saved state.
+Every meaningful fact and object action also exists in the text interface.
+Keyboard and touch controls obey the same discovery rules as 3D. Losing WebGL
+does not lose the investigation. The scene loads separately, renders on demand
+and respects reduced motion. [Verification](docs/after-hours-verification.md)
+separates HTTP, browser and hosted evidence from human judgement.
 
 ## Promises that need people
 
-Automated checks cannot establish that the mystery is satisfying, understandable
-or balanced. A first-time pair should contribute from both folders and explain
-how their conclusion follows from the evidence. Human playtesting is still
-outstanding. Observed confusion should change the clues or interface, not be
-explained away by the author.
+Tests cannot establish that the mystery is enjoyable, the reading load suits a
+family, or everybody gets to reason. Fresh players must test those claims.
+[The observation protocol](docs/playtest-protocol.md) records hesitation,
+interventions and which discovery changes someone's mind. No human playtest
+result is claimed yet.
 
 ## Before you begin
 
-Use a nickname. A cookie remembers your browser for 30 days; clearing it loses
-access to your investigations. An invitation allows one person to claim the
-second seat. Share it only with your partner. Names and shared actions appear
-in that investigation's record. Everything in the case is fictional.
-
-This definition was drafted with the coding agent from the approved plan. The
-student should review its position and the eventual playtest findings before
-course submission.
+A cookie remembers your seat for thirty days; clearing cookies loses access.
+Share an invitation only with your team. Names, published findings and discussion
+notes appear within that investigation. All places and events are fictional.
+This argument is agent-assisted and awaits the student's review and endorsement.

@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-10-22T09:24:48.516Z",
+  "base": "https://comp4020-final-2513238602.fly.dev",
+  "checks": [
+    "Desktop exploration: no overflow",
+    "Phone exploration: no overflow",
+    "Clicking the actual 3D transport case selects its investigation object",
+    "A 3D scene renders; an object inspection becomes shared evidence in the independent phone browser",
+    "Both players supply complementary evidence; two supported deductions unlock act two in both browsers",
+    "Phone reasoning: no overflow",
+    "Saved act progress survives reload; investigation works with the 3D canvas disabled"
+  ],
+  "errors": [],
+  "axeReports": [
+    {
+      "label": "Desktop exploration",
+      "violations": []
+    },
+    {
+      "label": "Phone exploration",
+      "violations": []
+    },
+    {
+      "label": "Phone reasoning",
+      "violations": []
+    }
+  ]
+}

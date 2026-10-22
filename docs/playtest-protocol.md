@@ -1,36 +1,63 @@
-# Human evaluation: two fresh perspectives
+# Human evaluation: After Hours
 
-Status: procedure prepared; no participants or observations recorded yet.
+Status, 22 October 2026: procedure prepared; no fresh-player observations recorded.
+The student reported tutor feedback requesting a friends/family game. That is
+useful direction, not a completed playtest of this implementation.
 
-Recruit two people who have not seen the case or answer. Use nicknames and ask
-permission before recording their comments. No recording is necessary; anonymous
-notes about actions are sufficient. Give them only the live URL and say:
-“Use the website together to explain the missing artwork.” Let the on-page
-instructions do the work. Do not explain the clock or recommend particular clues.
+## Participants and setup
 
-Observe for up to ten minutes, without treating five minutes as a pass/fail rule.
-Record the actual time to start, first publication, first cross-folder inference
-and completion, if reached. Note where a player hesitates or asks for help. If
-help becomes necessary, record the intervention and resume; do not describe that
-run as unassisted. Stop if the participants want to stop.
+Suggested evaluation: two or three fresh groups, including one pair and one group
+of three or four. Friends or family who have not seen the answer are suitable.
+This sample and schedule are design recommendations, not extra course requirements.
+Use separate browsers/devices and include an actual phone. Do not read the case
+solution or run the automated answer script before a first playthrough.
 
-Afterwards ask each person separately what their partner contributed, how they
-corrected conflicting evidence, and what one screen element they misunderstood.
-Ask whether the explanation follows from the clues rather than whether they
-“liked the design.” Record their answer as a quotation only when captured exactly;
-otherwise label it a paraphrase. Do not publish names or unrelated personal data.
+Give only the [live URL](https://comp4020-final-2513238602.fly.dev/) and this task:
+“Play After Hours together and explain what happened to the missing lantern.”
+Let the page explain entry, invitation and duties. Allow roughly 30–45 minutes
+for play and discussion, stopping whenever participants want. The 20–30 minute
+case duration is a target, not a pass/fail threshold or an existing measurement.
 
-Evaluate three claims:
+## Observe before helping
 
-| Claim | Observation needed | Possible correction |
-| --- | --- | --- |
-| Both perspectives matter | Each person explains an inference needing the other folder | Rebalance a clue that reveals too much or a dependency nobody can discover |
-| The next action is understandable | People start, invite, publish and submit without coaching | Change the specific label or instruction where they hesitate |
-| Shared updates respect reasoning | A person notices and understands a partner's change | Revise feedback or conflict wording; do not assume faster updates solve confusion |
+Record time to entry, invitation, first private finding, first publication,
+first supported deduction and completion if reached. Note who speaks, what they
+compare, whether someone waits without a useful task, and whether one person
+answers everything. Counted button actions do not measure conversational influence.
 
-Write a dated account with setting, assistance, observations, interpretation and
-one resulting decision. A single pair cannot establish universal usability.
-Implement justified corrections as another meaningful commit and rerun affected
-checks. Preserve contrary observations as well as successes. Link the account
-from README and PROCESS only after it exists. Leave the outstanding status in
-place until then.
+Watch these specific moments:
+
+- Does a person distinguish an observed object from an assumption about contents?
+- Does another person's record change their first interpretation of the case?
+- Do they connect dimensions, times and location codes across duties?
+- Can they find a next action after an unsupported deduction?
+- Do the three hint levels preserve discussion or prematurely give it away?
+- Is selecting/inspecting an object understandable on a real phone?
+- Can a teammate step away and have their duty transferred without explanation?
+- Does the final reconstruction feel justified rather than guessed?
+
+When help is necessary, record the exact intervention. Do not describe that run
+as unassisted. Anonymous written observations are sufficient; no video recording
+is required. Distinguish observed actions, participant statements and your own
+interpretation. Do not publish personal information with the report.
+
+## Discuss separately, then together
+
+Ask each person what their partner contributed, which clue changed their mind,
+where they felt stuck and whether the amount of reading suited the group. Ask
+what the 3D scene helped them understand and what was easier in the object list.
+Then ask the group whether the explanation followed from their discoveries.
+Capture a quotation only if its wording was actually recorded; otherwise use a
+labelled paraphrase. Preserve negative findings.
+
+## Turn findings into a decision
+
+For each run record: date, group size/device mix, prior familiarity, assistance,
+observed hesitation, a successful/failed inference, participant comment,
+interpretation, proposed correction and whether to keep or revise a quality claim.
+Link a real dated account from README and PROCESS after it exists. Do not fill
+this protocol with imagined successful participants.
+
+A few groups cannot prove universal accessibility or replay value. Repeat the
+affected technical checks after justified corrections. The classic Blue Hour can
+be evaluated separately; its short duration must not stand in for the main case.
