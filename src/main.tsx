@@ -13,22 +13,9 @@ import './desk-motion.css';
 import { CaseSeal } from './CaseSeal.tsx';
 import type { Clue, Investigation, InvestigationPage, Mode, RoomState, Theory } from '../shared/types.ts';
 
-class ApiError extends Error { status: number; constructor(status: number, message: string) { super(message); this.status=status; } }
-async function request<T>(path: string, data?: unknown): Promise<T> {
-  const control=new AbortController();const timeout=setTimeout(()=>control.abort(),12000);
-  try {
-    const res=await fetch(path,{method:data===undefined?'GET':'POST',headers:data===undefined?{}:{'Content-Type':'application/json'},body:data===undefined?undefined:JSON.stringify(data),signal:control.signal});
-    const value=await res.json();if(!res.ok)throw new ApiError(res.status,value.error??'Please try again.');return value as T;
-  } finally {clearTimeout(timeout)}
-}
-let pendingIdentity:Promise<unknown>|null=null;
-function api<T>(path:string,data?:unknown):Promise<T>{
-  if(path!=='/api/me'||data!==undefined)return request<T>(path,data);
-  // The home page and entry form may request a first identity together. Share
-  // that response so two new Set-Cookie values cannot race a room creation.
-  if(!pendingIdentity)pendingIdentity=request<T>(path).finally(()=>{pendingIdentity=null});
-  return pendingIdentity as Promise<T>;
-}
+import { api, ApiError } from './api.ts';
+const AfterHours = React.lazy(()=>import('./AfterHours.tsx'));
+
 const roleName=(role:string)=>role==='solo'?'Both folders':role==='field'?'Field investigator':'Archive investigator';
 const time=(value:string)=>new Intl.DateTimeFormat('en-AU',{hour:'2-digit',minute:'2-digit'}).format(new Date(value));
 
@@ -108,7 +95,7 @@ function SavedInvestigations(){
   return <section className="saved-section shell" aria-labelledby="saved-heading" aria-busy={status==='loading'}>
     <h2 id="saved-heading">Your case files</h2>
     <p className="saved-status">Newest investigations first. Dates show the last saved change.</p>
-    {saved.length>0&&<div className="saved-list">{saved.map(r=><a className="saved-case" href={`/case/${r.code}`} key={r.code}><span className="saved-icon">{r.status==='solved'?<CheckCircle size={24}/>:<ClockCounterClockwise size={24}/>}</span><span><strong>The Blue Hour</strong><small>{r.mode==='solo'?'Solo':'Together'} · {r.status==='solved'?'Case closed':'In progress'} · {new Date(r.updatedAt).toLocaleDateString('en-AU')}</small></span><span className="resume-label">{r.status==='solved'?'Revisit':'Continue'}</span><ArrowRight size={19}/></a>)}</div>}
+    {saved.length>0&&<div className="saved-list">{saved.map(r=><a className="saved-case" href={`/${r.caseId==='after-hours-v1'?'play':'case'}/${r.code}`} key={r.code}><span className="saved-icon">{r.status==='solved'?<CheckCircle size={24}/>:<ClockCounterClockwise size={24}/>}</span><span><strong>{r.caseId==='after-hours-v1'?'After Hours':'The Blue Hour'}</strong><small>{r.mode==='solo'?'Solo':'Together'} · {r.status==='solved'?'Case closed':'In progress'} · {new Date(r.updatedAt).toLocaleDateString('en-AU')}</small></span><span className="resume-label">{r.status==='solved'?'Revisit':'Continue'}</span><ArrowRight size={19}/></a>)}</div>}
     {status==='loading'&&<p className="saved-status" role="status">Loading your saved investigations…</p>}
     {status==='ready'&&saved.length===0&&<p className="saved-status">No saved investigations in this browser yet.</p>}
     {status==='error'&&<div className="saved-recovery"><p role="alert">{saved.length?'More investigations could not be loaded.':'Your saved investigations could not be loaded.'} Check your connection and retry.</p><button className="button secondary" onClick={()=>void load(failed.current?.cursor??null)}>Retry saved investigations</button></div>}
@@ -119,11 +106,11 @@ function SavedInvestigations(){
 function Home(){
   const [start,setStart]=useState(false);
   return <><a className="skip" href="#main">Skip to content</a><Header/><main id="main">
-    <section className="hero shell"><div className="hero-copy"><p className="eyebrow"><span className="tiny-rule"/> A SHORT COOPERATIVE MYSTERY</p><h1>Something’s<br/>missing.</h1><p className="hero-description">An empty plinth. Eight pieces of evidence.<br className="desktop-break"/> One story to put back together.</p><div className="hero-actions"><button className="button primary" onClick={()=>setStart(true)}>Open the case <ArrowUpRight size={21}/></button><a className="text-link" href="#how">How it works <ArrowRight size={17}/></a></div></div>
-    <div className="hero-art"><PaperSurface><div className="photo-sheet"><img src="/images/gallery.webp" alt="An empty plinth in a quiet gallery, with blue light falling on the wall." width="1536" height="1024" fetchPriority="high"/><div className="photo-caption"><span>GALLERY 2</span><span>17:40 / BEFORE OPENING</span></div></div></PaperSurface><div className="case-tab"><span>CASE FILE</span><strong>001</strong></div><div className="art-note"><span className="note-arrow">↳</span> Everything is here.<br/>Except the obvious.</div></div></section>
-    <section className="case-intro shell" id="case"><div className="case-number" aria-hidden="true">01</div><div className="case-heading"><p className="label">THE OPEN FILE</p><h2>The Blue Hour</h2><p>An exhibition is about to open. Its centrepiece has vanished. <br/>A camera, a clock and a signed note tell different stories. Or do they?</p></div><dl className="case-facts"><div><dt>PLAYERS</dt><dd>1 or 2</dd></div><div><dt>PLAY TIME</dt><dd>About 5 min</dd></div><div><dt>YOUR TASK</dt><dd>Follow the evidence</dd></div></dl></section>
+    <section className="hero shell"><div className="hero-copy"><p className="eyebrow"><span className="tiny-rule"/> A MYSTERY FOR YOUR FAVOURITE PEOPLE</p><h1>Something’s<br/>missing.</h1><p className="hero-description">Four rooms. Two journeys. One missing lantern.<br className="desktop-break"/> Explore a miniature world, together.</p><div className="hero-actions"><a className="button primary" href="/after-hours">Play After Hours <ArrowUpRight size={21}/></a><a className="text-link" href="#how">How it works <ArrowRight size={17}/></a></div><p className="privacy-note">2–4 players · 3D exploration · No timer</p><div className="classic-entry"><span>Prefer a short introduction? Try The Blue Hour.</span><button className="text-button" onClick={()=>setStart(true)}>Open the case <ArrowRight size={17}/></button></div></div>
+    <div className="hero-art"><PaperSurface><div className="photo-sheet"><img src="/images/gallery.webp" alt="An empty plinth in a quiet gallery, with blue light falling on the wall." width="1536" height="1024" fetchPriority="high"/><div className="photo-caption"><span>GALLERY 2</span><span>17:40 / BEFORE OPENING</span></div></div></PaperSurface><div className="case-tab"><span>CASE FILE</span><strong>002</strong></div><div className="art-note"><span className="note-arrow">↳</span> Everything is here.<br/>Except the obvious.</div></div></section>
+    <section className="case-intro shell" id="case"><div className="case-number" aria-hidden="true">02</div><div className="case-heading"><p className="label">THE MAIN INVESTIGATION</p><h2>After Hours</h2><p>A lantern is missing from the community exhibition.<br/>Explore the rooms, compare your findings, and separate a rumour from the facts.</p></div><dl className="case-facts"><div><dt>PLAYERS</dt><dd>2–4</dd></div><div><dt>PLAY TIME</dt><dd>20–30 min target</dd></div><div><dt>YOUR TASK</dt><dd>Follow the evidence</dd></div></dl></section>
     <SavedInvestigations/>
-    <section className="how-section shell" id="how"><div><span className="label">A LITTLE CURIOSITY GOES A LONG WAY</span><h2>Two perspectives.<br/>One discovery.</h2><p>Play at the same table, or talk over a call.<br/>Your partner might have the detail you’re missing.</p></div><ol className="how-list"><li><BookOpen size={25}/><div><h3>Open your folder</h3><p>Read the records. In a pair, each person starts with a different half of the evidence.</p></div></li><li><PaperPlaneTilt size={25}/><div><h3>Put your clues together</h3><p>Share what matters and rebuild the sequence of events on your investigation desk.</p></div></li><li><MagnifyingGlass size={25}/><div><h3>Make your case</h3><p>Explain what happened, cite your evidence, and see whether the story holds up.</p></div></li></ol></section>
+    <section className="how-section shell" id="how"><div><span className="label">A LITTLE CURIOSITY GOES A LONG WAY</span><h2>Two perspectives.<br/>One discovery.</h2><p>Play at the same table, or talk over a call.<br/>Your partner might have the detail you’re missing.</p></div><ol className="how-list"><li><BookOpen size={25}/><div><h3>Look a little closer</h3><p>Inspect objects in four miniature rooms. Each investigator has a different duty and private findings.</p></div></li><li><PaperPlaneTilt size={25}/><div><h3>Put your clues together</h3><p>Describe what you see. Share useful evidence so your teammates can connect it with their records.</p></div></li><li><MagnifyingGlass size={25}/><div><h3>Make your case</h3><p>Support seven deductions, unlock the next rooms, and reconstruct what actually happened.</p></div></li></ol></section>
   </main><Footer/>{start&&<Modal title="Open your investigation" onClose={()=>setStart(false)}><StartForm onClose={()=>setStart(false)}/></Modal>}</>
 }
 
@@ -243,5 +230,5 @@ function Desk({code}:{code:string}){
   </>
 }
 
-function App(){const match=location.pathname.match(/^\/case\/([a-f0-9]{12})\/?$/);return match?<Desk code={match[1]}/>:<Home/>}
+function App(){const game=location.pathname.match(/^\/play\/([a-f0-9]{12})\/?$/);if(game||location.pathname==='/after-hours')return <React.Suspense fallback={<main className="shell loading-page"><p role="status">Opening After Hours…</p></main>}><AfterHours code={game?.[1]}/></React.Suspense>;const match=location.pathname.match(/^\/case\/([a-f0-9]{12})\/?$/);return match?<Desk code={match[1]}/>:<Home/>}
 createRoot(document.getElementById('root')!).render(<App/>);
