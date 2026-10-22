@@ -29,6 +29,11 @@ exit cannot pass the 74 cm trolley; the studio is closed. Every dimension used i
 a deduction is written in a clue; procedural geometry is illustrative, not a
 measurement instrument. Neither colour nor a player's visual acuity is proof.
 
+Continuity correction during implementation: the inspectable case is the spare
+RX-18, with a dispatch photograph of collected RX-17. A collected case cannot
+simultaneously remain in the gallery. Both share the rigid packing dimensions;
+the register, not the spare's colour, establishes RX-17's empty contents.
+
 ## Seven deductions in three acts
 
 1. Cargo: G3 + W2, or G1 + W2. Courier: G2 + W3.

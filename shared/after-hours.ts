@@ -9,12 +9,12 @@ export const places: { id: Place; title: string; subtitle: string; act: number }
   { id: 'monitor', title: 'The watch room', subtitle: 'A clock can be precise and still tell the wrong story.', act: 2 },
   { id: 'store', title: 'The north store', subtitle: 'Follow the object, not the rumour.', act: 3 },
 ];
-export type SceneObject = { id: string; place: Place; label: string; duty: Duty; verb: string; shape: 'plinth' | 'record' | 'crate' | 'map' | 'cart' | 'camera' | 'clock' | 'sensor' | 'shelf'; x: number; z: number };
+export type SceneObject = { id: string; place: Place; label: string; duty: Duty; verb: string; shape: 'plinth' | 'record' | 'crate' | 'map' | 'track' | 'cart' | 'camera' | 'clock' | 'sensor' | 'shelf'; x: number; z: number };
 export const objects: SceneObject[] = [
   { id: 'G1', place: 'gallery', label: 'Empty display plinth', duty: 'field', verb: 'Measure the mount', shape: 'plinth', x: -1.5, z: -.7 },
   { id: 'G2', place: 'gallery', label: 'Reception notebook', duty: 'archive', verb: 'Read the visitor entry', shape: 'record', x: 1.5, z: -1.4 },
-  { id: 'G3', place: 'gallery', label: 'Case by the doorway', duty: 'workshop', verb: 'Turn the case over', shape: 'crate', x: 1.9, z: 1.3 },
-  { id: 'G4', place: 'gallery', label: 'Floor impressions', duty: 'routes', verb: 'Trace the wheel marks', shape: 'map', x: -.2, z: 1.6 },
+  { id: 'G3', place: 'gallery', label: 'Spare blue transport case', duty: 'workshop', verb: 'Turn the spare case over', shape: 'crate', x: 1.9, z: 1.3 },
+  { id: 'G4', place: 'gallery', label: 'Floor impressions', duty: 'routes', verb: 'Trace the wheel marks', shape: 'track', x: -.2, z: 1.6 },
   { id: 'W1', place: 'workshop', label: 'Padded transport trolley', duty: 'workshop', verb: 'Measure the trolley', shape: 'cart', x: -1.6, z: .7 },
   { id: 'W2', place: 'workshop', label: 'Packing register', duty: 'archive', verb: 'Open the packing register', shape: 'record', x: .5, z: -1.6 },
   { id: 'W3', place: 'workshop', label: 'Dispatch clipboard', duty: 'field', verb: 'Read the signed docket', shape: 'record', x: 2, z: .5 },

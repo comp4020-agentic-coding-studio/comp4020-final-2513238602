@@ -1,10 +1,11 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { Color, Object3D } from 'three';
-import type { InstancedMesh, OrthographicCamera } from 'three';
+import { CanvasTexture, Color, Object3D, SRGBColorSpace } from 'three';
+import type { Group, InstancedMesh, OrthographicCamera } from 'three';
 import { objects, places } from '../shared/after-hours.ts';
 import type { Place, SceneObject } from '../shared/after-hours.ts';
+import RoomFurniture, { Lantern } from './RoomFurniture.tsx';
 
 const wood='#9b7353',paper='#ede5d2',ink='#283b3a',blue='#557e91',red='#a53224';
 function Box({at=[0,0,0],size=[1,1,1],color=paper}:{at?:[number,number,number];size?:[number,number,number];color?:string}){
@@ -12,7 +13,17 @@ function Box({at=[0,0,0],size=[1,1,1],color=paper}:{at?:[number,number,number];s
 }
 function Table(){return <><Box at={[0,.85,0]} size={[1.3,.12,.95]} color={wood}/>{[-.48,.48].flatMap(x=>[-.32,.32].map(z=><Box key={`${x}${z}`} at={[x,.4,z]} size={[.09,.8,.09]} color={wood}/>))}</>}
 function Record(){return <><Table/><group position={[0,.93,0]} rotation={[0,.13,0]}><Box size={[.75,.025,.65]}/>{[0,1,2,3].map(i=><Box key={i} at={[-.04,.018,-.2+i*.1]} size={[.5,.004,.015]} color={i===0?red:'#aaa493'}/>)}</group></>}
-function Crate({inspected}:{inspected:boolean}){return <group position={[0,.46,0]} rotation={inspected?[0,0,Math.PI]:[0,0,0]}><Box size={[.8,.65,.64]} color={blue}/><Box size={[.84,.08,.68]} at={[0,.18,0]} color={ink}/><Box at={[0,-.331,0]} size={[.35,.01,.25]} color={paper}/><Box at={[.15,.336,0]} size={[.08,.01,.65]} color={wood}/></group>}
+function Crate({inspected}:{inspected:boolean}){
+  const ref=useRef<Group>(null),current=useRef(inspected?Math.PI:0);const {invalidate}=useThree();
+  useEffect(()=>{invalidate()},[inspected,invalidate]);
+  useFrame((_,delta)=>{const target=inspected?Math.PI:0;current.current=window.matchMedia('(prefers-reduced-motion: reduce)').matches?target:current.current+(target-current.current)*Math.min(1,delta*12);if(Math.abs(target-current.current)<.006)current.current=target;else invalidate();if(ref.current)ref.current.rotation.z=current.current;});
+  return <group ref={ref} position={[0,.46,0]}><Box size={[.8,.65,.64]} color={blue}/><Box size={[.84,.08,.68]} at={[0,.18,0]} color={ink}/><Box at={[0,-.331,0]} size={[.35,.01,.25]} color={paper}/><Box at={[.15,.336,0]} size={[.08,.01,.65]} color={wood}/></group>;
+}
+function ObjectBadge({id,selected}:{id:string;selected:boolean}){
+  const texture=useMemo(()=>{const canvas=document.createElement('canvas');canvas.width=128;canvas.height=80;const ctx=canvas.getContext('2d')!;ctx.fillStyle=selected?'#a53224':'#f5f3ed';ctx.fillRect(0,0,128,80);ctx.strokeStyle='#827d68';ctx.lineWidth=3;ctx.strokeRect(1,1,126,78);ctx.fillStyle=selected?'#ffffff':'#283b3a';ctx.font='42px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(id,64,42);const t=new CanvasTexture(canvas);t.colorSpace=SRGBColorSpace;return t;},[id,selected]);
+  useEffect(()=>()=>texture.dispose(),[texture]);
+  return <sprite position={[0,1.95,0]} scale={[.5,.31,1]}><spriteMaterial map={texture} depthTest={false} toneMapped={false}/></sprite>;
+}
 function Cart(){return <><Box at={[0,.4,0]} size={[1.4,.16,1]} color={wood}/><Box at={[0,.6,0]} size={[1.1,.24,.8]} color={'#c0b89f'}/><Box at={[.57,1,0]} size={[.08,1.2,.08]} color={ink}/>{[-.48,.48].flatMap(x=>[-.35,.35].map(z=><mesh key={`${x}${z}`} position={[x,.17,z]} rotation={[Math.PI/2,0,0]} castShadow><cylinderGeometry args={[.16,.16,.12,12]}/><meshStandardMaterial color={ink}/></mesh>))}</>}
 function MapObject(){return <><Table/><Box at={[0,.93,0]} size={[1.1,.03,.75]} color={'#c7d2bf'}/>{[-.3,0,.3].map(x=><Box key={x} at={[x,.95,0]} size={[.025,.01,.65]} color={'#718676'}/>)}<Box at={[0,.95,.12]} size={[1,.01,.035]} color={red}/></>}
 function Prop({object,selected,inspected,onSelect}:{object:SceneObject;selected:boolean;inspected:boolean;onSelect:()=>void}){
@@ -23,11 +34,13 @@ function Prop({object,selected,inspected,onSelect}:{object:SceneObject;selected:
     {object.shape==='record'&&<Record/>}
     {object.shape==='crate'&&<Crate inspected={inspected}/>}
     {object.shape==='map'&&<MapObject/>}
+    {object.shape==='track'&&<group>{[-.37,.37].map(x=><Box key={x} at={[x,.015,0]} size={[.04,.01,1.3]} color={'#8f947c'}/>)}{[-.16,.16].map(x=><group key={x} rotation={[0,-.7,0]}><Box at={[x,.02,0]} size={[.02,.01,1.3]} color={'#9a9e8c'}/></group>)}</group>}
     {object.shape==='cart'&&<Cart/>}
     {object.shape==='camera'&&<><Table/><Box at={[0,1.25,0]} size={[1,.6,.15]} color={ink}/><Box at={[0,1.25,.083]} size={[.84,.43,.015]} color={blue}/><Box at={[0,1.25,.1]} size={[.28,.32,.01]} color={'#9dbcb7'}/></>}
     {object.shape==='clock'&&<><Table/><mesh position={[0,1.3,0]} rotation={[Math.PI/2,0,0]} castShadow><cylinderGeometry args={[.4,.4,.13,32]}/><meshStandardMaterial color={paper}/></mesh><Box at={[0,1.43,.08]} size={[.035,.24,.025]} color={ink}/><Box at={[.1,1.3,.08]} size={[.22,.03,.025]} color={red}/></>}
     {object.shape==='sensor'&&<><Table/><Box at={[0,1.1,0]} size={[.6,.3,.45]} color={ink}/><Box at={[0,1.27,0]} size={[.45,.015,.3]} color={'#c0b89f'}/><Box at={[.1,1.28,0]} size={[.04,.01,.3]} color={red}/></>}
-    {object.shape==='shelf'&&<><Box at={[0,.2,0]} size={[1.5,.12,1.2]} color={wood}/><Box at={[0,1.7,0]} size={[1.5,.1,1.2]} color={wood}/>{[-.67,.67].map(x=><Box key={x} at={[x,.85,-.5]} size={[.1,1.7,.1]} color={wood}/>)}<mesh position={[0,.8,0]} castShadow><sphereGeometry args={[.48,20,16]}/><meshStandardMaterial color={inspected?'#d9bc70':'#abb6ad'} roughness={.8}/></mesh><Box at={[0,.35,0]} size={[.65,.12,.65]} color={ink}/></>}
+    {object.shape==='shelf'&&<><Box at={[0,.2,0]} size={[1.5,.12,1.2]} color={wood}/><Box at={[0,1.7,0]} size={[1.5,.1,1.2]} color={wood}/>{[-.67,.67].map(x=><Box key={x} at={[x,.85,-.5]} size={[.1,1.7,.1]} color={wood}/>)}<group position={[0,.85,0]}>{inspected?<Lantern/>:<mesh castShadow><sphereGeometry args={[.5,16,12]}/><meshStandardMaterial color={'#abb6ad'} roughness={1}/></mesh>}</group><Box at={[0,.35,0]} size={[.65,.12,.65]} color={ink}/></>}
+    <ObjectBadge id={object.id} selected={selected}/>
   </group>;
 }
 function Floor({seed}:{seed:number}){
@@ -43,8 +56,8 @@ function Rig({angle}:{angle:number}){
 }
 function Room({place,seed,selected,discovered,onSelect}:{place:Place;seed:number;selected:string;discovered:string[];onSelect:(id:string)=>void}){
   const props=useMemo(()=>objects.filter(o=>o.place===place),[place]);
-  return <><ambientLight intensity={1.7}/><directionalLight position={[3,9,4]} intensity={3} castShadow shadow-mapSize={[1024,1024]} shadow-camera-left={-6} shadow-camera-right={6} shadow-camera-top={6} shadow-camera-bottom={-6} shadow-bias={-.001}/><Floor seed={seed}/><Box at={[0,1,-3.25]} size={[8.15,2,.15]} color={place==='monitor'?'#b7c4bd':'#e4ddcc'}/><Box at={[-4.08,1,0]} size={[.15,2,6.5]} color={'#d5cdbb'}/><Box at={[0,.08,-3.12]} size={[8,.14,.08]} color={wood}/><Box at={[-3.98,.08,0]} size={[.08,.14,6.4]} color={wood}/>
-    <Box at={[0,1.25,-3.13]} size={[1.5,.8,.09]} color={wood}/><Box at={[0,1.25,-3.07]} size={[1.3,.62,.05]} color={place==='gallery'?blue:'#a6b29a'}/>
+  return <><ambientLight intensity={1.3}/><directionalLight position={[3,9,4]} intensity={2.6} castShadow shadow-mapSize={[1024,1024]} shadow-camera-left={-6} shadow-camera-right={6} shadow-camera-top={6} shadow-camera-bottom={-6} shadow-bias={-.001}/><Floor seed={seed}/><Box at={[0,1,-3.25]} size={[8.15,2,.15]} color={place==='monitor'?'#b7c4bd':'#e4ddcc'}/><Box at={[-4.08,1,0]} size={[.15,2,6.5]} color={'#d5cdbb'}/><Box at={[0,.08,-3.12]} size={[8,.14,.08]} color={wood}/><Box at={[-3.98,.08,0]} size={[.08,.14,6.4]} color={wood}/>
+    <RoomFurniture place={place} seed={seed}/>
     {props.map(o=><Prop key={o.id} object={o} selected={selected===o.id} inspected={discovered.includes(o.id)} onSelect={()=>onSelect(o.id)}/>)}
   </>;
 }

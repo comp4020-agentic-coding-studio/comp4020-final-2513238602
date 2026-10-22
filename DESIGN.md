@@ -41,5 +41,26 @@ must not replay shared feedback. Preserve row identity and up/down controls.
 An original SVG engraved seal lands once when an open case becomes solved. Old
 case records display the static seal. The conclusion is immediately available;
 no answer, action or focus change waits for the 350 ms decorative stamp.
-Decorative layers never capture input. Keep the existing fonts and case image;
-do not add remote demo assets, animation runtimes or a WebGL canvas to read clues.
+Decorative layers never capture input. Keep the existing fonts and case image.
+The classic case remains readable without WebGL or a new animation runtime.
+
+## After Hours: a miniature investigation
+
+Original Three.js geometry extends the paper/ink archive into four cutaway rooms.
+Warm wood, chalk walls and muted green storage equipment separate the spaces;
+blue identifies the misleading packing case. Scene object IDs match the text list.
+Repeated floor tiles and storage boxes use instancing and seeded decoration.
+No external model, texture, iframe or audio is required. Room assets are code.
+
+Demand rendering leaves a still room idle. A selected case turns only while its
+inspection changes; reduced motion snaps directly to the inspected state. The
+camera has bounded orbit controls plus labelled rotation/reset buttons. Hidden
+workspace tabs unmount the scene. The text list remains usable while 3D loads or
+after WebGL failure. Dimensions used in deductions are written facts, not an
+invitation to estimate pixels or model scale.
+
+Desktop: scene and object controls beside a stable evidence sheet. Phone: the
+selected object takes the reader to its evidence sheet; teammate updates do not
+move selection or focus. A player initially selects an object belonging to their
+own duty. Seven questions use a focused reasoning panel with retained tab drafts.
+The chronological record and conclusion preserve the team's actual actions.
