@@ -10,8 +10,10 @@ deductions, three acts and a six-event reconstruction. Blue Hour and its origina
 saved cases remain available. [The verification record](after-hours-verification.md)
 identifies actual checks, deployment runs and a hosted-discovered correction.
 
-This is technical readiness for review. It does not establish enjoyment, balanced
-conversation, student endorsement of the writing or completed classroom activity.
+This is a technical readiness record. The student's 25 October request to narrow
+unsupported claims is recorded as review in the [claim audit](claim-review-2026-10-25.md).
+It does not establish enjoyment, balanced conversation, original-source reading
+or completed classroom activity.
 The tutor feedback reported by the student establishes a reason for the redesign;
 no independent fresh-player evaluation has been recorded for the new game.
 
@@ -29,8 +31,12 @@ no independent fresh-player evaluation has been recorded for the new game.
 - The README's two relative evidence links returned 404 from the live site.
   Explicit repository URLs repair navigation; the HTTP check now follows local
   destinations. The report preserves the red/green check and the original 404s.
-- A [blank human observation sheet](playtest-observation-template.md) makes the
-  remaining evaluation executable without filling it with imagined results.
+- A [blank human observation sheet](playtest-observation-template.md) supports
+  further evaluation without filling it with imagined results.
+- The student-directed claim review replaces a general exactly-once claim with
+  a single held-request observation, distinguishes client rendering from service
+  costs, and narrows the research note's inferences. The review record separates
+  student direction, agent verification and activities not evidenced here.
 
 ## Requirement-to-evidence map
 
@@ -44,11 +50,11 @@ no independent fresh-player evaluation has been recorded for the new game.
 | Meaningful inference | Correct guesses with unrelated evidence fail; valid alternatives pass; six events support final reconstruction | Human difficulty and satisfaction remain unmeasured |
 | Four-person continuity | Automatic duty distribution, explicit handover, offline return and refused fifth seat | Four persistent seats; handing over a duty does not erase previous knowledge |
 | Phone, keyboard and 3D fallback | 1920×1080 and 390×844 checks, real raycast selection, touch scrolling, forced context loss and text actions | Automated accessibility is not a human accessibility study |
-| Interrupted saves | Lost creation/join/publication replies reconcile without automatic duplication | When a read also fails, the interface explicitly retains uncertainty |
+| Interrupted saves | Tested lost creation/join/publication replies use recovery reads rather than automatic replays | A failed recovery read retains uncertainty; this is not general exactly-once processing |
 | Efficient delivery | Lazy renderer, instanced repeated geometry, idle rendering and negotiated build-time gzip | GPU performance on actual family devices remains to be judged |
-| Argument, rules and tests | README 587 words, CLAUDE contracts, four ADRs and the [test map](../spec/README.md) | The student must review the argument's position |
-| Process | PROCESS 948 words, direct failure/fix citations and disclosed assisted reflections | Earlier C8/C9 cutoff state cannot be rewritten |
-| COMP8020 research | Revised 735-word argument comparing six primary sources; [source audit](research-source-audit.md) | Reading and endorsement are still unconfirmed |
+| Argument, rules and tests | README 587 words, CLAUDE contracts, four ADRs and the [test map](../spec/README.md) | The recorded student review concerns claim rigor; it is not an independent authorship attestation |
+| Process | PROCESS 1020 words, direct failure/fix citations and disclosed assisted reflections | Earlier C8/C9 cutoff state cannot be rewritten |
+| COMP8020 research | Revised 770-word argument comparing six primary sources; [source audit](research-source-audit.md) | Student-directed correction is recorded; original-source reading is not inferred |
 
 Word counts include whitespace-separated headings and links. The automated
 portfolio check verifies presence and references, not authorship or quality.
@@ -62,29 +68,28 @@ For COMP8020, process is 35%, application 20%, response 20% and research 25% of
 Final. The rubric's HD band starts at 80. These weights make the argument and
 its evidence consequential; extra 3D content alone does not establish a stronger
 response. The completed technical record supports review, not a predicted mark.
-The largest unresolved claims are equitable participation, satisfying inference
-and the student's ownership of the written positions. No automated check can
-certify them. [Official brief](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/assessments/final-project/)
+Equitable participation and satisfying inference remain design aims without
+first-time human-player evidence. The student's actual review direction is
+recorded; automated checks cannot certify personal understanding or originality.
+[Official brief](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/assessments/final-project/)
 and [shared rubric](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/).
 
-## What remains with the student
+## Recorded review and evidence limits
 
-1. Play the main case and organise fresh-player observation. Two or three groups,
-   including a pair and a three/four-person group with real phones, are suggested
-   by the [protocol](playtest-protocol.md); this is not an additional course quota.
-2. Review and revise the assisted README, PROCESS and reflections so their
-   judgements are understood and endorsed. Confirm actual classroom experience.
-3. Read the retained research sources and defend or revise the research argument.
+The student identified an overclaim and directed this correction of PROCESS and
+the research note. That is substantive review evidence, with its scope recorded
+in the [Chinese review record](final-personal-review.md). These authorised edits,
+checks and deployments do not require another confirmation or manual upload.
 
-The [Chinese personal review guide](final-personal-review.md) gives practical
-steps. C10's classroom date has passed; its actual completion is not recorded in
-this repository. If it happened, add an honest dated account. If not, follow the
-teacher's instructions; do not invent participation or move cutoff tags.
+The repository does not establish first-time human playtests, original-source
+reading by the student or C10 classroom completion. These remain disclosed limits,
+not activities that the agent can certify by editing their status. The course's
+personal academic requirements are not waived by this review record.
 
-Code corrections, source checks, observation formatting, regression testing and
-redeployment can still be delegated after genuine feedback. Additional cases or
-randomised truths are not required by the brief. Scenery seeds are not a claim of
-endless replay.
+The [human protocol](playtest-protocol.md) and source-navigation questions remain
+available for further scrutiny. The suggested two or three groups are not a course
+quota or a new publication gate. Additional cases or randomised truths are not
+required by the brief; scenery seeds do not establish endless replay.
 
 ## Submission
 

@@ -46,6 +46,6 @@ for (const sha of commits) {
 }
 for (const notice of advice) console.log(`ADVICE: ${notice}`);
 for (const error of errors) console.error(`FAIL: ${error}`);
-console.log('REVIEW: the student must understand and endorse the written positions, report only real experiences, and evaluate the human claims. This check does not certify those judgements.');
+console.log('EVIDENCE LIMIT: these checks do not certify source reading, classroom participation or human playtests; the dated claim-review record states the scope of student review.');
 if (errors.length) process.exitCode = 1;
 else console.log(`PASS: all three reflections and final documents present; local links and ${commits.size} cited commits resolve.`);

@@ -34,3 +34,32 @@ Stage 1 validation: portfolio and course evidence checks passed; 39 Markdown
 documents had 130 resolvable local links and no failures. These checks validate
 document structure and references, not the truth of every proposition. The audit
 above comes from comparing claims with the implementation and saved evidence.
+
+## Stage 2: research inference and consistent review status
+
+| Previous wording or implication | Correction |
+| --- | --- |
+| Cui et al.'s output estimate “supports adoption in those settings” | Report the measured outcome and IV assumption boundary. Output does not establish net value or an optimal adoption/review policy. |
+| Becker et al. randomised “AI access” | Specify that individual tasks allowed or disallowed AI, preserving the study's unit of assignment. |
+| The survey establishes that AI makes previously unaffordable work possible | State convenience sampling and self-report; use task selection as a methodological consideration, without claiming demonstrated additional value. |
+| Compare similar tasks to establish which policy is better | Describe a prospective decision aid, not a completed experiment. Similarity is not causal identification; combining time and spending requires explicit weights. |
+| “My inference” and unqualified policy language | Attribute the inference to the assisted argument and consistently label the acceptance rule as proposed. No study directly validates it as an optimum. |
+| “Awaits student review” throughout the portfolio | Record the actual correction requested by the student. Remove the duplicate publication-approval gate, while preserving assistance disclosure and unknown activities as evidence limits. |
+
+The [source audit](research-source-audit.md) links the six primary sources and
+their checked locations. README, the readiness map, the Chinese review record
+and the portfolio check's informational message use the same review scope.
+The check's required documents, word guidance and link/commit validation remain
+unchanged. Human observation templates remain blank; earlier crit records and
+archived test artifacts are not rewritten to imply activities occurred.
+
+The task closes through the requested corrections, checks, staged pushes and
+deployment. That is distinct from certifying a future mark or every personal
+academic obligation. The repository does not contain evidence for unrecorded
+source reading, classroom participation or first-time human playtesting.
+
+Stage 2 validation: README 587 words, PROCESS 1020, research note 770; each is
+within its course guidance. Portfolio and course evidence checks passed, as did
+all 132 local links across 39 Markdown documents. Each pushed stage runs the
+existing course check/deploy workflow; its authoritative result is recorded in
+[GitHub Actions](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/actions/workflows/checks.yml).

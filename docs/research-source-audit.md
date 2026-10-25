@@ -1,13 +1,16 @@
-# Research note: source audit and student decisions
+# Research note: source audit and review scope
 
 Primary sources checked on **18 October and 25 October 2026**. This records the agent's source
-verification and revision, not the student's reading history or endorsement.
-The note is complete prose for critical review, not a personal-reading account.
+verification and revision, not the student's reading history. The student's
+25 October request to narrow unsupported claims is recorded in the
+[claim review](claim-review-2026-10-25.md). The note is an assisted argument,
+not a personal-reading account.
 The [COMP8020 brief](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/assessments/final-project/)
 asks for a 600–800-word position which weighs scholarly and practitioner sources,
 answers a counter-case, and reaches beyond the student's own project. It also
 advises students to draft the portfolio writing themselves; the agent-assisted
-status remains explicit pending genuine student review.
+status remains explicit. The recorded review direction does not imply that the
+student independently drafted the text or read every original source.
 
 The current count is reported by `pnpm check:portfolio` (whitespace-separated
 words, including headings, disclosure and Markdown links). Earlier 18 October
@@ -29,6 +32,12 @@ The Anthropic author attribution was also checked against its
 
 ## Corrections and scope
 
+- **25 October, student-directed claim audit:** removed the inference from higher
+  task output to an adoption recommendation; stated the IV assumption boundary;
+  specified task-level permission in Becker et al.; and made convenience sampling
+  explicit for the May survey. A possible change in attempted tasks is not proof
+  of additional value. The proposed local comparison now distinguishes time from
+  money and acknowledges that similar tasks alone cannot identify a causal effect.
 - **25 October:** introduced Cui et al. as a substantive positive comparison,
   instead of relying on METR for every empirical productivity claim. It is a
   working paper; the note does not invent peer-review status. The note separates
@@ -37,7 +46,7 @@ The Anthropic author attribution was also checked against its
 - Defined the policy's boundary: hold outcome/quality fixed, include subsequent
   repair, choose evidence according to consequences, and name a follow-up period.
   Proposed measurements are a prospective evaluation, not a study conducted by
-  the student. Greater autonomy is justified if lighter review actually works.
+  the student. The proposed policy favours more autonomy if lighter review works.
 
 - Retained **19%** after checking the METR-hosted PDF and arXiv v2. The February
   update opens with a **20%** description but gives **19%** in its
@@ -57,15 +66,15 @@ The Anthropic author attribution was also checked against its
   current model-performance claims were added. The draft contains no invented
   course reading history, student endorsement or human playtest evidence.
 
-## Student reading and judgement still required
+## Source navigation for further scrutiny
 
-The following prompts support genuine review; no reading boxes have been marked
-complete by the agent. The numbered tasks are not a claim that a conversation or
-defence has already occurred.
+The following prompts are a reference guide, not additional publication gates.
+The student's request for the current correction is already recorded. No reading
+boxes have been marked complete and no oral defence is inferred from that request.
 
 1. Read the [SWE-bench abstract and evaluation section](https://arxiv.org/html/2310.06770v3)
    and the [2025 RCT's §§2–3](https://arxiv.org/pdf/2507.09089v2). Decide whether the
-   draft fairly separates capability from assistance in a working team.
+   note fairly separates capability from assistance in a working team.
 2. Read the [February update](https://metr.org/blog/2026-02-24-uplift-update/) and
    the [May survey's methodology](https://metr.org/blog/2026-05-11-ai-usage-survey/).
    Explain in your own words why their estimates cannot simply replace one another.
@@ -80,9 +89,9 @@ defence has already occurred.
    that one study is wrong. Decide whether task output adequately represents the
    kind of value you want agents to produce.
 
-## Argument stress test for the student
+## Argument stress test
 
-| Challenge | What the revised draft must defend |
+| Challenge | What the revised argument must defend |
 | --- | --- |
 | Is “justified acceptance” just a label for more testing? | No: lighter review may win; review itself is a cost, and usefulness needs judgement. |
 | Does the note dismiss positive results? | No: it treats company experiments as evidence for benefits in their settings, while identifying a transfer limit. |

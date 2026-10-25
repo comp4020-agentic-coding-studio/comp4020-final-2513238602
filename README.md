@@ -63,7 +63,7 @@ separates HTTP, browser and hosted evidence from human judgement.
 ## Promises that need people
 
 Tests cannot establish that the mystery is enjoyable, the reading load suits a
-family, or everybody gets to reason. Fresh players must test those claims.
+family, or everybody gets to reason. These remain design aims, not measured outcomes.
 [The observation protocol](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/blob/main/docs/playtest-protocol.md) records hesitation,
 interventions and which discovery changes someone's mind. No human playtest
 result is claimed yet.
@@ -73,7 +73,7 @@ result is claimed yet.
 A cookie remembers your seat for thirty days; clearing cookies loses access.
 Share an invitation only with your team. Names, published findings and discussion
 notes appear within that investigation. All places and events are fictional.
-This argument is agent-assisted and awaits the student's review and endorsement.
+Agent-assisted; the student's 25 October review requested stricter evidence boundaries.
 
 [PROCESS](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/blob/main/PROCESS.md)
 explains development decisions and their evidence.
