@@ -4,8 +4,9 @@ This agent-assisted account describes the project on 25 October. The student's
 recorded direction was consequential: challenge a mistaken assignment context,
 require meaningful staged uploads, then replace a shallow mystery with a
 friends/family investigation after reporting tutor feedback. The agent implemented
-and checked those changes. The record supports that collaboration; it does not
-establish the student's reading, classroom participation or approval of this prose.
+and checked those changes. On 25 October the student specifically requested
+narrower guarantees and an audit of unsupported claims. This revision implements
+that review direction; it does not establish source reading or classroom activity.
 
 ## The brief became a working contract
 
@@ -18,11 +19,11 @@ audience. Keep Talking and Nobody Explodes later sharpened the comparison:
 conversation can be necessary without importing its countdown pressure. These
 references motivate the design; they do not prove this game is enjoyable.
 
-The workflow makes the argument enforceable: state a claim in README, constrain
-implementation in CLAUDE, then test observable behaviour through real HTTP and
+The workflow makes observable parts of the argument testable: state a claim in
+README, constrain implementation in CLAUDE, then test behaviour through real HTTP and
 independent browsers. Agents propose and implement changes, while saved results
-and screenshots provide acceptance evidence. This is more useful than accepting
-a completed feature list, because the test boundary can itself be wrong.
+and screenshots provide acceptance evidence. The chosen rationale is to examine
+behaviour beyond a feature list, while recognising that test boundaries can be wrong.
 
 React supports the changing workspace; one Node service and SQLite fit the course
 machine and persistent volume. Synchronous transactions simplify atomic changes
@@ -44,7 +45,8 @@ publications can also invalidate a pending move.
 made actor attribution and commit timing explicit in logs. A requested action
 cannot be narrated as saved before COMMIT. Lost acknowledgements are similarly
 uncertain: the interface reads current state instead of automatically repeating
-a write. This accepts some recovery friction to avoid duplicate investigations.
+a write. This reduces duplication risk in the tested recovery flows; a failed
+recovery read still leaves the outcome uncertain.
 
 The student's screenshot exposed another blind spot: an unexplained disabled
 submission with only Field evidence selected. [352167b](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/352167b)
@@ -54,12 +56,13 @@ not merely the visual symptom.
 
 ## Depth required a different reasoning structure
 
-Reported tutor feedback challenged the game's depth. More decoration around four
-answer selectors would not answer that criticism. [67c3434](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/67c3434)
+Reported tutor feedback challenged the game's depth. The redesign prioritised
+linked evidence over additional decoration. [67c3434](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/67c3434)
 established After Hours' authored rules before the 3D interface: sixteen records,
-seven supported deductions, three acts and a six-event reconstruction. Every
-accepted support set crosses the initial two-player information split. A correct
-guess with unrelated citations fails; alternative valid supports remain possible.
+seven supported deductions, three acts and a six-event reconstruction. Authoring
+checks verify that every configured support set crosses the initial two-player
+split. A correct guess with unrelated citations fails; alternative valid supports
+remain possible.
 
 [2cea1e4](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/2cea1e4)
 made this structure playable in procedural rooms. Geometry is generated, but truth
@@ -78,9 +81,10 @@ after publication; the rules alone cannot settle that design risk.
 ## Production exposed timing and evidence gaps
 
 [9961819](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/9961819)
-added interrupted-save and actual WebGL-loss checks. Lazy loading, instancing,
-demand rendering and build-time gzip limit the renderer's cost on the small
-service. Real family-device performance remains unmeasured.
+added interrupted-save and actual WebGL-loss checks. Lazy loading, instancing and
+demand rendering target client download/drawing work; build-time gzip avoids
+runtime compression work on the service. These mechanisms do not establish a
+measured performance gain on real family devices.
 
 The first hosted replay exposed a race hidden by fast local execution: intentional
 canvas disposal triggered the failure listener and disabled restoring 3D.
@@ -96,14 +100,18 @@ clears obsolete warnings only after shared closure. A new assertion first failed
 on the old deployment, then passed after correction; the behaviour became a
 CLAUDE rule and CI regression. [54ee92a](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/54ee92a)
 preserves before/after screenshots, both script-development mistakes and hosted
-replays. The known-answer actors prove interaction paths, not blind puzzle solving.
+replays. Known-answer actors exercised scripted interaction paths; they did not
+test blind puzzle solving or establish correctness beyond those paths.
 
 ## Closing the audit loop
 
 The 25 October review identified untested transitions between marking viewports.
 [a928205](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/a928205)
 adds six scenarios: README entry, withheld 3D delivery, pending-save resizing,
-retained focus/citations, constrained reconnection and exactly-once deduction.
+retained focus/citations, constrained reconnection and a held deduction request.
+The last scenario observed one outgoing request and one saved attempt through
+resizing. It does not establish general exactly-once processing under retries,
+duplicate delivery or crashes.
 [Results](docs/verification/2026-10-25/README.md) include Chrome version, network
 conditions and script hashes. Both local and hosted runs passed; that bounds the
 claim to tested conditions rather than implying every device is covered.
@@ -115,10 +123,12 @@ repository URLs correct the links. This matters because markers enter through th
 argument, not through a guided tour of the repository.
 
 Meaningful stages are pushed independently and course CI gates deployment. Forty-one
-HTTP/process tests and eleven browser suites enforce technical claims. The
-[readiness map](docs/final-readiness.md) separates these from remaining judgement.
+HTTP/process tests and eleven browser suites check specified behaviours; passing
+does not establish exhaustive correctness. The [readiness map](docs/final-readiness.md)
+records evidence and limits.
 C8/C9 reflections remain dated retrospectives and cutoff tags stay frozen.
-The [human protocol](docs/playtest-protocol.md) and blank observation sheet await
-actual first-time players. Their evidence must decide whether cooperation, pace
-and reading load justify the README's ambition. The student must also defend or
-revise the assisted process and research arguments before treating them as final.
+The [human protocol](docs/playtest-protocol.md) describes further evaluation;
+cooperation, pace and reading suitability remain unmeasured human outcomes.
+The [claim audit](docs/claim-review-2026-10-25.md) records the student's review
+direction and the agent's corrections without converting those limits into
+imagined experiences or an additional publication-approval requirement.

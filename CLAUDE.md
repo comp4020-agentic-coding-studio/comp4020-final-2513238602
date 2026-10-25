@@ -83,6 +83,11 @@
   detail. Distinguish rejected requests from committed activity. Keep cookies,
   nicknames, request bodies and private reading activity out of stdout/stderr.
 - Never invent reflection, human research, measured play time or deployment.
+- Bound written guarantees to the scenario and evidence actually checked. A
+  request count in one regression is not an exactly-once processing guarantee.
+  Separate design rationale, empirical observations and proposed research policy.
+  Record the student's actual review direction without inferring source reading,
+  classroom participation or human playtesting from delegated edits.
 - A crit reflection must be ready before that crit's cutoff. Ground a pre-crit
   account in real development or rehearsal; never require future classroom
   observations as a prerequisite or invent them to fill the gap.
