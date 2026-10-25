@@ -63,3 +63,37 @@ Chrome is the default; CI uses Playwright Chromium through `BROWSER_CHANNEL`.
 This evidence supports interaction resilience. It does not establish enjoyment,
 equitable conversation, real-phone GPU performance, or student endorsement.
 The [human observation protocol](../../playtest-protocol.md) remains outstanding.
+
+## Portfolio navigation regression
+
+The subsequent document audit found a separate defect outside the six gameplay
+scenarios: both repository-relative evidence links in the deployed README
+resolved under `/readme/docs/`, returning **404**. The earlier HTTP check compared
+the rendered links with the Markdown source, so it accepted the same mistake
+on both sides. [Hosted responses before correction](readme-links-before.json)
+record the actual destinations and statuses at 06:41:41 UTC.
+
+The extended HTTP check follows same-origin destinations. It
+[failed before correction](readme-regression-before.txt) and
+[passed afterwards](readme-regression-after.txt). The README now uses explicit
+public repository URLs for the verification record and observation protocol,
+and directly exposes PROCESS and the research note. All four corrected
+destinations returned **200** when followed from the
+[local revised README](readme-links-after-local.json). These local results do
+not claim that an unpushed revision was already deployed. The stage's public
+GitHub Actions check/deploy record establishes publication separately.
+
+## Returning on another day
+
+At 06:42 UTC on 25 October, the [main-case fixture](main-case-persistence.json)
+created on 22 October restored both original identities, the seed and duties,
+private/shared discoveries, deduction, chronology, note and contributions.
+The [classic fixture](classic-persistence.json) created on 5 October retained its
+original identity and F1 publication after twenty days. No fixture was reseeded.
+These read-only checks use original cookies held in ignored local files; no
+credentials were copied to this report. They complement process-restart tests
+and do not promise recovery after a person deletes their identity cookie.
+
+Stage one [a928205](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/a928205)
+passed the full [CI check and deployment](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/actions/runs/40169797519),
+including all 41 HTTP/process tests and eleven browser suites.

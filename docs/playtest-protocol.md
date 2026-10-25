@@ -1,8 +1,12 @@
 # Human evaluation: After Hours
 
-Status, 22 October 2026: procedure prepared; no fresh-player observations recorded.
+Status, 25 October 2026: procedure prepared; no fresh-player observations recorded.
 The student reported tutor feedback requesting a friends/family game. That is
 useful direction, not a completed playtest of this implementation.
+
+Use the [blank observation sheet](playtest-observation-template.md) during each
+real session. It separates observed behaviour, participant accounts and the
+student's interpretation. It is an instrument, not fabricated results.
 
 ## Participants and setup
 
@@ -57,6 +61,14 @@ observed hesitation, a successful/failed inference, participant comment,
 interpretation, proposed correction and whether to keep or revise a quality claim.
 Link a real dated account from README and PROCESS after it exists. Do not fill
 this protocol with imagined successful participants.
+
+Prioritise findings that challenge the quality claim. If one player reasons while
+others only execute instructions, publishing counts do not rescue a claim of
+balanced cooperation. If 3D adds no useful understanding, narrow its claim or
+improve the relevant interaction rather than adding more decoration. A useful
+follow-up compares the same kind of obstacle after a justified change; it need
+not manufacture a successful outcome. These are proposed decision rules, not
+observed faults or course-imposed scoring thresholds.
 
 A few groups cannot prove universal accessibility or replay value. Repeat the
 affected technical checks after justified corrections. The classic Blue Hour can

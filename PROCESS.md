@@ -1,143 +1,124 @@
 # Process overview
 
-This agent-assisted account describes the final project as it stands on 22
-October. The student challenged an assignment mismatch, authorised public
-shipping, required meaningful staged uploads and then requested a deeper
-friends/family detective game after reporting tutor feedback. Implementations,
-automated runs and those instructions are evidence; independent human enjoyment,
-reading history and classroom participation are not inferred from them.
+This agent-assisted account describes the project on 25 October. The student's
+recorded direction was consequential: challenge a mistaken assignment context,
+require meaningful staged uploads, then replace a shallow mystery with a
+friends/family investigation after reporting tutor feedback. The agent implemented
+and checked those changes. The record supports that collaboration; it does not
+establish the student's reading, classroom participation or approval of this prose.
 
-## Establishing the brief and foundation
+## The brief became a working contract
 
-RoomFlow belonged to C7. Checking the briefs established that C8 starts the final
-repository, with an open topic but fixed multi-user, real-time and persistence
-requirements. The original scope in
-[`1a0ca88`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/1a0ca88)
-was one short gallery mystery. The Past Within informed information asymmetry;
-Robin Sloan supported designing for a small audience. Neither source established
-that this particular game was enjoyable.
+RoomFlow belonged to C7, not this final repository. The open final brief fixed
+multi-user identity, real-time updates and persistence. The initial gallery case
+in [1a0ca88](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/1a0ca88)
+turned those requirements into two perspectives on one disappearance. The Past
+Within informed information asymmetry; Robin Sloan supported a deliberately small
+audience. Keep Talking and Nobody Explodes later sharpened the comparison:
+conversation can be necessary without importing its countdown pressure. These
+references motivate the design; they do not prove this game is enjoyable.
 
-React and CSS provided the interface. One Node service and SQLite fitted the
-course machine and persistent volume, without external identity or gameplay AI
-services. Synchronous transactions simplify atomic changes but briefly block the
-service; this is a small-room design, not a scalability claim.
-[ADR 001](docs/decisions/001-small-persistent-service.md) records that trade-off.
-Membership checks and server-held answers separated genuine browser identities
-from nicknames and withheld the other folder's unpublished evidence.
+The workflow makes the argument enforceable: state a claim in README, constrain
+implementation in CLAUDE, then test observable behaviour through real HTTP and
+independent browsers. Agents propose and implement changes, while saved results
+and screenshots provide acceptance evidence. This is more useful than accepting
+a completed feature list, because the test boundary can itself be wrong.
 
-## Corrections became contracts
+React supports the changing workspace; one Node service and SQLite fit the course
+machine and persistent volume. Synchronous transactions simplify atomic changes
+but briefly block the service. Browser cookies avoid account setup but cannot
+recover a seat after cookies are cleared. [ADR 001](docs/decisions/001-small-persistent-service.md)
+records the service trade-off. This is a small-room design, not a scaling claim.
 
-An authoring review found that the archive disclosed too much alone. Replacing
-names and destinations with codes required cross-reading. The corresponding
-rule entered CLAUDE.md. Browser checks found missed changes after an offline
-interval;
-[`bb98630`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/bb98630)
-reconnects and retrieves current state. Shared updates preserve the selected
-record, and version checks reject stale chronology writes. [ADR
-002](docs/decisions/002-shared-desk-conflicts.md) explains the cost: an unrelated
-publication can also invalidate a pending move.
+## Failures changed what acceptance required
 
-Logs originally lacked sufficient actor context and could precede commit.
-[`dee5c79`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/dee5c79)
-made committed facts distinct from rejected requests. Earlier parallel reviewers
-examined permissions and the terminal reader; the primary agent remained
-responsible for integration. Same-name actors and repeated publications became
-regressions. Actual Fly output exposed multiline JSON, leading to bounded stream
-parsing rather than assumptions about line boundaries.
+Early review found that the archive revealed too much alone. Codes replaced
+standalone names and destinations, and the cross-folder rule entered CLAUDE.
+[bb98630](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/bb98630)
+repaired missed updates after an offline interval by reopening the stream and
+retrieving current state. Version checks reject competing chronology writes;
+[ADR 002](docs/decisions/002-shared-desk-conflicts.md) acknowledges that unrelated
+publications can also invalidate a pending move.
 
-Recovery also required honest uncertainty. A lost response can follow a
-successful write. The interface checks saved state without automatically
-repeating creation or publication. History pagination uses immutable creation
-time and room code so a partner's update cannot move an unseen investigation
-past its cursor. Returning-user checks preserve earlier links during failures.
+[dee5c79](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/dee5c79)
+made actor attribution and commit timing explicit in logs. A requested action
+cannot be narrated as saved before COMMIT. Lost acknowledgements are similarly
+uncertain: the interface reads current state instead of automatically repeating
+a write. This accepts some recovery friction to avoid duplicate investigations.
 
-On 20 October, the student's screenshot showed an unexplained disabled submit
-button with only Field evidence selected.
-[`352167b`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/352167b)
-replaced that dead end with actionable citation guidance and retained drafts.
-Previous tests had supplied both folders first, missing the problem. The
-[motion pass](docs/motion-design.md) later made confirmed changes visible while
-protecting focus, reduced motion and overlapping sorts. These corrections improved
-interaction, but did not establish sufficient gameplay depth.
+The student's screenshot exposed another blind spot: an unexplained disabled
+submission with only Field evidence selected. [352167b](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/352167b)
+added actionable citation guidance and retained drafts. Earlier tests had supplied
+both folders first. Testing the incomplete path corrected the acceptance rule,
+not merely the visual symptom.
 
-## Changing what the game asks of people
+## Depth required a different reasoning structure
 
-The student's reported tutor feedback prompted an explicit scope change: a
-friends/family investigation with procedural 3D evidence discovery. Adding more
-decoration to four answer selectors would not address that criticism. After
-Hours instead introduces sixteen authored records, seven supported deductions,
-three acts and a final reconstruction. [The case design](docs/after-hours-design.md)
-records the truth, dependencies and proposed human evaluation.
+Reported tutor feedback challenged the game's depth. More decoration around four
+answer selectors would not answer that criticism. [67c3434](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/67c3434)
+established After Hours' authored rules before the 3D interface: sixteen records,
+seven supported deductions, three acts and a six-event reconstruction. Every
+accepted support set crosses the initial two-player information split. A correct
+guess with unrelated citations fails; alternative valid supports remain possible.
 
-[`67c3434`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/67c3434)
-established the rules before the visual interface. Each accepted support set
-crosses the two initial perspectives. A guessed correct answer with unrelated
-citations fails. Alternative valid support sets remain possible. Four persistent
-seats divide duties; private discoveries follow explicit handovers. New rooms
-pin a case version and seed, while legacy rooms retain their original rules.
+[2cea1e4](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/2cea1e4)
+made this structure playable in procedural rooms. Geometry is generated, but truth
+is authored. Free movement, physics and generated mysteries were excluded because
+they add implementation uncertainty without establishing complementary reasoning.
+[ADR 004](docs/decisions/004-authored-mystery-procedural-rooms.md) records that cost.
+The object list deliberately exposes the same facts and actions: visual exclusivity
+would make motor precision or GPU support decide who can investigate.
 
-## Building a world within the existing service
+[34845c7](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/34845c7)
+added duty handovers, discussion and contribution records. Four same-name identities
+tested ownership, private discovery transfer and offline return. Counts describe
+saved actions, not whose reasoning mattered. A stronger player may still dominate
+after publication; the rules alone cannot settle that design risk.
 
-[`2cea1e4`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/2cea1e4)
-added the first playable 3D flow. React Three Fiber fits the existing React 19
-client. Room geometry is original code; instancing reuses floor tiles and storage
-boxes. Scenery is generated, but case truth is authored. [ADR
-004](docs/decisions/004-authored-mystery-procedural-rooms.md) explains why free
-movement, physics and generated mysteries were excluded.
+## Production exposed timing and evidence gaps
 
-The text object list shares the server's discovery conditions with the scene.
-This costs some visual exclusivity, but prevents motor precision or GPU support
-from deciding who can investigate. Camera controls, role labels and object IDs
-make the room inspectable. Three.js loads only when opening a scene.
+[9961819](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/9961819)
+added interrupted-save and actual WebGL-loss checks. Lazy loading, instancing,
+demand rendering and build-time gzip limit the renderer's cost on the small
+service. Real family-device performance remains unmeasured.
 
-[`ad32d97`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/ad32d97)
-completed distinct rooms and the full two-browser case. Review caught a narrative
-contradiction: the collected case was still available in the gallery. It became
-a matching spare with a dispatch photograph; the register establishes the
-collected case's contents. This correction belongs to the authored contract,
-not an undocumented visual workaround.
+The first hosted replay exposed a race hidden by fast local execution: intentional
+canvas disposal triggered the failure listener and disabled restoring 3D.
+[1a5bcef](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/1a5bcef)
+removes listeners with their canvas. The regression waits through deferred disposal
+before restoring the scene. The failed hosted record remains visible; absence of
+a JavaScript exception had not established a complete playthrough.
 
-## Cooperation and failure evidence
+A second failure was more instructive. Four scripted players completed 63 steps,
+yet screenshot inspection found an old conflict warning above the confirmed
+ending. [6fe6cc3](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/6fe6cc3)
+clears obsolete warnings only after shared closure. A new assertion first failed
+on the old deployment, then passed after correction; the behaviour became a
+CLAUDE rule and CI regression. [54ee92a](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/54ee92a)
+preserves before/after screenshots, both script-development mistakes and hosted
+replays. The known-answer actors prove interaction paths, not blind puzzle solving.
 
-[`34845c7`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/34845c7)
-exposed duty handovers, discussion notes and contribution records. Four independent
-browsers with identical nicknames tested seat attribution, private discovery
-transfer, retained drafts and an offline participant's return. Contribution counts
-report recorded actions; they cannot measure whose conversation mattered most.
+## Closing the audit loop
 
-[`9961819`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/9961819)
-strengthened validation and device recovery. Prototype-property names are rejected
-as evidence IDs, duplicate notes are idempotent, and new party events enter the
-log reader's allowlist without exposing discussion text. Browser tests lose real
-responses after commit and deliberately lose the WebGL context. Keyboard
-investigation still works. A touch device retains vertical scrolling over the
-canvas; reduced-motion rendering settles instead of drawing continuously.
+The 25 October review identified untested transitions between marking viewports.
+[a928205](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/a928205)
+adds six scenarios: README entry, withheld 3D delivery, pending-save resizing,
+retained focus/citations, constrained reconnection and exactly-once deduction.
+[Results](docs/verification/2026-10-25/README.md) include Chrome version, network
+conditions and script hashes. Both local and hosted runs passed; that bounds the
+claim to tested conditions rather than implying every device is covered.
 
-Build-time gzip reduces the separately loaded 3D payload without compression work
-on the small running machine. HTTP tests verify content negotiation and identity
-fallback. Forty-one tests and three new browser suites complement the seven
-legacy browser suites. Failures found during implementation included insufficient
-label contrast; the affected views were corrected and rescanned. Automated
-players and software rendering are not substitutes for actual family devices.
+Document review also found that README evidence links resolved to nonexistent
+`/readme/docs/` paths. The source and rendered hrefs matched, so the old check
+passed. A failing HTTP regression now follows local destinations; explicit public
+repository URLs correct the links. This matters because markers enter through the
+argument, not through a guided tour of the repository.
 
-The first hosted replay exposed a timing error absent from fast local runs:
-intentional canvas disposal triggered the failure listener and disabled restoring
-3D. [`1a5bcef`](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/commit/1a5bcef)
-removes listeners with their canvas. The regression waits through deferred
-disposal before restoring the view. The failed hosted report is retained; a
-partial run with no JavaScript exception is not a passed playthrough.
-
-## Release and remaining judgement
-
-Each meaningful stage is committed with its player problem and validation,
-pushed to public main and deployed through course CI. The [verification
-record](docs/after-hours-verification.md) identifies actual runs and limits.
-Existing crit tags remain frozen. C8/C9 reflections remain explicitly dated
-October 18 retrospectives; later improvements cannot repair an earlier cutoff.
-
-The reported tutor advice establishes a reason to change direction, not a
-completed blind playtest. Fresh groups must still assess pace, clue clarity,
-participation and satisfaction. The student must review the assisted portfolio,
-confirm any classroom account and defend or revise the research argument.
-[Readiness](docs/final-readiness.md) distinguishes completed technical work from
-those outstanding personal judgements.
+Meaningful stages are pushed independently and course CI gates deployment. Forty-one
+HTTP/process tests and eleven browser suites enforce technical claims. The
+[readiness map](docs/final-readiness.md) separates these from remaining judgement.
+C8/C9 reflections remain dated retrospectives and cutoff tags stay frozen.
+The [human protocol](docs/playtest-protocol.md) and blank observation sheet await
+actual first-time players. Their evidence must decide whether cooperation, pace
+and reading load justify the README's ambition. The student must also defend or
+revise the assisted process and research arguments before treating them as final.

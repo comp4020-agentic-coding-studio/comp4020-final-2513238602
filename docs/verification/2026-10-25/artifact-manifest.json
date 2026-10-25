@@ -1,11 +1,35 @@
 [
   {
+    "file": "classic-persistence.json",
+    "sha256": "eec4101dd8ee49092d4a540c5418832a95fe9d846c9f834a0054b4e0f978b4ab"
+  },
+  {
     "file": "hosted.json",
     "sha256": "3cf023d283dbb6dcc684194810ab1c3bc98f9c4fe952800172b8f9aacfb3cc39"
   },
   {
     "file": "local.json",
     "sha256": "ae6fea800939d914b21e23e1ccf3d5dec0d7f8ef9ebe4a6afbf652e93c006e1d"
+  },
+  {
+    "file": "main-case-persistence.json",
+    "sha256": "a802eeee5416b844f4c0443dafde9fd5583854c377b62093de4cc300d9355cc4"
+  },
+  {
+    "file": "readme-links-after-local.json",
+    "sha256": "1aa818501072de94c051660ced023e658283311eed974770778e971b4755db69"
+  },
+  {
+    "file": "readme-links-before.json",
+    "sha256": "46a20e9b96a814d046109e1b790bb1d7e164aeea0bdbac5be717e11c34cf36d1"
+  },
+  {
+    "file": "readme-regression-after.txt",
+    "sha256": "99344d883e65b66fe443f95e9261db8ef4f183e7991369733e3e6bcbdf88801d"
+  },
+  {
+    "file": "readme-regression-before.txt",
+    "sha256": "7e231809a7d917c52fbde3fc2849f7258494b4243c2de9591a0747560c2860e5"
   },
   {
     "file": "screenshots/pending-deduction-phone.png",

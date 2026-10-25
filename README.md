@@ -57,14 +57,14 @@ contribution record counts saved actions, not conversational value.
 Every meaningful fact and object action also exists in the text interface.
 Keyboard and touch controls obey the same discovery rules as 3D. Losing WebGL
 does not lose the investigation. The scene loads separately, renders on demand
-and respects reduced motion. [Verification](docs/after-hours-verification.md)
+and respects reduced motion. [Verification](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/blob/main/docs/after-hours-verification.md)
 separates HTTP, browser and hosted evidence from human judgement.
 
 ## Promises that need people
 
 Tests cannot establish that the mystery is enjoyable, the reading load suits a
 family, or everybody gets to reason. Fresh players must test those claims.
-[The observation protocol](docs/playtest-protocol.md) records hesitation,
+[The observation protocol](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/blob/main/docs/playtest-protocol.md) records hesitation,
 interventions and which discovery changes someone's mind. No human playtest
 result is claimed yet.
 
@@ -74,3 +74,8 @@ A cookie remembers your seat for thirty days; clearing cookies loses access.
 Share an invitation only with your team. Names, published findings and discussion
 notes appear within that investigation. All places and events are fictional.
 This argument is agent-assisted and awaits the student's review and endorsement.
+
+[PROCESS](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/blob/main/PROCESS.md)
+explains development decisions and their evidence.
+[The research note](https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/blob/main/research-note.md)
+examines agentic practice beyond this game.

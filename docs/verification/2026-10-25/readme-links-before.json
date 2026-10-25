@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-10-25T06:41:41.414Z",
+  "base": "https://comp4020-final-2513238602.fly.dev",
+  "results": [
+    {
+      "label": "Verification",
+      "url": "https://comp4020-final-2513238602.fly.dev/readme/docs/after-hours-verification.md",
+      "status": 404
+    },
+    {
+      "label": "The observation protocol",
+      "url": "https://comp4020-final-2513238602.fly.dev/readme/docs/playtest-protocol.md",
+      "status": 404
+    }
+  ]
+}

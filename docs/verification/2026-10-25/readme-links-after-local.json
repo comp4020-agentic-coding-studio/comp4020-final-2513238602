@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-10-25T06:42:48.155Z",
+  "base": "http://127.0.0.1:8086",
+  "results": [
+    {
+      "label": "Verification",
+      "url": "https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/blob/main/docs/after-hours-verification.md",
+      "status": 200
+    },
+    {
+      "label": "The observation protocol",
+      "url": "https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/blob/main/docs/playtest-protocol.md",
+      "status": 200
+    },
+    {
+      "label": "PROCESS",
+      "url": "https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/blob/main/PROCESS.md",
+      "status": 200
+    },
+    {
+      "label": "The research note",
+      "url": "https://github.com/comp4020-agentic-coding-studio/comp4020-final-2513238602/blob/main/research-note.md",
+      "status": 200
+    }
+  ]
+}

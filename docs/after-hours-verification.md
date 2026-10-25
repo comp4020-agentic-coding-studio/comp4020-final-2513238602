@@ -111,3 +111,13 @@ UI-driven conflicting chronology writes, screenshots and sanitized server action
 Visual review found a stale warning surviving a teammate's successful closure;
 the report retains the failed regression and the correction. These scripted actors
 know the answers and do not constitute human playtesting.
+
+## Marking environment and portfolio navigation
+
+The [25 October audit](verification/2026-10-25/README.md) adds local and hosted
+Chrome evidence for delayed 3D delivery, mid-save resizing, retained draft/focus
+and throttled reconnection. It includes measured conditions, original JSON and
+five inspected screenshots. These checks now run in CI as an eleventh browser
+suite. The same audit records a separate README navigation defect: evidence links
+worked in GitHub but returned 404 under `/readme/`. The corrected README uses
+explicit repository URLs; the HTTP regression now follows local destinations.

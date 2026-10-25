@@ -1,0 +1,13 @@
+{
+  "base": "https://comp4020-final-2513238602.fly.dev",
+  "seededAt": "2026-10-22T09:32:01.535Z",
+  "verifiedAt": "2026-10-25T06:42:44.342Z",
+  "passed": true,
+  "checks": [
+    "Both original hosted identities restored",
+    "Case version, procedural seed and duties unchanged",
+    "Private/shared discoveries, supported deduction, chronology and note retained",
+    "Recorded contributions retained"
+  ],
+  "limitations": "Uses the original test cookies. Verifies this saved investigation across deployment, not recovery after clearing cookies."
+}

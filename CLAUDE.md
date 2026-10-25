@@ -75,6 +75,9 @@
   incomplete submission sends no write, returning retains the draft, and a
   partner's publication appears in the open form without resetting its choices.
 - Render the full README in server HTML at /readme/.
+- README evidence links must work from /readme/ as well as GitHub. Use explicit
+  public repository URLs for repository documents. Check navigable destinations,
+  not only equality between rendered href strings and Markdown source.
 - Log pseudonymous actions, not tokens or private clue contents.
 - Emit saved-action logs only after COMMIT, with room, member, role and saved
   detail. Distinguish rejected requests from committed activity. Keep cookies,
