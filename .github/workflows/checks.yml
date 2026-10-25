@@ -58,6 +58,7 @@ jobs:
           pnpm check:after-hours
           pnpm check:after-hours-party
           pnpm check:after-hours-recovery
+          pnpm check:after-hours-marking
         env:
           APP_URL: http://localhost:8080
           BROWSER_CHANNEL: chromium

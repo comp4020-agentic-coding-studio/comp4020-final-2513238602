@@ -1,0 +1,30 @@
+[
+  {
+    "file": "hosted.json",
+    "sha256": "3cf023d283dbb6dcc684194810ab1c3bc98f9c4fe952800172b8f9aacfb3cc39"
+  },
+  {
+    "file": "local.json",
+    "sha256": "ae6fea800939d914b21e23e1ccf3d5dec0d7f8ef9ebe4a6afbf652e93c006e1d"
+  },
+  {
+    "file": "screenshots/pending-deduction-phone.png",
+    "sha256": "27bfa1aecb67aadde82d8ba6da02b51bf3237a684ff84d67d09f720ce20f1a4d"
+  },
+  {
+    "file": "screenshots/phone-live-draft.png",
+    "sha256": "9358b765e8375b70c6ecfa15059528d2fbf9901fcf54ef5df1e3fa0eb44e0623"
+  },
+  {
+    "file": "screenshots/reconnected-draft.png",
+    "sha256": "a79a40d4f226add045515f24c53ad85ff8bb71a1f7093f3726dff108b9c34852"
+  },
+  {
+    "file": "screenshots/scene-loading-text-progress.png",
+    "sha256": "ce94857616d34e1addd5a2bccf7993815758ad1cabea1213aea871ede1c51f3a"
+  },
+  {
+    "file": "screenshots/supported-deduction-phone.png",
+    "sha256": "6e3ebd2468db8abacd9161cbddeca8dd8a27a2957f168ee9bef4b51f315399dd"
+  }
+]

@@ -57,6 +57,11 @@
   repeat or an ordinary form resubmission disguised as recovery.
 - Validate request shape, length, origin and clue ownership server-side.
 - Keep clues readable as text and actions usable by keyboard and touch.
+- Check the marker's entry from /readme/. A delayed 3D module must not block
+  text discovery. Resize an active investigation between both marking viewports:
+  preserve selection, draft citations and pending-save feedback. Reconnect under
+  an explicit network profile; report measured timings without claiming global
+  latency or human-device performance. Keep failed evidence runs as well as passes.
 - Motion follows accepted server state: animate new publications/activity and
   changed chronology once, never a pending write or repeated snapshot. Keep the
   selected article, explanation form and keyed timeline rows mounted. Carry an

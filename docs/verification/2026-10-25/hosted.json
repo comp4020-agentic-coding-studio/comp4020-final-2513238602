@@ -1,0 +1,62 @@
+{
+  "startedAt": "2026-10-25T06:37:04.165Z",
+  "finishedAt": "2026-10-25T06:37:11.421Z",
+  "base": "https://comp4020-final-2513238602.fly.dev",
+  "channel": "chrome",
+  "browserVersion": "155.0.8059.86",
+  "revision": "54ee92a455bea5dca46ffabc96e2f9eb26666469",
+  "scriptSha256": "0cac735c7c6284b644c5bd53bc816556537ff1bbd46a958959f50b0ed86e2466",
+  "passed": true,
+  "failure": null,
+  "checks": [
+    {
+      "label": "README alone exposes the main-case entry; two fresh browser identities join",
+      "at": "2026-10-25T06:37:04.578Z",
+      "passed": true
+    },
+    {
+      "label": "A withheld 3D module does not block inspecting and sharing through the object list",
+      "at": "2026-10-25T06:37:07.920Z",
+      "passed": true
+    },
+    {
+      "label": "Resize during an uncommitted inspection preserves selection and honest save feedback",
+      "at": "2026-10-25T06:37:08.401Z",
+      "passed": true
+    },
+    {
+      "label": "Desktop-to-phone resizing and a live partner publication retain the explanation, citation and focus",
+      "at": "2026-10-25T06:37:08.547Z",
+      "passed": true
+    },
+    {
+      "label": "A throttled browser preserves its draft through an offline interval and catches up without reloading",
+      "at": "2026-10-25T06:37:08.799Z",
+      "passed": true
+    },
+    {
+      "label": "A delayed deduction remains pending while resizing, then appears once in both browsers",
+      "at": "2026-10-25T06:37:09.212Z",
+      "passed": true
+    }
+  ],
+  "timings": {
+    "normalPublicationToVisibleMs": 65,
+    "throttledReconnectToVisibleMs": 205
+  },
+  "errors": [],
+  "slowProfile": {
+    "offline": false,
+    "latency": 150,
+    "downloadThroughput": 524288,
+    "uploadThroughput": 131072
+  },
+  "screenshots": [
+    "scene-loading-text-progress.png",
+    "phone-live-draft.png",
+    "reconnected-draft.png",
+    "pending-deduction-phone.png",
+    "supported-deduction-phone.png"
+  ],
+  "limitations": "Known scripted actions, isolated cookies, headless browser and emulated phone/network. No human enjoyment, real-device performance or global latency conclusion. No cookies, room code or raw trace exported."
+}

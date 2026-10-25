@@ -71,7 +71,7 @@ mise exec -- pnpm check:portfolio
 以及确认后的共享动效、连续排序、减少动态和结案去重。`check:motion` 的结果与截图
 默认在忽略的 `data/motion/`，可用 `MOTION_OUTPUT_DIR` 改变位置。
 `check` 另含真实 HTTP、进程重启和日志检查。三组新主案检查覆盖完整双人通关、四人分工及断线交接、保存回执丢失及真实 WebGL 故障，结果默认在忽略的 data/after-hours-*。
-CI 配置在部署前运行共十组浏览器检查及两个材料检查；
+CI 配置在部署前运行共十一组浏览器检查及两个材料检查；
 当前运行结果以 CI 和 [验收记录](docs/final-readiness.md) 为准。
 
 上面的 `APP_URL` 让 `check:returning` 复用已启动的测试服务，不主动重启它。
@@ -91,6 +91,13 @@ mise exec -- pnpm check:returning
 个人论点、真人体验或研究判断已经获得确认。
 
 ## 四人自动模拟留痕
+
+评分环境专项检查：`mise exec -- pnpm check:after-hours-marking`。默认使用已安装的
+Chrome；可设置 `BROWSER_CHANNEL=chromium` 使用 Playwright 浏览器，CI 使用后者。
+从 `/readme/` 发现入口，模拟 3D 延迟、保存途中缩放、草稿同步与限速重连。
+`APP_URL` 指定隔离本地服务或课程线上；每次创建自己的测试案。结果、浏览器版本、
+脚本摘要及截图写入新的 `data/marking-*`，也可用 `MARKING_OUTPUT` 指定尚不存在的
+data/ 子目录。不输出 cookie 或原始 trace。见 [10 月 25 日记录](docs/verification/2026-10-25/README.md)。
 
 按需运行四人留痕模拟（不是额外的 CI 套件，也不是真人试玩）：
 

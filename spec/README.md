@@ -93,14 +93,18 @@ participation, a student's reading history or the quality of an argument.
 - `check:after-hours-recovery`: committed creation/join/publication with lost
   replies, keyboard investigation after real WebGL context loss, touch scrolling,
   pending inspection feedback and settled reduced-motion rendering.
+- `check:after-hours-marking`: entry discovered from README, withheld 3D delivery,
+  live resize between 1920×1080 and 390×844 during inspection and deduction,
+  focus/citation preservation during a partner update, and reconnection with an
+  explicit network profile. Records browser version, timings and script digest.
 
 The terminal-reader regression also captures real party actions and checks that
-names and discussion text do not reach its output. CI runs all ten browser suites
+names and discussion text do not reach its output. CI runs all eleven browser suites
 and all HTTP/process checks before deploying. These prove implemented behavior,
 not the quality of a family conversation or a measured human completion time.
 
 `pnpm check:simulation` is an additional on-demand four-person audit, not an
-eleventh CI suite. It records 63 scripted steps, known-answer mistakes, UI-driven
+CI suite. It records 63 scripted steps, known-answer mistakes, UI-driven
 concurrent chronology moves, complete resolution and original-identity reopening.
 Raw per-context traces stay under ignored data/; sanitized journals, screenshots
 and server-action projections support the [dated report](../docs/simulations/2026-10-22/README.md).
